@@ -16,9 +16,9 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/testing_site")
+    @PostMapping("/testing-site")
     public String postlogin(@ModelAttribute UserLogin userLogin, BindingResult result, Model model) {
         model.addAttribute("UserLogin", userLogin);
-        return "testing_site";
+        return "testing-site";
     }
 }
