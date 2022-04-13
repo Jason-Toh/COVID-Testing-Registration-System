@@ -28,12 +28,12 @@ public class LoginController {
         String uname = login.getUserName();
         String pass = login.getPassword();
         if(uname.equals("Admin") && pass.equals("Admin")) {
-            m.addAttribute("uname", uname);
-            m.addAttribute("pass", pass);
+            m.addAttribute("userName", uname);
+            m.addAttribute("password", pass);
             return "testing-site";
         }
         m.addAttribute("error", "Incorrect Username & Password");
-        return "/login";
+        return "login";
 
     }
 

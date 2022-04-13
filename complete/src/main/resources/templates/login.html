@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Login</h1>
-<form name='f' th:action="@{testing-site}" th:object="${userlogin}" method='POST'>
+<form name='f' th:action="@{/login}" th:object="${userlogin}" method='POST'>
     <p th:if="${error}" class="error">UserName & Password Incorrect</p>
     <table>
         <tr>
