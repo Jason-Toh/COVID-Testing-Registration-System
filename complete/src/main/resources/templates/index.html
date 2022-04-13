@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Login</h1>
-<form name='f' th:action="@{testing-site}" th:object="${userlogin}" method='POST'>
+<form name='f' th:action="@{/login}" th:object="${userlogin}" method='POST'>
     <p th:if="${error}" class="error">UserName & Password Incorrect</p>
     <table>
         <tr>
@@ -22,6 +22,6 @@
         </tr>
     </table>
 </form>
-<p>Get your greeting <a href="/greeting">here</a></p>
+<p>Get your greeting <a href="/greeting">here yo</a></p>
 </body>
 </html>
