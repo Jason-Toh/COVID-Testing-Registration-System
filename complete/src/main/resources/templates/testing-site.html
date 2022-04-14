@@ -6,7 +6,22 @@
 </head>
 <body>
 <h1>Testing-Site</h1>
-<p th:text = "'username : ' +   ${userlogin.userName}"></p>
-<p th:text = "'password : ' +   ${userlogin.password}"></p>
+<p th:text = "'Username : ' +   ${userlogin.userName}"></p>
+<p th:text = "'Password : ' +   ${userlogin.password}"></p>
+
+<!--Input for Suburb name-->
+<span>Suburb Name: </span><input type='text' name='suburbName' value=''>
+
+<span>Type Of Facility </span>
+<!--Dropdown list for Drive Through, Walk-in, Clinics, GPs or Hospitals-->
+<select id="typeOfFacility" name="typeOfFacility">
+    <option value="Drive Through">Drive Through</option>
+    <option value="Walk-in">Walk-in</option>
+    <option value="Clinics" selected="selected">Clinics</option>
+    <option value="GPs">GPs</option>
+    <option value="Hospitals">Hospitals</option>
+</select>
+
+
 </body>
 </html>

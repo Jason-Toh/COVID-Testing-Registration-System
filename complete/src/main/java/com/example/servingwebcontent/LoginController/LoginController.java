@@ -45,7 +45,7 @@ public class LoginController {
 
 
     @PostMapping("/testing-site")
-    public String postlogin(@ModelAttribute UserLogin userLogin, BindingResult result, Model model) {
+    public String postTestingSite(@ModelAttribute UserLogin userLogin, BindingResult result, Model model) {
         model.addAttribute("UserLogin", userLogin);
         return "testing-site";
     }
