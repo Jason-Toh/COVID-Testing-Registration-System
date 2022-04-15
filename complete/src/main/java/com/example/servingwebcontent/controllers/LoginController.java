@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.LoginController;
+package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.domain.UserLogin;
 import org.springframework.stereotype.Controller;
@@ -28,12 +28,13 @@ public class LoginController {
         return "login";
     }
 
-    //Check for Credentials
+    // Check for Credentials
     @PostMapping("/login")
-    public String postlogin(@ModelAttribute(name="userlogin") UserLogin login, Model m) throws IOException, InterruptedException {
+    public String postlogin(@ModelAttribute(name = "userlogin") UserLogin login, Model m)
+            throws IOException, InterruptedException {
         String uname = login.getUserName();
         String pass = login.getPassword();
-        if(checkLoginFromAPI(uname, pass)) {
+        if (checkLoginFromAPI(uname, pass)) {
             m.addAttribute("userName", uname);
             m.addAttribute("password", pass);
             return "testing-site";
@@ -43,13 +44,11 @@ public class LoginController {
 
     }
 
-
     @PostMapping("/testing-site")
-    public String postlogin(@ModelAttribute UserLogin userLogin, BindingResult result, Model model) {
+    public String postTestingSite(@ModelAttribute UserLogin userLogin, BindingResult result, Model model) {
         model.addAttribute("UserLogin", userLogin);
         return "testing-site";
     }
-
 
     public boolean checkLoginFromAPI(String userName, String password) throws IOException, InterruptedException {
         boolean flag = false;
@@ -64,14 +63,16 @@ public class LoginController {
                 "}";
 
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(URI.create(usersLoginUrl + "?jwt=true")) // Return a JWT so we can use it in Part 5 later.
+        HttpRequest request = HttpRequest.newBuilder(URI.create(usersLoginUrl + "?jwt=true")) // Return a JWT so we can
+                                                                                              // use it in Part 5 later.
                 .setHeader("Authorization", myApiKey)
-                .header("Content-Type","application/json") // This header needs to be set when sending a JSON request body.
+                .header("Content-Type", "application/json") // This header needs to be set when sending a JSON request
+                                                            // body.
                 .POST(HttpRequest.BodyPublishers.ofString(jsonString))
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        if(response.statusCode() == 200){
+        if (response.statusCode() == 200) {
             flag = true;
         }
         return flag;

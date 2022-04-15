@@ -1,4 +1,4 @@
-package com.example.servingwebcontent;
+package com.example.servingwebcontent.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,5 +13,4 @@ public class GreetingController {
 		model.addAttribute("name", name);
 		return "greeting";
 	}
-
 }
