@@ -10,6 +10,12 @@ public class Main {
 
         APIfactory factory = new UserFactory("NrMhfCkHTjJjzHTWR8z8nP6FjcGg8K");
         Get userGet = factory.createGet();
-        User user = userGet.getApi();
+        try {
+            User user = userGet.getApi();
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+
     }
 }

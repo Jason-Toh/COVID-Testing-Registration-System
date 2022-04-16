@@ -1,7 +1,13 @@
 package com.example.servingwebcontent.api;
 
 import com.example.servingwebcontent.apiclasses.User;
-import org.apache.tomcat.util.json.JSONParser;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+//import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,7 +26,7 @@ public class UserGet extends Get{
     }
 
     @Override
-    public User getApi() throws IOException, InterruptedException {
+    public User getApi() throws IOException, InterruptedException, ParseException {
         String rootUrl = "https://fit3077.com/api/v1";
         String usersUrl = rootUrl + "/user";
 
@@ -38,7 +44,10 @@ public class UserGet extends Get{
         System.out.println("Full JSON response: " + response.body());
 
         JSONParser parser = new JSONParser();
-        JSONObject json = (JSONObject) parser.parse(response.body());
+        JSONArray json = new JSONArray(response.body());
+        System.out.println(json.get(0));
+        System.out.println(json.getJSONObject(0).get("id"));
+
 
         return null;
     }
