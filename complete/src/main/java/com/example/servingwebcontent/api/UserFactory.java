@@ -1,12 +1,14 @@
 package com.example.servingwebcontent.api;
 
 public class UserFactory implements APIfactory{
+    private String api;
 
-    //some methods
+    public UserFactory(String api) {
+        this.api = api;
+    }
 
     @Override
     public Get createGet() {
-//        return new UserPost();
-        return null;
+        return new UserGet(this.api);
     }
 }
