@@ -3,10 +3,6 @@ package com.example.servingwebcontent.api;
 import com.example.servingwebcontent.apiclasses.User;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-//import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 
 import java.io.IOException;
@@ -14,19 +10,21 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
-
-public class UserGet extends Get{
+public class UserGet extends Get<User> {
     private String myApiKey;
-
+    private List<User> users = new ArrayList<>();
 
     public UserGet(String api) {
         this.myApiKey = api;
     }
 
     @Override
-    public User getApi() throws IOException, InterruptedException, ParseException {
+    public Collection<User> getApi() throws IOException, InterruptedException {
         String rootUrl = "https://fit3077.com/api/v1";
         String usersUrl = rootUrl + "/user";
 
@@ -40,15 +38,24 @@ public class UserGet extends Get{
         HttpResponse<String> response;
         response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println("Response code: " + response.statusCode()); // Status code of 4xx or 5xx indicates an error with the request or with the server, respectively.
-        System.out.println("Full JSON response: " + response.body());
-
-        JSONParser parser = new JSONParser();
+        // Convert String into JSONArray
         JSONArray json = new JSONArray(response.body());
-        System.out.println(json.get(0));
-        System.out.println(json.getJSONObject(0).get("id"));
+        // Create users list
 
 
-        return null;
+        // Add user into users list
+        for(int i = 0; i < json.length(); i++){
+            String id = (String)json.getJSONObject(i).get("id");
+            String givenName = (String)json.getJSONObject(i).get("givenName");
+            String familyName = (String)json.getJSONObject(i).get("familyName");
+            String userName = (String)json.getJSONObject(i).get("userName");
+            String phoneNumber = (String)json.getJSONObject(i).get("phoneNumber");
+            boolean isCustomer = (boolean)json.getJSONObject(i).get("isCustomer");
+            boolean isReceptionist = (boolean)json.getJSONObject(i).get("isReceptionist");
+            boolean isHealthcareWorker = (boolean)json.getJSONObject(i).get("isHealthcareWorker");
+            User user = new User(id, givenName, familyName, userName, phoneNumber, isCustomer, isReceptionist, isHealthcareWorker);
+            users.add(user);
+        }
+        return users;
     }
 }

@@ -1,21 +1,19 @@
 package com.example.servingwebcontent.apiclasses;
 
 public class Address {
-    double latitude;
-    double longitude;
-    String unitNumber;
-    String street;
-    String street2;
-    String suburb;
-    String state;
-    String postcode;
+    private double latitude;
+    private double longitude;
+    private String unitNumber;
+    private String street;
+    private String suburb;
+    private String state;
+    private String postcode;
 
-    public Address(double latitude, double longitude, String unitNumber, String street, String street2, String suburb, String state, String postcode) {
+    public Address(double latitude, double longitude, String unitNumber, String street, String suburb, String state, String postcode) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.unitNumber = unitNumber;
         this.street = street;
-        this.street2 = street2;
         this.suburb = suburb;
         this.state = state;
         this.postcode = postcode;
@@ -53,14 +51,6 @@ public class Address {
         this.street = street;
     }
 
-    public String getStreet2() {
-        return street2;
-    }
-
-    public void setStreet2(String street2) {
-        this.street2 = street2;
-    }
-
     public String getSuburb() {
         return suburb;
     }
@@ -92,7 +82,6 @@ public class Address {
                 ", longitude=" + longitude +
                 ", unitNumber='" + unitNumber + '\'' +
                 ", street='" + street + '\'' +
-                ", street2='" + street2 + '\'' +
                 ", suburb='" + suburb + '\'' +
                 ", state='" + state + '\'' +
                 ", postcode='" + postcode + '\'' +

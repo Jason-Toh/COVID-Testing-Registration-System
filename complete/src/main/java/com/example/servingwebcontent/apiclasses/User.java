@@ -1,5 +1,6 @@
 package com.example.servingwebcontent.apiclasses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -16,6 +17,20 @@ public class User {
     private List<UserBooking> bookings;
     private List<CovidTest> testsTaken;
     private List<User> testsAdministered;
+
+    public User(String id, String givenName, String familyName, String userName, String phoneNumber, boolean isCustomer, boolean isReceptionist, boolean isHealthcareWorker) {
+        this.id = id;
+        this.givenName = givenName;
+        this.familyName = familyName;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+        this.isCustomer = isCustomer;
+        this.isReceptionist = isReceptionist;
+        this.isHealthcareWorker = isHealthcareWorker;
+        this.bookings = new ArrayList<>();
+        this.testsTaken = new ArrayList<>();
+        this.testsAdministered = new ArrayList<>();
+    }
 
     public String getId() {
         return id;
@@ -85,24 +100,24 @@ public class User {
         return bookings;
     }
 
-    public void setBookings(List<UserBooking> bookings) {
-        this.bookings = bookings;
+    public void addBookings(UserBooking booking) {
+        this.bookings.add(booking);
     }
 
     public List<CovidTest> getTestsTaken() {
         return testsTaken;
     }
 
-    public void setTestsTaken(List<CovidTest> testsTaken) {
-        this.testsTaken = testsTaken;
+    public void addTestsTaken(CovidTest testsTaken) {
+        this.testsTaken.add(testsTaken);
     }
 
     public List<User> getTestsAdministered() {
         return testsAdministered;
     }
 
-    public void setTestsAdministered(List<User> testsAdministered) {
-        this.testsAdministered = testsAdministered;
+    public void addTestsAdministered(User testsAdministered) {
+        this.testsAdministered.add(testsAdministered);
     }
 
     @Override

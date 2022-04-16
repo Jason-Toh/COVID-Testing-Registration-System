@@ -1,5 +1,6 @@
 package com.example.servingwebcontent.apiclasses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestingSite {
@@ -12,14 +13,14 @@ public class TestingSite {
     private List<TestingSiteBooking> bookings;
     private TestingSiteStatus additonalInfo;
 
-    public TestingSite(String id, String name, String description, String websiteUrl, String phoneNumber, Address address, List<TestingSiteBooking> bookings, TestingSiteStatus additonalInfo) {
+    public TestingSite(String id, String name, String description, String websiteUrl, String phoneNumber, Address address, TestingSiteStatus additonalInfo) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.websiteUrl = websiteUrl;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.bookings = bookings;
+        this.bookings = new ArrayList<>();
         this.additonalInfo = additonalInfo;
     }
 
