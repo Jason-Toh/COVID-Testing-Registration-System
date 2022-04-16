@@ -1,12 +1,15 @@
 package com.example.servingwebcontent.api;
 
 import com.example.servingwebcontent.apiclasses.User;
+import org.apache.tomcat.util.json.JSONParser;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
+
 
 public class UserGet extends Get{
     private String myApiKey;
@@ -34,7 +37,8 @@ public class UserGet extends Get{
         System.out.println("Response code: " + response.statusCode()); // Status code of 4xx or 5xx indicates an error with the request or with the server, respectively.
         System.out.println("Full JSON response: " + response.body());
 
-
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(response.body());
 
         return null;
     }
