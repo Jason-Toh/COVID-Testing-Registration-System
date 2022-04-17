@@ -68,7 +68,7 @@ public class OnSiteRegisterController {
         RandomPinGenerator rad = new RandomPinGenerator();
         String smsPin = rad.getPin();
         SMSPinModel smsPinModel = new SMSPinModel(smsPin);
-        model.addAttribute("smsPinModel", smsPinModel);
+//        model.addAttribute("smsPinModel", smsPinModel);
 
         return "register";
     }
