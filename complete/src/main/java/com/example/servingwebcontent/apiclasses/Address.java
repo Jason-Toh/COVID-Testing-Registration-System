@@ -75,6 +75,21 @@ public class Address {
         this.postcode = postcode;
     }
 
+
+    public String toJSONStringFormat() {
+        return "Address:{" +
+                "\"latitude\":" + latitude +
+                ", \"longitude\":" + longitude +
+                ", \"unitNumber\":\"" + unitNumber + '\"' +
+                ", \"street\":\"" + street + '\"' +
+                ", \"suburb\":\"" + suburb + '\"' +
+                ", \"street2\":\"" + "-" + '\"' +
+                ", \"state\":\"" + state + '\"' +
+                ", \"postcode\":\"" + postcode + '\"' +
+                ", \"additionalInfo\":" + "{}" +
+                '}';
+    }
+
     @Override
     public String toString() {
         return "Address{" +

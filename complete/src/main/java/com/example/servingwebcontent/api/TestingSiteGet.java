@@ -51,7 +51,8 @@ public class TestingSiteGet extends Get{
             String description = (String)json.getJSONObject(i).get("description");
             String websiteUrl = (String)json.getJSONObject(i).get("websiteUrl");
             String phoneNumber = (String)json.getJSONObject(i).get("phoneNumber");
-
+            String createdAt = (String)json.getJSONObject(i).get("createdAt");
+            String updatedAt = (String)json.getJSONObject(i).get("updatedAt");
             // Address
             JSONObject addressJson = (JSONObject) json.getJSONObject(i).get("address");
             double latitude = addressJson.getDouble("latitude");
@@ -68,9 +69,10 @@ public class TestingSiteGet extends Get{
             String typeOfFacility = additionalInfoJson.getString("typeOfFacility");
             boolean onSiteBookingAndTesting = additionalInfoJson.getBoolean("onSiteBookingAndTesting");
             int waitingTimeInMins = additionalInfoJson.getInt("waitingTimeInMins");
+
             TestingSiteStatus additionalInfo = new TestingSiteStatus(typeOfFacility, onSiteBookingAndTesting, waitingTimeInMins);
 
-            TestingSite testingSite = new TestingSite(id, name, description, websiteUrl, phoneNumber, address, additionalInfo);
+            TestingSite testingSite = new TestingSite(id, name, description, websiteUrl, phoneNumber, address, additionalInfo, createdAt, updatedAt);
             testingSites.add(testingSite);
         }
         return testingSites;

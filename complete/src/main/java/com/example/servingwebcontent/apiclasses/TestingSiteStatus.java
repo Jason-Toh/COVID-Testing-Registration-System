@@ -35,6 +35,15 @@ public class TestingSiteStatus {
         this.waitingTimeInMins = waitingTimeInMins;
     }
 
+
+    public String toJSONStringFormat() {
+        return "additionalInfo:{" +
+                "\"typeOfFacility\":\"" + typeOfFacility + '\"' +
+                ", \"onSiteBookingAndTesting\":" + onSiteBookingAndTesting +
+                ", \"waitingTimeInMins\":" + waitingTimeInMins +
+                '}';
+    }
+
     @Override
     public String toString() {
         return "TestingSiteStatus{" +

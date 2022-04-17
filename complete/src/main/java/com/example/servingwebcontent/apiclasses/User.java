@@ -120,20 +120,34 @@ public class User {
         this.testsAdministered.add(testsAdministered);
     }
 
+    public String toJSONStringFormat(String userType){
+        return userType+":{" +
+                "id:\"" + id + '\"' +
+                ", \"givenName\":\"" + givenName + '\"' +
+                ", \"familyName\":\"" + familyName + '\"' +
+                ", \"userName\":\"" + userName + '\"' +
+                ", \"phoneNumber\":\"" + phoneNumber + '\"' +
+                ", \"isCustomer\":" + isCustomer +
+                ", \"isReceptionist\":" + isReceptionist +
+                ", \"isHealthcareWorker\":" + isHealthcareWorker +
+                ", \"additionalInfo\":" + "{}" +
+                '}';
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
-                ", givenName='" + givenName + '\'' +
-                ", familyName='" + familyName + '\'' +
-                ", userName='" + userName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", isCustomer=" + isCustomer +
-                ", isReceptionist=" + isReceptionist +
-                ", isHealthcareWorker=" + isHealthcareWorker +
-                ", bookings=" + bookings +
-                ", testsTaken=" + testsTaken +
-                ", testsAdministered=" + testsAdministered +
+                "id:\"" + id + '\'' +
+                ", \"givenName\":\"" + givenName + '\"' +
+                ", \"familyName\":\"" + familyName + '\"' +
+                ", \"userName\":\"" + userName + '\"' +
+                ", \"phoneNumber\":\"" + phoneNumber + '\"' +
+                ", \"isCustomer\":\"" + isCustomer +
+                ", \"isReceptionist\":\"" + isReceptionist +
+                ", \"isHealthcareWorker\":\"" + isHealthcareWorker +
+                ", \"bookings\":" + bookings +
+                ", \"testsTaken\":" + testsTaken +
+                ", \"testsAdministered\":" + testsAdministered +
                 '}';
     }
 }
