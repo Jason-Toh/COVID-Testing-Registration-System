@@ -6,52 +6,35 @@
 </head>
 <body>
 <h1>Register Page (On-site Booking)</h1>
-<form name='f' th:action="@{/register}" th:object="${userlogin}" method='POST'>
+<form name='f' th:action="@{/register}" th:object="${bookingForm}" method='POST'>
     <table>
         <tr>
             <td>Customer:</td>
-            <td>Mary brown</td>
+            <td><input type='text' name='customName' value='' th:field="*{customerUsername}"></td>
         </tr>
-<!--        <tr >-->
-<!--            <td>Demo:</td>-->
-<!--            <td class="col-lg-3" th:object="${test}">-->
-<!--                <select class="form-control" id="testOrder" name="testOrder">-->
-<!--                    <option value="">Demo</option>-->
-<!--                    <option th:each="test : ${tests}"-->
-<!--                            th:value="${test.testCode}"-->
-<!--                            th:text="${test.testCode}+' : '+${test.testName}"></option>-->
-<!--                </select>-->
-<!--            </td>-->
-<!--        </tr>-->
         <tr>
             <td>Testing-sites:</td>
-            <td class="col-lg-3" th:object="${test}">
-                <select class="form-control" id="testingSiteOrder" name="testingSiteOrder">
-                    <option value="">Select Testing Site</option>
-                    <option th:each="test : ${testingSiteModels}"
-                            th:value="${test.nameTestingSite}"
-                            th:text="${test.nameTestingSite}"></option>
+            <td>
+                <select th:field="*{testingSite}">
+                    <option th:each="p : ${testingSiteModels}" th:value="${p}" th:text="${p}" />
                 </select>
-            </td>
+            <td>
         </tr>
         <tr>
             <td>Test-type:</td>
-            <td class="col-lg-3" th:object="${test}">
-                <select class="form-control" id="testTypeOrder" name="testTypeOrder">
-                    <option value="">Select Test Type</option>
-                    <option th:each="test : ${testTypeModels}"
-                            th:value="${test.nameTestType}"
-                            th:text="${test.nameTestType}"></option>
+            <td>
+                <select th:field="*{testType}">
+                    <option th:each="p : ${testTypeModels}" th:value="${p}" th:text="${p}" />
                 </select>
-            </td>
+            <td>
         </tr>
         <tr>
             <td>Administrator:</td>
-            <td><input type='text' name='adminName' value=''></td>
+            <td><input type='text' name='adminName' value='' th:field="*{administrator}"></td>
         </tr>
         <tr>
             <td>Patient:</td>
-            <td><input type='text' name='patientName' value=''></td>
+            <td><input type='text' name='patientName' value='' th:field="*{patient}"></td>
         </tr>
         <tr>
             <td><input name="submit" type="submit" value="submit" /></td>
