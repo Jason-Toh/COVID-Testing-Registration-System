@@ -30,16 +30,16 @@ public class LoginController {
 
     // Check for Credentials
     @PostMapping("/login")
-    public String postlogin(@ModelAttribute(name = "userlogin") UserLogin login, Model m)
+    public String postlogin(@ModelAttribute(name = "userlogin") UserLogin login, Model model)
             throws IOException, InterruptedException {
         String uname = login.getUserName();
         String pass = login.getPassword();
         if (checkLoginFromAPI(uname, pass)) {
-            m.addAttribute("userName", uname);
-            m.addAttribute("password", pass);
+            model.addAttribute("userName", uname);
+            model.addAttribute("password", pass);
             return "testing-site";
         }
-        m.addAttribute("error", "Incorrect Username & Password");
+        model.addAttribute("error", "Incorrect Username & Password");
         return "login";
 
     }

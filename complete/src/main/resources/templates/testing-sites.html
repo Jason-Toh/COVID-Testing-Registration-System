@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
     <title>Testing Sites</title>
 </head>
 <body>
-    
+    <div class="container">
+        <h1 class="text-center">Testing Sites</h1>
+        <table class="table">
+            <tbody class="thead-dark" th:each="testingSite : ${testingSites}">
+                <tr>
+                    <th>Name: </th>
+                    <td th:text="${testingSite.get('name')}"></td>
+                </tr>
+                <tr>
+                    <th>Description:</th>
+                    <td th:text="${testingSite.get('description')}"></td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td th:text="${testingSite.get('phoneNumber')}"></td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td th:text="${testingSite.get('address')}"></td>
+                </tr>
+                <tr>
+                    <th>Type of Facility</th>
+                    <td th:text="${testingSite.get('additionalInfo').get('typeOfFacility')}"></td>
+                </tr>
+                <tr>
+                    <th>On Site Booking and Testing</th>
+                    <td th:text="${testingSite.get('additionalInfo').get('onSiteBookingAndTesting')}"></td>
+                </tr>
+                <tr>
+                    <th>Waiting Time in Mins</th>
+                    <td th:text="${testingSite.get('additionalInfo').get('waitingTimeInMins')}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
