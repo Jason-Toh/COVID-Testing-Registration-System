@@ -7,7 +7,6 @@
 <body>
 <h1>Register Page (On-site Booking)</h1>
 <form name='f' th:action="@{/register}" th:object="${userlogin}" method='POST'>
-    <p th:if="${error}" class="error">UserName & Password Incorrect</p>
     <table>
         <tr>
             <td>Customer:</td>
@@ -48,20 +47,18 @@
         </tr>
         <tr>
             <td>Administrator:</td>
-            <td><input type='text' name='userName' value=''></td>
+            <td><input type='text' name='adminName' value=''></td>
         </tr>
         <tr>
             <td>Patient:</td>
-            <td><input type='text' name='userName' value=''></td>
+            <td><input type='text' name='patientName' value=''></td>
         </tr>
         <tr>
             <td><input name="submit" type="submit" value="submit" /></td>
         </tr>
     </table>
-
-
-
 </form>
+<p  th:text="${smsPinModel.smsPin}"></p>
 <p>Get your greeting <a href="/greeting">here</a></p>
 </body>
 </html>

@@ -6,9 +6,11 @@ import com.example.servingwebcontent.api.TestingSiteFactory;
 import com.example.servingwebcontent.apiclasses.TestType;
 import com.example.servingwebcontent.apiclasses.TestingSite;
 import com.example.servingwebcontent.domain.UserLogin;
+import com.example.servingwebcontent.model.SMSPinModel;
 import com.example.servingwebcontent.model.Test;
 import com.example.servingwebcontent.model.TestTypeModel;
 import com.example.servingwebcontent.model.TestingSiteModel;
+import com.example.servingwebcontent.tool.RandomPinGenerator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,11 +64,16 @@ public class OnSiteRegisterController {
         }
         model.addAttribute("testTypeModels", testTypeModels);
 
+        // Get smsPin
+        RandomPinGenerator rad = new RandomPinGenerator();
+        String smsPin = rad.getPin();
+        SMSPinModel smsPinModel = new SMSPinModel(smsPin);
+        model.addAttribute("smsPinModel", smsPinModel);
+
         return "register";
     }
     @PostMapping("/register")
-    public String postTestingSite(@ModelAttribute UserLogin userLogin, BindingResult result, Model model) {
-        model.addAttribute("UserLogin", userLogin);
+    public String postTestingSite(@ModelAttribute(name = "userlogin") UserLogin login, Model model) {
         System.out.println("mom");
         return "register";
     }
