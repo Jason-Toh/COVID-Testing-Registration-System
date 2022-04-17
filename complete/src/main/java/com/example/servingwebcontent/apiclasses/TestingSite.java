@@ -12,8 +12,10 @@ public class TestingSite {
     private Address address;
     private List<TestingSiteBooking> bookings;
     private TestingSiteStatus additonalInfo;
+    private String createdAt;
+    private String updatedAt;
 
-    public TestingSite(String id, String name, String description, String websiteUrl, String phoneNumber, Address address, TestingSiteStatus additonalInfo) {
+    public TestingSite(String id, String name, String description, String websiteUrl, String phoneNumber, Address address, TestingSiteStatus additonalInfo, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -22,6 +24,8 @@ public class TestingSite {
         this.address = address;
         this.bookings = new ArrayList<>();
         this.additonalInfo = additonalInfo;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getId() {
@@ -88,6 +92,19 @@ public class TestingSite {
         this.additonalInfo = additonalInfo;
     }
 
+    public String toJSONStringFormat(){
+        return "testingSite:{" +
+                "\"id\":\"" + id + '\"' +
+                ", \"name\":\"" + name + '\"' +
+                ", \"description\":\"" + description + '\"' +
+                ", \"websiteUrl\":\"" + websiteUrl + '\"' +
+                ", \"phoneNumber\":\"" + phoneNumber + '\"' +
+                "," + address.toJSONStringFormat() +
+                ", \"createdAt\":\"" + createdAt + '\"' +
+                ", \"updatedAt\":\"" + updatedAt + '\"' +
+                "," + additonalInfo.toJSONStringFormat() +
+                '}';
+    }
     @Override
     public String toString() {
         return "TestingSite{" +

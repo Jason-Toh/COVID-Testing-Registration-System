@@ -44,11 +44,11 @@ public class LoginController {
 
     }
 
-    @PostMapping("/testing-site")
-    public String postTestingSite(@ModelAttribute UserLogin userLogin, BindingResult result, Model model) {
-        model.addAttribute("UserLogin", userLogin);
-        return "testing-site";
-    }
+//    @PostMapping("/testing-site")
+//    public String postTestingSite(@ModelAttribute UserLogin userLogin, BindingResult result, Model model) {
+//        model.addAttribute("UserLogin", userLogin);
+//        return "testing-site";
+//    }
 
     public boolean checkLoginFromAPI(String userName, String password) throws IOException, InterruptedException {
         boolean flag = false;

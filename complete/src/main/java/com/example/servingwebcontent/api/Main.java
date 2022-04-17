@@ -6,10 +6,10 @@ import com.example.servingwebcontent.apiclasses.User;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
+
         String api = "NrMhfCkHTjJjzHTWR8z8nP6FjcGg8K";
 
         // 1.0 Get User and return list of users information
@@ -23,7 +23,7 @@ public class Main {
             // Just to show all the user in users
             Iterator<User> iterator = users.iterator();
             while (iterator.hasNext()) {
-                System.out.println("--> " + iterator.next());
+                System.out.println("--> " + iterator.next().toJSONStringFormat("customer"));
             }
         }
         catch(Exception e) {
@@ -41,11 +41,14 @@ public class Main {
             // Just to show all the user in users
             Iterator<TestingSite> iterator = testingSites.iterator();
             while (iterator.hasNext()) {
-                System.out.println("--> " + iterator.next());
+                System.out.println("--> " + iterator.next().toJSONStringFormat());
             }
         }
         catch(Exception e) {
             System.out.println(e);
         }
+
+        // Test
+
     }
 }

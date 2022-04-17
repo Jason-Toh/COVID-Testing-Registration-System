@@ -1,5 +1,6 @@
 package com.example.servingwebcontent.apiclasses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Booking {
@@ -7,10 +8,10 @@ public class Booking {
     private String smsPin;
     private List<CovidTest> covidTests;
 
-    public Booking(String id, String smsPin, List<CovidTest> covidTests) {
+    public Booking(String id, String smsPin) {
         this.id = id;
         this.smsPin = smsPin;
-        this.covidTests = covidTests;
+        this.covidTests = new ArrayList<>();
     }
 
     public String getId() {
@@ -33,8 +34,8 @@ public class Booking {
         return covidTests;
     }
 
-    public void setCovidTests(List<CovidTest> covidTests) {
-        this.covidTests = covidTests;
+    public void addCovidTestsCovidTest(CovidTest covidTest) {
+        this.covidTests.add(covidTest);
     }
 
     @Override
