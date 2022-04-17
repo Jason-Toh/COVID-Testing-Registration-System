@@ -6,15 +6,14 @@ public class CovidTest {
     private TestType testType;
     private User patient;
     private User administer;
-    private Booking booking;
     private Result result;
 
-    public CovidTest(String id, TestType testType, User patient, User administer, Booking booking, Result result) {
+    public CovidTest(String id, TestType testType, User patient, User administer, Result result) {
         this.id = id;
         this.testType = testType;
         this.patient = patient;
         this.administer = administer;
-        this.booking = booking;
+
         this.result = result;
     }
 
@@ -50,14 +49,6 @@ public class CovidTest {
         this.administer = administer;
     }
 
-    public Booking getBooking() {
-        return booking;
-    }
-
-    public void setBooking(Booking booking) {
-        this.booking = booking;
-    }
-
     public Result getResult() {
         return result;
     }
@@ -73,7 +64,6 @@ public class CovidTest {
                 ", testType=" + testType +
                 ", patient=" + patient +
                 ", administer=" + administer +
-                ", booking=" + booking +
                 ", result=" + result +
                 '}';
     }

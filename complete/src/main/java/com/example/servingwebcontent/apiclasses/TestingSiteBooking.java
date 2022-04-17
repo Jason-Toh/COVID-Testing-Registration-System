@@ -6,8 +6,8 @@ public class TestingSiteBooking extends Booking{
 
     private User customer;
 
-    public TestingSiteBooking(String id, String smsPin, List<CovidTest> covidTests, User customer) {
-        super(id, smsPin, covidTests);
+    public TestingSiteBooking(String id, String smsPin, User customer) {
+        super(id, smsPin);
         this.customer = customer;
     }
 

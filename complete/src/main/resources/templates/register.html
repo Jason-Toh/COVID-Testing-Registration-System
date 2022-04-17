@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Register Page (On-site Booking)</h1>
+<form name='f' th:action="@{/register}" th:object="${userlogin}" method='POST'>
+    <p th:if="${error}" class="error">UserName & Password Incorrect</p>
+    <table>
+        <tr>
+            <td>Customer:</td>
+            <td>Mary brown</td>
+        </tr>
+<!--        <tr >-->
+<!--            <td>Demo:</td>-->
+<!--            <td class="col-lg-3" th:object="${test}">-->
+<!--                <select class="form-control" id="testOrder" name="testOrder">-->
+<!--                    <option value="">Demo</option>-->
+<!--                    <option th:each="test : ${tests}"-->
+<!--                            th:value="${test.testCode}"-->
+<!--                            th:text="${test.testCode}+' : '+${test.testName}"></option>-->
+<!--                </select>-->
+<!--            </td>-->
+<!--        </tr>-->
+        <tr>
+            <td>Testing-sites:</td>
+            <td class="col-lg-3" th:object="${test}">
+                <select class="form-control" id="testingSiteOrder" name="testingSiteOrder">
+                    <option value="">Select Testing Site</option>
+                    <option th:each="test : ${testingSiteModels}"
+                            th:value="${test.nameTestingSite}"
+                            th:text="${test.nameTestingSite}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Test-type:</td>
+            <td class="col-lg-3" th:object="${test}">
+                <select class="form-control" id="testTypeOrder" name="testTypeOrder">
+                    <option value="">Select Test Type</option>
+                    <option th:each="test : ${testTypeModels}"
+                            th:value="${test.nameTestType}"
+                            th:text="${test.nameTestType}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Administrator:</td>
+            <td><input type='text' name='userName' value=''></td>
+        </tr>
+        <tr>
+            <td>Patient:</td>
+            <td><input type='text' name='userName' value=''></td>
+        </tr>
+        <tr>
+            <td><input name="submit" type="submit" value="submit" /></td>
+        </tr>
+    </table>
+
+
+
+</form>
+<p>Get your greeting <a href="/greeting">here</a></p>
+</body>
+</html>

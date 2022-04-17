@@ -1,5 +1,6 @@
 package com.example.servingwebcontent.api;
 
+import com.example.servingwebcontent.apiclasses.TestType;
 import com.example.servingwebcontent.apiclasses.TestingSite;
 import com.example.servingwebcontent.apiclasses.User;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
+
         String api = "NrMhfCkHTjJjzHTWR8z8nP6FjcGg8K";
 
         // 1.0 Get User and return list of users information
