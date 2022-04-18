@@ -7,6 +7,7 @@ import com.example.servingwebcontent.apiclasses.User;
 import com.example.servingwebcontent.domain.BookingForm;
 
 import com.example.servingwebcontent.tool.RandomPinGenerator;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,9 +92,16 @@ public class OnSiteRegisterController {
         // Make booking post here
         APIfactory factory3 = new BookingFactory(api,bookingForm.getCustomerUsername(),bookingForm.getTestingSite(),bookingForm.getTime());
         Post bookingPost = factory3.createPost();
-        bookingPost.postApi();
+        String jsonPost = bookingPost.postApi();
+
+        //Convert booking return JSON string to JSONObject and get the booking id
+        JSONObject book = new JSONObject(jsonPost);
+        String bookingId = book.get("id")+"";
         // Make covid-test post here
 
+        APIfactory factory4 = new CovidTestFactory(api, bookingForm.getTestType(), bookingForm.getPatient(), bookingForm.getAdministrator(), bookingId);
+        Post covidTestPost = factory4.createPost();
+        String jsonPost1 = covidTestPost.postApi();
         return "register";
     }
 }

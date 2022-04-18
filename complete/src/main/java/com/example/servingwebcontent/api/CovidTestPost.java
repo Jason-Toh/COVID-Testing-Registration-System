@@ -6,18 +6,21 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+public class CovidTestPost extends Post{
+    private String myApiKey;
+    private String testType;
+    private String patientId;
+    private String administererId;
+    private String bookingId;
+    private String result;
 
-public class BookingPost extends Post{
-    private final String myApiKey;
-    private final String customerId;
-    private final String testingSiteId;
-    private final String startTime;
-
-    public BookingPost(String api, String customerId, String testingSiteId, String startTime) {
+    public CovidTestPost(String api, String testType, String patientId, String administererId, String bookingId, String result) {
         this.myApiKey = api;
-        this.customerId = customerId;
-        this.testingSiteId = testingSiteId;
-        this.startTime = startTime;
+        this.testType = testType;
+        this.patientId = patientId;
+        this.administererId = administererId;
+        this.bookingId = bookingId;
+        this.result = result;
     }
 
     @Override
@@ -25,13 +28,17 @@ public class BookingPost extends Post{
         String rootUrl = "https://fit3077.com/api/v1";
 
         String jsonString = "{" +
-                "\"customerId\":\"" + customerId + "\"," +
-                "\"testingSiteId\":\"" + testingSiteId + "\"," +
-                "\"startTime\":\"" + startTime + "\"" +
+                "\"type\":\"" + testType + "\"," +
+                "\"patientId\":\"" + patientId + "\"," +
+                "\"administererId\":\"" + administererId + "\"," +
+                "\"bookingId\":\"" + bookingId + "\"," +
+                "\"result\":\"" + result + "\"" +
                 "}";
+
+        System.out.println(jsonString);
         // Note the POST() method being used here, and the request body is supplied to it.
         // A request body needs to be supplied to this endpoint, otherwise a 400 Bad Request error will be returned.
-        String usersVerifyTokenUrl = rootUrl + "/booking";
+        String usersVerifyTokenUrl = rootUrl + "/covid-test";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(URI.create(usersVerifyTokenUrl)) // Return a JWT so we can use it in Part 5 later.
                 .setHeader("Authorization", myApiKey)
@@ -43,8 +50,8 @@ public class BookingPost extends Post{
 
 //        System.out.println("Booking POST :> \n----");
 //        System.out.println(request.uri());
-//        System.out.println("Response code: " + response.statusCode());
-//        System.out.println("Full JSON response: " + response.body());
+        System.out.println("Response code: " + response.statusCode());
+        System.out.println("Full JSON response: " + response.body());
         return response.body();
     }
 }
