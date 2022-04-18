@@ -10,13 +10,17 @@
     <table>
         <tr>
             <td>Customer:</td>
-            <td><input type='text' name='customName' value='' th:field="*{customerUsername}"></td>
+            <td>
+                <select th:field="*{customerUsername}">
+                    <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}"/>
+                </select>
+            <td>
         </tr>
         <tr>
             <td>Testing-sites:</td>
             <td>
                 <select th:field="*{testingSite}">
-                    <option th:each="p : ${testingSiteModels}" th:value="${p}" th:text="${p}" />
+                    <option th:each="p : ${testingSiteModels}" th:value="${p.getId()}" th:text="${p.getName()}" />
                 </select>
             <td>
         </tr>
@@ -30,14 +34,30 @@
         </tr>
         <tr>
             <td>Administrator:</td>
-            <td><input type='text' name='adminName' value='' th:field="*{administrator}"></td>
+            <td>
+                <select th:field="*{administrator}">
+                    <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}"/>
+                </select>
+            <td>
         </tr>
         <tr>
             <td>Patient:</td>
-            <td><input type='text' name='patientName' value='' th:field="*{patient}"></td>
+            <td>
+                <select th:field="*{patient}">
+                    <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}"/>
+                </select>
+            <td>
+
         </tr>
         <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
+            <td>Date/Time:</td>
+            <td>
+                <input type="datetime-local" id="birthdaytime" name="birthdaytime" th:field="*{time}">
+            <td>
+
+        </tr>
+        <tr>
+            <td><input name="submit" type="submit" value="submit"/></td>
         </tr>
     </table>
 </form>

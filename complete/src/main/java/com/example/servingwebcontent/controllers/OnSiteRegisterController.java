@@ -3,8 +3,10 @@ package com.example.servingwebcontent.controllers;
 import com.example.servingwebcontent.api.APIfactory;
 import com.example.servingwebcontent.api.Get;
 import com.example.servingwebcontent.api.TestingSiteFactory;
+import com.example.servingwebcontent.api.UserFactory;
 import com.example.servingwebcontent.apiclasses.TestType;
 import com.example.servingwebcontent.apiclasses.TestingSite;
+import com.example.servingwebcontent.apiclasses.User;
 import com.example.servingwebcontent.domain.BookingForm;
 
 import com.example.servingwebcontent.tool.RandomPinGenerator;
@@ -30,25 +32,46 @@ public class OnSiteRegisterController {
         model.addAttribute("bookingForm", bookingForm);
 
 
-        //2. Get testing-sites and put it into model
+        //2.1 Get testing-sites and put it into model
         // API factory
         APIfactory factory = new TestingSiteFactory(api);
         Get testingSiteGet = factory.createGet();
 
-        List<String> testingSiteModels = new ArrayList<>();
+        List<TestingSite> testingSiteModels = new ArrayList<>();
 
         try {
             // Testing-site collection
             Collection<TestingSite> testingSites = testingSiteGet.getApi();
             Iterator<TestingSite> iterator = testingSites.iterator();
             while (iterator.hasNext()) {
-                testingSiteModels.add(iterator.next().getName());
+                testingSiteModels.add(iterator.next());
             }
         }
         catch(Exception e) {
             System.out.println(e);
         }
         model.addAttribute("testingSiteModels", testingSiteModels);
+        //2.2
+        APIfactory factory1 = new UserFactory(api);
+        Get userGet = factory1.createGet();
+
+        List<User> userModels = new ArrayList<>();
+
+        try {
+            // Testing-site collection
+            Collection<User> users = userGet.getApi();
+            Iterator<User> iterator = users.iterator();
+            while (iterator.hasNext()) {
+                userModels.add(iterator.next());
+            }
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+
+        model.addAttribute("userModels", userModels);
+
+
 
         //3. Get test-type and put it into model
         List<String> testTypeModels = new ArrayList<>();

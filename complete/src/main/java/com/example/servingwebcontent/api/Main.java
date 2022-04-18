@@ -23,7 +23,8 @@ public class Main {
             // Just to show all the user in users
             Iterator<User> iterator = users.iterator();
             while (iterator.hasNext()) {
-                System.out.println("--> " + iterator.next().toJSONStringFormat("customer"));
+//                System.out.println("--> " + iterator.next().toJSONStringFormat("customer"));
+                System.out.println("--> " + iterator.next());
             }
         }
         catch(Exception e) {
@@ -41,7 +42,8 @@ public class Main {
             // Just to show all the user in users
             Iterator<TestingSite> iterator = testingSites.iterator();
             while (iterator.hasNext()) {
-                System.out.println("--> " + iterator.next().toJSONStringFormat());
+//                System.out.println("--> " + iterator.next().toJSONStringFormat());
+                System.out.println("--> " + iterator.next());
             }
         }
         catch(Exception e) {

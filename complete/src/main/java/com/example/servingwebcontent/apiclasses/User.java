@@ -56,6 +56,10 @@ public class User {
         this.familyName = familyName;
     }
 
+    public String getFullName(){
+        return givenName+" "+familyName;
+    }
+
     public String getUserName() {
         return userName;
     }

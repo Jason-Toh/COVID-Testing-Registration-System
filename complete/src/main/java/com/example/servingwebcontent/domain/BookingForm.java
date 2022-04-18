@@ -6,6 +6,9 @@ public class BookingForm {
     private String administrator;
     private String patient;
     private String testType;
+    private String time;
+
+
 
     public String getCustomerUsername() {
         return customerUsername;
@@ -46,6 +49,13 @@ public class BookingForm {
     public void setTestType(String testType) {
         this.testType = testType;
     }
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     @Override
     public String toString() {
@@ -55,6 +65,7 @@ public class BookingForm {
                 ", administrator='" + administrator + '\'' +
                 ", patient='" + patient + '\'' +
                 ", testType='" + testType + '\'' +
+                ", time='" + time + '\'' +
                 '}';
     }
 }
