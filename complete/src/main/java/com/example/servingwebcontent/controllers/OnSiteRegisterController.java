@@ -1,9 +1,6 @@
 package com.example.servingwebcontent.controllers;
 
-import com.example.servingwebcontent.api.APIfactory;
-import com.example.servingwebcontent.api.Get;
-import com.example.servingwebcontent.api.TestingSiteFactory;
-import com.example.servingwebcontent.api.UserFactory;
+import com.example.servingwebcontent.api.*;
 import com.example.servingwebcontent.apiclasses.TestType;
 import com.example.servingwebcontent.apiclasses.TestingSite;
 import com.example.servingwebcontent.apiclasses.User;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -88,8 +86,14 @@ public class OnSiteRegisterController {
         return "register";
     }
     @PostMapping("/register")
-    public String submitForm(@ModelAttribute("bookingForm") BookingForm bookingForm) {
+    public String submitForm(@ModelAttribute("bookingForm") BookingForm bookingForm) throws IOException, InterruptedException {
         System.out.println(bookingForm);
+        // Make booking post here
+        APIfactory factory3 = new BookingFactory(api,bookingForm.getCustomerUsername(),bookingForm.getTestingSite(),bookingForm.getTime());
+        Post bookingPost = factory3.createPost();
+        bookingPost.postApi();
+        // Make covid-test post here
+
         return "register";
     }
 }

@@ -11,4 +11,9 @@ public class UserFactory implements APIfactory{
     public Get createGet() {
         return new UserGet(this.api);
     }
+
+    @Override
+    public Post createPost() {
+        return null;
+    }
 }

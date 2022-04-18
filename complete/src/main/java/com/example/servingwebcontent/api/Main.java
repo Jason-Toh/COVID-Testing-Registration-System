@@ -50,7 +50,14 @@ public class Main {
             System.out.println(e);
         }
 
-        // Test
+        // 2.0 Post Booking given customer Id, patient Id, start time
+        String custId = "b96a725e-4d80-4f82-ba64-0ce7a856ff8e";
+        String patientId = "ccad0b5b-0786-42d2-802d-3497c5eda14e";
+        String startTime = "2022-04-18T13:45:01.046652100";
+
+        APIfactory factory3 = new BookingFactory(api,custId,patientId,startTime);
+        Post bookingPost = factory3.createPost();
+        bookingPost.postApi();
 
     }
 }

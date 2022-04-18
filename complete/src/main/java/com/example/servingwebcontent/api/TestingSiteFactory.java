@@ -13,4 +13,9 @@ public class TestingSiteFactory implements APIfactory{
     public Get createGet() {
         return new TestingSiteGet(this.api);
     }
+
+    @Override
+    public Post createPost() {
+        return null;
+    }
 }
