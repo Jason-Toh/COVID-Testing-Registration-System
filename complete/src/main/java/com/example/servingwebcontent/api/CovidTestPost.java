@@ -50,8 +50,8 @@ public class CovidTestPost extends Post{
 
 //        System.out.println("Booking POST :> \n----");
 //        System.out.println(request.uri());
-        System.out.println("Response code: " + response.statusCode());
-        System.out.println("Full JSON response: " + response.body());
+//        System.out.println("Response code: " + response.statusCode());
+//        System.out.println("Full JSON response: " + response.body());
         return response.body();
     }
 }
