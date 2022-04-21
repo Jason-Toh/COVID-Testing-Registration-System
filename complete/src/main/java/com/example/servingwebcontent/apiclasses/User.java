@@ -14,7 +14,7 @@ public class User {
     private boolean isReceptionist;
     private boolean isHealthcareWorker;
 
-    private List<UserBooking> bookings;
+    private List<Booking> bookings;
     private List<CovidTest> testsTaken;
     private List<User> testsAdministered;
 
@@ -100,12 +100,12 @@ public class User {
         isHealthcareWorker = healthcareWorker;
     }
 
-    public List<UserBooking> getBookings() {
+    public List<Booking> getBookings() {
         return bookings;
     }
 
-    public void addBookings(UserBooking booking) {
-        this.bookings.add(booking);
+    public void setBookings(List<Booking> bookings) {
+        this.bookings= bookings;
     }
 
     public List<CovidTest> getTestsTaken() {

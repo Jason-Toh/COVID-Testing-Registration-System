@@ -1,8 +1,10 @@
 package com.example.servingwebcontent.api;
 
+import com.example.servingwebcontent.apiclasses.Booking;
 import com.example.servingwebcontent.apiclasses.User;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 import java.io.IOException;
@@ -26,7 +28,7 @@ public class UserGet extends Get<User> {
     @Override
     public Collection<User> getApi() throws IOException, InterruptedException {
         String rootUrl = "https://fit3077.com/api/v1";
-        String usersUrl = rootUrl + "/user";
+        String usersUrl = rootUrl + "/user?fields=bookings";
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest
@@ -41,8 +43,6 @@ public class UserGet extends Get<User> {
         // Convert String into JSONArray
         JSONArray json = new JSONArray(response.body());
         // Create users list
-
-
         // Add user into users list
         for(int i = 0; i < json.length(); i++){
             String id = (String)json.getJSONObject(i).get("id");
@@ -53,7 +53,26 @@ public class UserGet extends Get<User> {
             boolean isCustomer = (boolean)json.getJSONObject(i).get("isCustomer");
             boolean isReceptionist = (boolean)json.getJSONObject(i).get("isReceptionist");
             boolean isHealthcareWorker = (boolean)json.getJSONObject(i).get("isHealthcareWorker");
+
+            JSONArray bookingJsonArray = json.getJSONObject(i).getJSONArray("bookings");
+
+            List<Booking> bookings = new ArrayList<>();
+            for(int j = 0; j < bookingJsonArray.length(); j++){
+                String bookingId = (String) bookingJsonArray.getJSONObject(j).get("id");
+                String smsPin = (String) bookingJsonArray.getJSONObject(j).get("smsPin");
+                JSONObject testingSite;
+                String testingSiteName = null;
+                String testingSiteId = null;
+                if (! bookingJsonArray.getJSONObject(j).get("testingSite").equals(null)){
+                    testingSite = (JSONObject) bookingJsonArray.getJSONObject(j).get("testingSite");
+                    testingSiteId = (String) testingSite.get("id");
+                    testingSiteName = (String) testingSite.get("name");
+                }
+                Booking booking = new Booking(bookingId, testingSiteId, testingSiteName, smsPin);
+                bookings.add(booking);
+            }
             User user = new User(id, givenName, familyName, userName, phoneNumber, isCustomer, isReceptionist, isHealthcareWorker);
+            user.setBookings(bookings);
             users.add(user);
         }
         return users;

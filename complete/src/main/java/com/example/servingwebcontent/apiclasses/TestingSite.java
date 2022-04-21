@@ -10,7 +10,7 @@ public class TestingSite {
     private String websiteUrl;
     private String phoneNumber;
     private Address address;
-    private List<TestingSiteBooking> bookings;
+    private List<Booking> bookings;
     private TestingSiteStatus additonalInfo;
     private String createdAt;
     private String updatedAt;
@@ -76,11 +76,11 @@ public class TestingSite {
         this.address = address;
     }
 
-    public List<TestingSiteBooking> getBookings() {
+    public List<Booking> getBookings() {
         return bookings;
     }
 
-    public void setBookings(List<TestingSiteBooking> bookings) {
+    public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
 
