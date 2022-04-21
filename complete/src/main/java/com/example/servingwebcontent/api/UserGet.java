@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.api;
 
 import com.example.servingwebcontent.apiclasses.Booking;
+import com.example.servingwebcontent.apiclasses.CovidTest;
 import com.example.servingwebcontent.apiclasses.User;
 
 import org.json.JSONArray;
@@ -28,7 +29,7 @@ public class UserGet extends Get<User> {
     @Override
     public Collection<User> getApi() throws IOException, InterruptedException {
         String rootUrl = "https://fit3077.com/api/v1";
-        String usersUrl = rootUrl + "/user?fields=bookings";
+        String usersUrl = rootUrl + "/user?fields=bookings.covidTests";
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest
@@ -44,6 +45,8 @@ public class UserGet extends Get<User> {
         JSONArray json = new JSONArray(response.body());
         // Create users list
         // Add user into users list
+
+        //Retrieve each user from the user list jsonArray
         for(int i = 0; i < json.length(); i++){
             String id = (String)json.getJSONObject(i).get("id");
             String givenName = (String)json.getJSONObject(i).get("givenName");
@@ -57,6 +60,7 @@ public class UserGet extends Get<User> {
             JSONArray bookingJsonArray = json.getJSONObject(i).getJSONArray("bookings");
 
             List<Booking> bookings = new ArrayList<>();
+            // Retrieve each item from the booking list jsonArray
             for(int j = 0; j < bookingJsonArray.length(); j++){
                 String bookingId = (String) bookingJsonArray.getJSONObject(j).get("id");
                 String smsPin = (String) bookingJsonArray.getJSONObject(j).get("smsPin");
@@ -64,13 +68,29 @@ public class UserGet extends Get<User> {
                 JSONObject testingSite;
                 String testingSiteName = "None";
                 String testingSiteId = "None";
-
+                // Check whether the testing site is null because Tyler One user has null testing-site
                 if (! bookingJsonArray.getJSONObject(j).get("testingSite").equals(null)){
                     testingSite = (JSONObject) bookingJsonArray.getJSONObject(j).get("testingSite");
                     testingSiteId = (String) testingSite.get("id");
                     testingSiteName = (String) testingSite.get("name");
                 }
+
+
+                // Retrieve each item from the covid-test list jsonArray
+                JSONArray covidTests = (JSONArray) bookingJsonArray.getJSONObject(j).get("covidTests");
+
+                List<CovidTest> covidTests1 = new ArrayList<>();
+                for(int k = 0; k < covidTests.length(); k++){
+                    String covidTestId = (String) covidTests.getJSONObject(k).get("id");
+                    String result = (String) covidTests.getJSONObject(k).get("result");
+                    String type = (String) covidTests.getJSONObject(k).get("type");
+                    CovidTest covidTest = new CovidTest(covidTestId,type,result);
+
+                    covidTests1.add(covidTest);
+                }
+
                 Booking booking = new Booking(bookingId, testingSiteId, testingSiteName, smsPin, startTime);
+                booking.setCovidTests(covidTests1);
                 bookings.add(booking);
             }
             User user = new User(id, givenName, familyName, userName, phoneNumber, isCustomer, isReceptionist, isHealthcareWorker);
