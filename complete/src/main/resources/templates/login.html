@@ -1,27 +1,104 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org">
+
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
 </head>
+
 <body>
-    <h1>Login</h1>
-    <form name='f' th:action="@{/login}" th:object="${userlogin}" method='POST'>
-        <p th:if="${error}" class="error">UserName & Password Incorrect</p>
-        <table>
-            <tr>
-                <td>User:</td>
-                <td><input type='text' name='userName' value=''></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input type='password' name='password' /></td>
-            </tr>
-            <tr>
-                <td><input name="submit" type="submit" value="submit" /></td>
-            </tr>
-        </table>
-    </form>
-    <p>Get your greeting <a href="/greeting">here</a></p>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <section class="min-vh-100 d-flex align-items-center bg-soft">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <div
+                        class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                        <div class="text-center text-md-center mb-4 mt-md-0">
+                            <h1 class="mb-0 h3">Covid Registration System</h1>
+                        </div>
+                        <form name='f' th:action="@{/login}" th:object="${userlogin}" method='POST' class="mt-4">
+                            <!-- Form -->
+                            <div class="form-group">
+                                <label for="userName">Username</label>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><span class="fas fa-user"></span></span>
+                                    </div>
+                                    <input class="form-control" id="userName" name="userName" placeholder="John Doe"
+                                        type="text" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <div class="input-group mb-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><span
+                                                    class="fas fa-unlock-alt"></span></span>
+                                        </div>
+                                        <input class="form-control" id="password" placeholder="Password" type="password"
+                                            name="password" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-block btn-primary">Sign in</button>
+                        </form>
+                        <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
+                            <span class="font-weight-normal">
+                                Not registered?
+                                <a href="./sign-up.html" class="font-weight-bold">Create account</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- <div class="container py-4">
+        <h1 class="text-center h3 mb-4">Covid Registration System</h1>
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <div class="card p-4 bg-light">
+                    <form name='f' th:action="@{/login}" th:object="${userlogin}" method='POST'>
+                        <p th:if="${error}" class="error">UserName & Password Incorrect</p>
+                        <div class="form-group">
+                            <label for="userName" class="h6">Username</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span class="fa fa-user"></span>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" name="userName" id="userName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="h6">Password</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span class="fa fa-unlock-alt"></span>
+                                    </div>
+                                </div>
+                                <input type="password" class="form-control" name="password" id="password" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-primary" value="submit">
+                                Login
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div th:replace="fragments/scripts :: scripts"></div>
 </body>
+
 </html>

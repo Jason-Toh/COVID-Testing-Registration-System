@@ -14,7 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class SearchController {
+public class BrowseTestingSiteController {
+
+    @GetMapping("/browse")
+    public String browseTestingSite() {
+        return "browseTestingSite";
+    }
 
     @GetMapping("/testing-sites")
     public String displayTestingSites(Model model) throws IOException, InterruptedException {
@@ -31,25 +36,11 @@ public class SearchController {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // System.out.println(request.uri());
-        // System.out.println("Response code: " + response.statusCode());
-        // System.out.println("Full JSON response: " + response.body());
-        // System.out.println("----\n\n");
-
         ObjectNode[] jsonNodes = new ObjectMapper().readValue(response.body(), ObjectNode[].class);
 
-        // Pretty print json
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNodes);
 
-        System.out.println(json);
-
-        for (ObjectNode node : jsonNodes) {
-            System.out.println(node.toString());
-        }
-
-        // model.addAttribute("responseCode", response.statusCode());
-        // model.addAttribute("responseBody", response.body());
         model.addAttribute("testingSites", jsonNodes);
 
         return "testing-sites";

@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
-    <title>Testing Sites</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
 </head>
+
 <body>
-    <div class="container">
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container py-4">
         <h1 class="text-center">Testing Sites</h1>
+        <!--Input for Suburb name-->
+        <span>Suburb Name: </span><input type="text" name="suburbName" value="" />
+
+        <span>Type Of Facility </span>
+        <!--Dropdown list for Drive Through, Walk-in, Clinics, GPs or Hospitals-->
+        <select id="typeOfFacility" name="typeOfFacility">
+            <option value="Drive Through">Drive Through</option>
+            <option value="Walk-in">Walk-in</option>
+            <option value="Clinics" selected="selected">Clinics</option>
+            <option value="GPs">GPs</option>
+            <option value="Hospitals">Hospitals</option>
+        </select>
         <table class="table">
             <tbody class="thead-dark" th:each="testingSite : ${testingSites}">
                 <tr>
@@ -41,5 +59,7 @@
             </tbody>
         </table>
     </div>
+    <div th:replace="fragments/scripts :: scripts"></div>
 </body>
+
 </html>

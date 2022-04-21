@@ -26,12 +26,11 @@ public class OnSiteRegisterController {
 
     @GetMapping("/register")
     public String getRegister(Model model) {
-        //1.
+        // 1.
         BookingForm bookingForm = new BookingForm();
         model.addAttribute("bookingForm", bookingForm);
 
-
-        //2.1 Get testing-sites and put it into model
+        // 2.1 Get testing-sites and put it into model
         // API factory
         APIfactory factory = new TestingSiteFactory(api);
         Get testingSiteGet = factory.createGet();
@@ -45,12 +44,11 @@ public class OnSiteRegisterController {
             while (iterator.hasNext()) {
                 testingSiteModels.add(iterator.next());
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         model.addAttribute("testingSiteModels", testingSiteModels);
-        //2.2
+        // 2.2
         APIfactory factory1 = new UserFactory(api);
         Get userGet = factory1.createGet();
 
@@ -63,43 +61,44 @@ public class OnSiteRegisterController {
             while (iterator.hasNext()) {
                 userModels.add(iterator.next());
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
         model.addAttribute("userModels", userModels);
 
-
-
-        //3. Get test-type and put it into model
+        // 3. Get test-type and put it into model
         List<String> testTypeModels = new ArrayList<>();
         for (TestType testType : TestType.values()) {
-            testTypeModels.add(testType+"");
+            testTypeModels.add(testType + "");
         }
         model.addAttribute("testTypeModels", testTypeModels);
 
-        //4. Get smsPin
+        // 4. Get smsPin
         RandomPinGenerator rad = new RandomPinGenerator();
         String smsPin = rad.getPin();
         // model.addAttribute("smsPinModel", smsPinModel);
 
         return "register";
     }
+
     @PostMapping("/register")
-    public String submitForm(@ModelAttribute("bookingForm") BookingForm bookingForm) throws IOException, InterruptedException {
+    public String submitForm(@ModelAttribute("bookingForm") BookingForm bookingForm)
+            throws IOException, InterruptedException {
         System.out.println(bookingForm);
         // Make booking post here
-        APIfactory factory3 = new BookingFactory(api,bookingForm.getCustomerUsername(),bookingForm.getTestingSite(),bookingForm.getTime());
+        APIfactory factory3 = new BookingFactory(api, bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
+                bookingForm.getTime());
         Post bookingPost = factory3.createPost();
         String jsonPost = bookingPost.postApi();
 
-        //Convert booking return JSON string to JSONObject and get the booking id
+        // Convert booking return JSON string to JSONObject and get the booking id
         JSONObject book = new JSONObject(jsonPost);
-        String bookingId = book.get("id")+"";
+        String bookingId = book.get("id") + "";
         // Make covid-test post here
 
-        APIfactory factory4 = new CovidTestFactory(api, bookingForm.getTestType(), bookingForm.getPatient(), bookingForm.getAdministrator(), bookingId);
+        APIfactory factory4 = new CovidTestFactory(api, bookingForm.getTestType(), bookingForm.getPatient(),
+                bookingForm.getAdministrator(), bookingId);
         Post covidTestPost = factory4.createPost();
         String jsonPost1 = covidTestPost.postApi();
         return "register";

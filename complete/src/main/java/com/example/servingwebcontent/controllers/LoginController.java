@@ -16,11 +16,6 @@ import java.net.http.HttpResponse;
 
 @Controller
 public class LoginController {
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("UserLogin", new UserLogin());
-        return "index";
-    }
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -37,18 +32,19 @@ public class LoginController {
         if (checkLoginFromAPI(uname, pass)) {
             model.addAttribute("userName", uname);
             model.addAttribute("password", pass);
-            return "testing-site";
+            return "home-page";
         }
         model.addAttribute("error", "Incorrect Username & Password");
         return "login";
 
     }
 
-//    @PostMapping("/testing-site")
-//    public String postTestingSite(@ModelAttribute UserLogin userLogin, BindingResult result, Model model) {
-//        model.addAttribute("UserLogin", userLogin);
-//        return "testing-site";
-//    }
+    // @PostMapping("/testing-site")
+    // public String postTestingSite(@ModelAttribute UserLogin userLogin,
+    // BindingResult result, Model model) {
+    // model.addAttribute("UserLogin", userLogin);
+    // return "testing-site";
+    // }
 
     public boolean checkLoginFromAPI(String userName, String password) throws IOException, InterruptedException {
         boolean flag = false;
