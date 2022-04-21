@@ -8,14 +8,24 @@ public class Booking {
     private String testingSiteId;
     private String testingSiteName;
     private String smsPin;
+    private String startTime;
     private List<CovidTest> covidTests;
 
-    public Booking(String bookingId, String testingSiteId, String testingSiteName, String smsPin) {
+    public Booking(String bookingId, String testingSiteId, String testingSiteName, String smsPin, String startTime) {
         this.bookingId = bookingId;
         this.testingSiteId = testingSiteId;
         this.testingSiteName = testingSiteName;
         this.smsPin = smsPin;
+        this.startTime = startTime;
         this.covidTests = new ArrayList<>();
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public String getBookingId() {
@@ -65,6 +75,7 @@ public class Booking {
                 ", testingSiteId='" + testingSiteId + '\'' +
                 ", testingSiteName='" + testingSiteName + '\'' +
                 ", smsPin='" + smsPin + '\'' +
+                ", startTime='" + startTime + '\'' +
                 ", covidTests=" + covidTests +
                 '}';
     }

@@ -60,15 +60,17 @@ public class UserGet extends Get<User> {
             for(int j = 0; j < bookingJsonArray.length(); j++){
                 String bookingId = (String) bookingJsonArray.getJSONObject(j).get("id");
                 String smsPin = (String) bookingJsonArray.getJSONObject(j).get("smsPin");
+                String startTime = (String) bookingJsonArray.getJSONObject(j).get("startTime");
                 JSONObject testingSite;
-                String testingSiteName = null;
-                String testingSiteId = null;
+                String testingSiteName = "None";
+                String testingSiteId = "None";
+
                 if (! bookingJsonArray.getJSONObject(j).get("testingSite").equals(null)){
                     testingSite = (JSONObject) bookingJsonArray.getJSONObject(j).get("testingSite");
                     testingSiteId = (String) testingSite.get("id");
                     testingSiteName = (String) testingSite.get("name");
                 }
-                Booking booking = new Booking(bookingId, testingSiteId, testingSiteName, smsPin);
+                Booking booking = new Booking(bookingId, testingSiteId, testingSiteName, smsPin, startTime);
                 bookings.add(booking);
             }
             User user = new User(id, givenName, familyName, userName, phoneNumber, isCustomer, isReceptionist, isHealthcareWorker);
