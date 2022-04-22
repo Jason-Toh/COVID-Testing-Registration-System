@@ -97,10 +97,10 @@ public class OnSiteRegisterController {
         String bookingId = book.get("id") + "";
         // Make covid-test post here
 
-        APIfactory factory4 = new CovidTestFactory(api, bookingForm.getTestType(), bookingForm.getPatient(),
-                bookingForm.getAdministrator(), bookingId);
-        Post covidTestPost = factory4.createPost();
-        String jsonPost1 = covidTestPost.postApi();
+//        APIfactory factory4 = new CovidTestFactory(api, bookingForm.getTestType(), bookingForm.getPatient(),
+//                bookingForm.getAdministrator(), bookingId);
+//        Post covidTestPost = factory4.createPost();
+//        String jsonPost1 = covidTestPost.postApi();
         return "register";
     }
 }

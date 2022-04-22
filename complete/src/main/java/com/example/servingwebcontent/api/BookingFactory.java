@@ -15,7 +15,7 @@ public class BookingFactory implements APIfactory{
 
     @Override
     public Get createGet() {
-        return null;
+        return new BookingGet(api);
     }
 
     @Override

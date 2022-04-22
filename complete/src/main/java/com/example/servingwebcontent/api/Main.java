@@ -1,15 +1,17 @@
 package com.example.servingwebcontent.api;
 
+import com.example.servingwebcontent.apiclasses.Booking;
 import com.example.servingwebcontent.apiclasses.TestingSite;
 import com.example.servingwebcontent.apiclasses.User;
 import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, ParseException {
 
         String api = "NrMhfCkHTjJjzHTWR8z8nP6FjcGg8K";
 
@@ -59,6 +61,9 @@ public class Main {
         APIfactory factory3 = new BookingFactory(api,custId,patientId,startTime);
         Post bookingPost = factory3.createPost();
         String jsonPost = bookingPost.postApi();
+
+        Get bookingGet = factory3.createGet();
+        Collection<Booking> bookingGet1 = bookingGet.getApi();
 
         // 2.1 Post CovidTest given testtype, admin id, patient id, booking id(obtain from 2.0), result
         JSONObject book = new JSONObject(jsonPost);
