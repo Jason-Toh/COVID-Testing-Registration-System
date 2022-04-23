@@ -73,7 +73,7 @@ public class Main {
         String administererId = "70e136be-40ec-4e4b-8682-ac457f43a3cf";
         String result = "POSITIVE";
 
-        APIfactory factory4 = new CovidTestFactory(api, testType, patientId, administererId, bookingId);
+        APIfactory factory4 = new CovidTestFactory(api, testType, patientId, administererId, bookingId,null);
         Post covidTestPost = factory4.createPost();
         String jsonPost1 = covidTestPost.postApi();
 

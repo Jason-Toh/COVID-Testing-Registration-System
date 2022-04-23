@@ -13,14 +13,16 @@ public class CovidTestPost extends Post{
     private String administererId;
     private String bookingId;
     private String result;
+    private String patientStatus;
 
-    public CovidTestPost(String api, String testType, String patientId, String administererId, String bookingId, String result) {
+    public CovidTestPost(String api, String testType, String patientId, String administererId, String bookingId, String result, String patientStatus) {
         this.myApiKey = api;
         this.testType = testType;
         this.patientId = patientId;
         this.administererId = administererId;
         this.bookingId = bookingId;
         this.result = result;
+        this.patientStatus = patientStatus;
     }
 
     @Override
@@ -32,7 +34,8 @@ public class CovidTestPost extends Post{
                 "\"patientId\":\"" + patientId + "\"," +
                 "\"administererId\":\"" + administererId + "\"," +
                 "\"bookingId\":\"" + bookingId + "\"," +
-                "\"result\":\"" + result + "\"" +
+                "\"result\":\"" + result + "\"," +
+                "\"additionalInfo\":" +    "{\"patientStatus\":\"" +  patientStatus +"\"" +"}" +
                 "}";
 
         System.out.println(jsonString);

@@ -70,8 +70,16 @@ public class InterviewController {
                 bookingId = iterator.next().getBookingId();
             }
         }
+        String patientStatus = "Headache: " + interviewForm.getHeadache() +
+                "loss taste and smell: "+interviewForm.getLossTasteAndSmell() +
+                "sore throat: " +interviewForm.getSoreThroat() +
+                "muscle pain: "+interviewForm.getMusclePain()+
+                "shaking: "+interviewForm.getShaking()+
+                "close contact: "+interviewForm.getCloseContact();
 
-        APIfactory factory3 = new CovidTestFactory(api, interviewForm.getTestType(),interviewForm.getPatient(), interviewForm.getAdministrator(), bookingId);
+
+        APIfactory factory3 = new CovidTestFactory(api, interviewForm.getTestType(),
+                interviewForm.getPatient(), interviewForm.getAdministrator(), bookingId, patientStatus);
         Post covidTestPost = factory3.createPost();
         String jsonPost = covidTestPost.postApi();
 
