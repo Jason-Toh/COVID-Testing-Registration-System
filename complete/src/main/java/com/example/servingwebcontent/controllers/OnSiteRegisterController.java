@@ -93,8 +93,8 @@ public class OnSiteRegisterController {
         String jsonPost = bookingPost.postApi();
 
         // Convert booking return JSON string to JSONObject and get the booking id
-        JSONObject book = new JSONObject(jsonPost);
-        String bookingId = book.get("id") + "";
+//        JSONObject book = new JSONObject(jsonPost);
+//        String bookingId = book.get("id") + "";
         // Make covid-test post here
 
 //        APIfactory factory4 = new CovidTestFactory(api, bookingForm.getTestType(), bookingForm.getPatient(),
@@ -103,4 +103,6 @@ public class OnSiteRegisterController {
 //        String jsonPost1 = covidTestPost.postApi();
         return "register";
     }
+
+
 }

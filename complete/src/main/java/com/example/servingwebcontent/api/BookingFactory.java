@@ -6,6 +6,10 @@ public class BookingFactory implements APIfactory{
     private String testingSiteId;
     private String startTime;
 
+    public BookingFactory(String api) {
+        this.api = api;
+
+    }
     public BookingFactory(String api, String customerId, String testingSiteId, String startTime) {
         this.api = api;
         this.customerId = customerId;

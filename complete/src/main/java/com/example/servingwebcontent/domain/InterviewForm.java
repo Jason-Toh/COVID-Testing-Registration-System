@@ -8,6 +8,8 @@ public class InterviewForm {
     public boolean soreThroat;
     public boolean lossTasteAndSmell;
     public boolean closeContact;
+    private String administrator;
+    private String patient;
     private String testType;
 
     public String getPinCode() {
@@ -24,6 +26,22 @@ public class InterviewForm {
 
     public void setShaking(boolean shaking) {
         this.shaking = shaking;
+    }
+
+    public String getAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(String administrator) {
+        this.administrator = administrator;
+    }
+
+    public String getPatient() {
+        return patient;
+    }
+
+    public void setPatient(String patient) {
+        this.patient = patient;
     }
 
     public boolean getMusclePain() {
@@ -84,6 +102,8 @@ public class InterviewForm {
                 ", soreThroat=" + soreThroat +
                 ", lossTasteAndSmell=" + lossTasteAndSmell +
                 ", closeContact=" + closeContact +
+                ", administrator='" + administrator + '\'' +
+                ", patient='" + patient + '\'' +
                 ", testType='" + testType + '\'' +
                 '}';
     }

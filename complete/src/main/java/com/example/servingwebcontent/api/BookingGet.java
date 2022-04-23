@@ -51,7 +51,7 @@ public class BookingGet extends Get{
             Booking booking = new Booking(bookingId,null,null,smsPin,null);
             bookings.add(booking);
         }
-        System.out.println(bookings);
+
         return bookings;
     }
 
