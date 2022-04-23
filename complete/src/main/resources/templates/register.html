@@ -26,7 +26,7 @@
                     </select>
                 <td>
             </tr>
-            <tr>
+            <tr style="display:none">
                 <td>Test-type:</td>
                 <td>
                     <select th:field="*{testType}">
@@ -34,18 +34,18 @@
                     </select>
                 <td>
             </tr>
-            <tr>
+            <tr style="display:none">
                 <td>Administrator:</td>
                 <td>
-                    <select th:field="*{administrator}">
+                    <select th:field="*{administrator}" >
                         <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
                     </select>
                 <td>
             </tr>
-            <tr>
+            <tr style="display:none">
                 <td>Patient:</td>
                 <td>
-                    <select th:field="*{patient}">
+                    <select th:field="*{patient}" >
                         <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
                     </select>
                 <td>

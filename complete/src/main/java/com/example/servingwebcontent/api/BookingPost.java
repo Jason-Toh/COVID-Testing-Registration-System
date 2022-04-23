@@ -41,9 +41,9 @@ public class BookingPost extends Post{
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-//        System.out.println("Booking POST :> \n----");
+        System.out.println("Booking POST :> \n----");
 //        System.out.println(request.uri());
-//        System.out.println("Response code: " + response.statusCode());
+        System.out.println("Response code: " + response.statusCode());
 //        System.out.println("Full JSON response: " + response.body());
         return response.body();
     }
