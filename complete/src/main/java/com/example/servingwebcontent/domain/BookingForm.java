@@ -7,6 +7,7 @@ public class BookingForm {
     private String patient;
     private String testType;
     private String time;
+    private boolean onHomeBooking;
 
 
 
@@ -57,6 +58,14 @@ public class BookingForm {
         this.time = time;
     }
 
+    public boolean isOnHomeBooking() {
+        return onHomeBooking;
+    }
+
+    public void setOnHomeBooking(boolean onHomeBooking) {
+        this.onHomeBooking = onHomeBooking;
+    }
+
     @Override
     public String toString() {
         return "BookingForm{" +
@@ -66,6 +75,7 @@ public class BookingForm {
                 ", patient='" + patient + '\'' +
                 ", testType='" + testType + '\'' +
                 ", time='" + time + '\'' +
+                ", onHomeBooking=" + onHomeBooking +
                 '}';
     }
 }

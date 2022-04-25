@@ -6,7 +6,10 @@ import com.example.servingwebcontent.apiclasses.TestingSite;
 import com.example.servingwebcontent.apiclasses.User;
 import com.example.servingwebcontent.domain.BookingForm;
 
+import com.example.servingwebcontent.tool.MyQr;
 import com.example.servingwebcontent.tool.RandomPinGenerator;
+import com.example.servingwebcontent.tool.RandomStringGenerator;
+import com.google.zxing.WriterException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,7 +87,7 @@ public class OnSiteRegisterController {
 
     @PostMapping("/register")
     public String submitForm(@ModelAttribute("bookingForm") BookingForm bookingForm)
-            throws IOException, InterruptedException {
+            throws IOException, InterruptedException, WriterException {
         System.out.println(bookingForm);
         // Make booking post here
         APIfactory factory3 = new BookingFactory(api, bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
@@ -93,14 +96,23 @@ public class OnSiteRegisterController {
         String jsonPost = bookingPost.postApi();
 
         // Convert booking return JSON string to JSONObject and get the booking id
-//        JSONObject book = new JSONObject(jsonPost);
-//        String bookingId = book.get("id") + "";
-        // Make covid-test post here
+        JSONObject book = new JSONObject(jsonPost);
+        String bookingId = book.get("id") + "";
 
-//        APIfactory factory4 = new CovidTestFactory(api, bookingForm.getTestType(), bookingForm.getPatient(),
-//                bookingForm.getAdministrator(), bookingId);
-//        Post covidTestPost = factory4.createPost();
-//        String jsonPost1 = covidTestPost.postApi();
+        // Post Qr code String
+        if(bookingForm.isOnHomeBooking()){
+            //Generate random String
+            String randomString = RandomStringGenerator.randomString();
+            APIfactory factory4 = new PhotoFactory(api,randomString);
+            Post photoPost = factory4.createPost();
+            String jsonPost1 = photoPost.postApi();
+
+            // generate qr code using random String
+            String path = "C:\\Users\\User\\Desktop\\new\\heheboi.jpg";
+            MyQr myQr = new MyQr(randomString,path);
+            myQr.generateQR();
+        }
+
         return "register";
     }
 

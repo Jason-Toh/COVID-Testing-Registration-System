@@ -5,9 +5,10 @@
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <body>
-    <h1>Register Page (On-site Booking)</h1>
+    <h1>Register Page (Booking)</h1>
     <form name='f' th:action="@{/register}" th:object="${bookingForm}" method='POST'>
         <table>
             <tr>
@@ -59,12 +60,23 @@
 
             </tr>
             <tr>
+                <td>On Home Booking?</td>
+                <td>
+                    <input type="checkbox" th:field="*{onHomeBooking}">
+                <td>
+            </tr>
+            <tr>
                 <td><input name="submit" type="submit" value="submit" /></td>
             </tr>
         </table>
     </form>
 
     <p>Get your greeting <a href="/greeting">here</a></p>
+
+
+
+
+
 </body>
 
 </html>
