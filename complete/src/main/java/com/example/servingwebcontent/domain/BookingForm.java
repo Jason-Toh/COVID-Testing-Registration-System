@@ -7,6 +7,7 @@ public class BookingForm {
     private String patient;
     private String testType;
     private String time;
+    private String qr;
     private boolean onHomeBooking;
 
 
@@ -66,6 +67,14 @@ public class BookingForm {
         this.onHomeBooking = onHomeBooking;
     }
 
+    public String getQr() {
+        return qr;
+    }
+
+    public void setQr(String qr) {
+        this.qr = qr;
+    }
+
     @Override
     public String toString() {
         return "BookingForm{" +
@@ -75,6 +84,7 @@ public class BookingForm {
                 ", patient='" + patient + '\'' +
                 ", testType='" + testType + '\'' +
                 ", time='" + time + '\'' +
+                ", qr='" + qr + '\'' +
                 ", onHomeBooking=" + onHomeBooking +
                 '}';
     }

@@ -62,21 +62,60 @@
             <tr>
                 <td>On Home Booking?</td>
                 <td>
-                    <input type="checkbox" th:field="*{onHomeBooking}">
+                    <input type="checkbox" th:field="*{onHomeBooking}" id="myCheck" onchange="myFunction1()">
                 <td>
             </tr>
+
+            <tr style="display:none">
+                <td>QR Code:</td>
+                <td>
+                    <input type="text" id="qrcode" value="" th:field="*{qr}">
+                <td>
+            </tr>
+
             <tr>
                 <td><input name="submit" type="submit" value="submit" /></td>
             </tr>
         </table>
     </form>
 
-    <p>Get your greeting <a href="/greeting">here</a></p>
 
+    <button onclick="myFunction()" id="btn" style="display:none">Generate QR code</button>
+    <img id = "myQR" src=""/>
+    <script>
+    function makeRandomString(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() *
+     charactersLength));
+       }
+       return result;
+    }
 
+    function myFunction() {
+      // Get the checkbox
+      var checkBox = document.getElementById("myCheck");
+      let randomString = makeRandomString(10)
+      let qrCodeApi = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + randomString
 
+      document.getElementById('qrcode').value = randomString
 
-
+      // If the checkbox is checked, display the output text
+      if (checkBox.checked == true){
+           document.getElementById('myQR').src=qrCodeApi
+      }
+    }
+    function myFunction1() {
+        var x = document.getElementById("btn");
+        if (x.style.display === "none") {
+             x.style.display = "block";
+        } else {
+         x.style.display = "none";
+        }
+}
+</script>
 </body>
 
 </html>

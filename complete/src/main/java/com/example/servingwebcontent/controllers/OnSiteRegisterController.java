@@ -102,15 +102,12 @@ public class OnSiteRegisterController {
         // Post Qr code String
         if(bookingForm.isOnHomeBooking()){
             //Generate random String
-            String randomString = RandomStringGenerator.randomString();
-            APIfactory factory4 = new PhotoFactory(api,randomString);
+
+            APIfactory factory4 = new PhotoFactory(api,bookingForm.getQr());
             Post photoPost = factory4.createPost();
             String jsonPost1 = photoPost.postApi();
 
-            // generate qr code using random String
-            String path = "C:\\Users\\User\\Desktop\\new\\heheboi.jpg";
-            MyQr myQr = new MyQr(randomString,path);
-            myQr.generateQR();
+
         }
 
         return "register";
