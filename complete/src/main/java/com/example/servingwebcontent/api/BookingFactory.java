@@ -1,6 +1,6 @@
 package com.example.servingwebcontent.api;
 
-public class BookingFactory implements APIfactory{
+public class BookingFactory implements APIfactory {
     private String api;
     private String customerId;
     private String testingSiteId;
@@ -8,8 +8,8 @@ public class BookingFactory implements APIfactory{
 
     public BookingFactory(String api) {
         this.api = api;
-
     }
+
     public BookingFactory(String api, String customerId, String testingSiteId, String startTime) {
         this.api = api;
         this.customerId = customerId;
@@ -26,5 +26,4 @@ public class BookingFactory implements APIfactory{
     public Post createPost() {
         return new BookingPost(api, customerId, testingSiteId, startTime);
     }
-
 }

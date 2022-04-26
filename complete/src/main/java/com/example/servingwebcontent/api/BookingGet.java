@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class BookingGet extends Get{
+public class BookingGet extends Get {
     private String myApiKey;
     private List<Booking> bookings = new ArrayList<>();
 
@@ -42,13 +42,12 @@ public class BookingGet extends Get{
         // Convert String into JSONArray
         JSONArray json = new JSONArray(response.body());
 
-
         // Add user into users list
         for (int i = 0; i < json.length(); i++) {
             String bookingId = (String) json.getJSONObject(i).get("id");
             String smsPin = (String) json.getJSONObject(i).get("smsPin");
 
-            Booking booking = new Booking(bookingId,null,null,smsPin,null);
+            Booking booking = new Booking(bookingId, null, null, smsPin, null);
             bookings.add(booking);
         }
 

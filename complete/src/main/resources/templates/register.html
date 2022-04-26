@@ -2,120 +2,127 @@
 <html xmlns:th="http://thymeleaf.org">
 
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
 </head>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
 <body>
-    <h1>Register Page (Booking)</h1>
-    <form name='f' th:action="@{/register}" th:object="${bookingForm}" method='POST'>
-        <table>
-            <tr>
-                <td>Customer:</td>
-                <td>
-                    <select th:field="*{customerUsername}">
-                        <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
-                    </select>
-                <td>
-            </tr>
-            <tr>
-                <td>Testing-sites:</td>
-                <td>
-                    <select th:field="*{testingSite}">
-                        <option th:each="p : ${testingSiteModels}" th:value="${p.getId()}" th:text="${p.getName()}" />
-                    </select>
-                <td>
-            </tr>
-            <tr style="display:none">
-                <td>Test-type:</td>
-                <td>
-                    <select th:field="*{testType}">
-                        <option th:each="p : ${testTypeModels}" th:value="${p}" th:text="${p}" />
-                    </select>
-                <td>
-            </tr>
-            <tr style="display:none">
-                <td>Administrator:</td>
-                <td>
-                    <select th:field="*{administrator}" >
-                        <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
-                    </select>
-                <td>
-            </tr>
-            <tr style="display:none">
-                <td>Patient:</td>
-                <td>
-                    <select th:field="*{patient}" >
-                        <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
-                    </select>
-                <td>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container py-4">
+        <h1>Register Page (Booking)</h1>
+        <form name='f' th:action="@{/register}" th:object="${bookingForm}" method='POST'>
+            <table>
+                <tr>
+                    <td>Customer:</td>
+                    <td>
+                        <select th:field="*{customerUsername}">
+                            <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
+                        </select>
+                    <td>
+                </tr>
+                <tr>
+                    <td>Testing-sites:</td>
+                    <td>
+                        <select th:field="*{testingSite}">
+                            <option th:each="p : ${testingSiteModels}" th:value="${p.getId()}"
+                                th:text="${p.getName()}" />
+                        </select>
+                    <td>
+                </tr>
+                <tr style="display:none">
+                    <td>Test-type:</td>
+                    <td>
+                        <select th:field="*{testType}">
+                            <option th:each="p : ${testTypeModels}" th:value="${p}" th:text="${p}" />
+                        </select>
+                    <td>
+                </tr>
+                <tr style="display:none">
+                    <td>Administrator:</td>
+                    <td>
+                        <select th:field="*{administrator}">
+                            <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
+                        </select>
+                    <td>
+                </tr>
+                <tr style="display:none">
+                    <td>Patient:</td>
+                    <td>
+                        <select th:field="*{patient}">
+                            <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
+                        </select>
+                    <td>
+                </tr>
+                <tr>
+                    <td>Date/Time:</td>
+                    <td>
+                        <input type="datetime-local" id="birthdaytime" name="birthdaytime" th:field="*{time}">
+                    <td>
 
-            </tr>
-            <tr>
-                <td>Date/Time:</td>
-                <td>
-                    <input type="datetime-local" id="birthdaytime" name="birthdaytime" th:field="*{time}">
-                <td>
+                </tr>
+                <tr>
+                    <td>On Home Booking?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{onHomeBooking}" id="myCheck" onchange="myFunction1()">
+                    <td>
+                </tr>
 
-            </tr>
-            <tr>
-                <td>On Home Booking?</td>
-                <td>
-                    <input type="checkbox" th:field="*{onHomeBooking}" id="myCheck" onchange="myFunction1()">
-                <td>
-            </tr>
+                <tr style="display:none">
+                    <td>QR Code:</td>
+                    <td>
+                        <input type="text" id="qrcode" value="" th:field="*{qr}">
+                    <td>
+                </tr>
 
-            <tr style="display:none">
-                <td>QR Code:</td>
-                <td>
-                    <input type="text" id="qrcode" value="" th:field="*{qr}">
-                <td>
-            </tr>
-
-            <tr>
-                <td><input name="submit" type="submit" value="submit" /></td>
-            </tr>
-        </table>
-    </form>
-
+                <tr>
+                    <td><input name="submit" type="submit" value="submit" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
     <button onclick="myFunction()" id="btn" style="display:none">Generate QR code</button>
-    <img id = "myQR" src=""/>
+    <img id="myQR" src="" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script>
-    function makeRandomString(length) {
-        var result           = '';
-        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        var charactersLength = characters.length;
-        for ( var i = 0; i < length; i++ ) {
-          result += characters.charAt(Math.floor(Math.random() *
-     charactersLength));
-       }
-       return result;
-    }
-
-    function myFunction() {
-      // Get the checkbox
-      var checkBox = document.getElementById("myCheck");
-      let randomString = makeRandomString(10)
-      let qrCodeApi = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + randomString
-
-      document.getElementById('qrcode').value = randomString
-
-      // If the checkbox is checked, display the output text
-      if (checkBox.checked == true){
-           document.getElementById('myQR').src=qrCodeApi
-      }
-    }
-    function myFunction1() {
-        var x = document.getElementById("btn");
-        if (x.style.display === "none") {
-             x.style.display = "block";
-        } else {
-         x.style.display = "none";
+        function makeRandomString(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() *
+                    charactersLength));
+            }
+            return result;
         }
-}
-</script>
+
+        function myFunction() {
+            // Get the checkbox
+            var checkBox = document.getElementById("myCheck");
+            let randomString = makeRandomString(10)
+            let qrCodeApi = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + randomString
+
+            document.getElementById('qrcode').value = randomString
+
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true) {
+                document.getElementById('myQR').src = qrCodeApi
+            }
+        }
+        function myFunction1() {
+            var x = document.getElementById("btn");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>

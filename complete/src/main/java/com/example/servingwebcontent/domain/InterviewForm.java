@@ -1,13 +1,13 @@
 package com.example.servingwebcontent.domain;
 
 public class InterviewForm {
-    public String pinCode;
-    public boolean shaking;
-    public boolean musclePain;
-    public boolean headache;
-    public boolean soreThroat;
-    public boolean lossTasteAndSmell;
-    public boolean closeContact;
+    private String pinCode;
+    private boolean shaking;
+    private boolean musclePain;
+    private boolean headache;
+    private boolean soreThroat;
+    private boolean lossTasteAndSmell;
+    private boolean closeContact;
     private String administrator;
     private String patient;
     private String testType;
@@ -19,7 +19,7 @@ public class InterviewForm {
     public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
     }
-//
+
     public boolean getShaking() {
         return shaking;
     }

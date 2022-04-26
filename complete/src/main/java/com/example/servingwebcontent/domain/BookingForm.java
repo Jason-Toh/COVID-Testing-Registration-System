@@ -10,8 +10,6 @@ public class BookingForm {
     private String qr;
     private boolean onHomeBooking;
 
-
-
     public String getCustomerUsername() {
         return customerUsername;
     }
@@ -51,6 +49,7 @@ public class BookingForm {
     public void setTestType(String testType) {
         this.testType = testType;
     }
+
     public String getTime() {
         return time;
     }

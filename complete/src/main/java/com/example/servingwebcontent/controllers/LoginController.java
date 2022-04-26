@@ -25,7 +25,7 @@ public class LoginController {
 
     // Check for Credentials
     @PostMapping("/login")
-    public String postlogin(@ModelAttribute(name = "userlogin") UserLogin login, Model model)
+    public String postlogin(@ModelAttribute("userLogin") UserLogin login, Model model)
             throws IOException, InterruptedException {
         String uname = login.getUserName();
         String pass = login.getPassword();

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class TestingSiteGet extends Get{
+public class TestingSiteGet extends Get {
     private String myApiKey;
     private List<TestingSite> testingSites = new ArrayList<>();
 
@@ -43,16 +43,15 @@ public class TestingSiteGet extends Get{
         // Convert String into JSONArray
         JSONArray json = new JSONArray(response.body());
 
-
         // Add user into users list
-        for(int i = 0; i < json.length(); i++){
-            String id = (String)json.getJSONObject(i).get("id");
-            String name = (String)json.getJSONObject(i).get("name");
-            String description = (String)json.getJSONObject(i).get("description");
-            String websiteUrl = (String)json.getJSONObject(i).get("websiteUrl");
-            String phoneNumber = (String)json.getJSONObject(i).get("phoneNumber");
-            String createdAt = (String)json.getJSONObject(i).get("createdAt");
-            String updatedAt = (String)json.getJSONObject(i).get("updatedAt");
+        for (int i = 0; i < json.length(); i++) {
+            String id = (String) json.getJSONObject(i).get("id");
+            String name = (String) json.getJSONObject(i).get("name");
+            String description = (String) json.getJSONObject(i).get("description");
+            String websiteUrl = (String) json.getJSONObject(i).get("websiteUrl");
+            String phoneNumber = (String) json.getJSONObject(i).get("phoneNumber");
+            String createdAt = (String) json.getJSONObject(i).get("createdAt");
+            String updatedAt = (String) json.getJSONObject(i).get("updatedAt");
             // Address
             JSONObject addressJson = (JSONObject) json.getJSONObject(i).get("address");
             double latitude = addressJson.getDouble("latitude");
@@ -60,9 +59,9 @@ public class TestingSiteGet extends Get{
             String unitNumber = addressJson.getString("unitNumber");
             String street = addressJson.getString("street");
             String suburb = addressJson.getString("suburb");
-            String state = addressJson.getString("state");;
-            String postcode = addressJson.getString("postcode");;
-            Address address = new Address(latitude,longitude, unitNumber, street, suburb, state, postcode);
+            String state = addressJson.getString("state");
+            String postcode = addressJson.getString("postcode");
+            Address address = new Address(latitude, longitude, unitNumber, street, suburb, state, postcode);
 
             // Additional Info class
             JSONObject additionalInfoJson = (JSONObject) json.getJSONObject(i).get("additionalInfo");
@@ -70,9 +69,11 @@ public class TestingSiteGet extends Get{
             boolean onSiteBookingAndTesting = additionalInfoJson.getBoolean("onSiteBookingAndTesting");
             int waitingTimeInMins = additionalInfoJson.getInt("waitingTimeInMins");
 
-            TestingSiteStatus additionalInfo = new TestingSiteStatus(typeOfFacility, onSiteBookingAndTesting, waitingTimeInMins);
+            TestingSiteStatus additionalInfo = new TestingSiteStatus(typeOfFacility, onSiteBookingAndTesting,
+                    waitingTimeInMins);
 
-            TestingSite testingSite = new TestingSite(id, name, description, websiteUrl, phoneNumber, address, additionalInfo, createdAt, updatedAt);
+            TestingSite testingSite = new TestingSite(id, name, description, websiteUrl, phoneNumber, address,
+                    additionalInfo, createdAt, updatedAt);
             testingSites.add(testingSite);
         }
         return testingSites;
