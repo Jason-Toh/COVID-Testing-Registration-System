@@ -26,8 +26,8 @@
                             <td>Administrator:</td>
                             <td>
                                 <select th:field="*{administrator}">
-                                    <option th:each="p : ${userModels}" th:value="${p.getId}"
-                                        th:text="${p.getFullName}" />
+                                    <option th:each="user : ${userModels}" th:value="${user.getId()}"
+                                        th:text="${user.getFullName()}" />
                                 </select>
                             <td>
                         </tr>
@@ -35,8 +35,8 @@
                             <td>Patient:</td>
                             <td>
                                 <select th:field="*{patient}">
-                                    <option th:each="p : ${userModels}" th:value="${p.getId}"
-                                        th:text="${p.getFullName}" />
+                                    <option th:each="user : ${userModels}" th:value="${user.getId()}"
+                                        th:text="${user.getFullName()}" />
                                 </select>
                             <td>
 
@@ -81,7 +81,8 @@
                             <td>Test-type:</td>
                             <td>
                                 <select th:field="*{testType}" id="heyman" onchange="myFunction()">
-                                    <option th:each="p : ${testTypeModels}" th:value="${p}" th:text="${p}" />
+                                    <option th:each="testType : ${testTypeModels}" th:value="${testType}"
+                                        th:text="${testType}" />
                                 </select>
                             <td>
                         </tr>

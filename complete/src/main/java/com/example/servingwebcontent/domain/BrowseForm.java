@@ -3,7 +3,7 @@ package com.example.servingwebcontent.domain;
 public class BrowseForm {
 
     private String suburbName;
-    private String selectedOption;
+    private String typeOfFacility;
 
     public String getSuburbName() {
         return suburbName;
@@ -13,11 +13,11 @@ public class BrowseForm {
         this.suburbName = suburbName;
     }
 
-    public String getSelectedOption() {
-        return selectedOption;
+    public String getTypeOfFacility() {
+        return typeOfFacility;
     }
 
-    public void setSelectedOption(String selectedOption) {
-        this.selectedOption = selectedOption;
+    public void setTypeOfFacility(String typeOfFacility) {
+        this.typeOfFacility = typeOfFacility;
     }
 }

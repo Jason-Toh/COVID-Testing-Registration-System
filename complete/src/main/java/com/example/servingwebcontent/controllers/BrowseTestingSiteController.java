@@ -59,7 +59,6 @@ public class BrowseTestingSiteController {
 
     @PostMapping("/search")
     public String searchTestingSite(@ModelAttribute("browseForm") BrowseForm browseForm, Model model) {
-
         APIfactory factory = new TestingSiteFactory(api);
         Get testingSiteGet = factory.createGet();
 
@@ -74,6 +73,35 @@ public class BrowseTestingSiteController {
             // Search for a substring in a string
             for (TestingSite testingSite : testingSites) {
                 if (testingSite.getName().toLowerCase().contains(suburbName)) {
+                    filteredTestingSiteModels.add(testingSite);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        model.addAttribute("testingSites", filteredTestingSiteModels);
+
+        return "testing-site/browse";
+    }
+
+    @PostMapping("/select")
+    public String filterByTypeOfFacility(@ModelAttribute("browseForm") BrowseForm browseForm, Model model) {
+        APIfactory factory = new TestingSiteFactory(api);
+        Get testingSiteGet = factory.createGet();
+
+        List<TestingSite> filteredTestingSiteModels = new ArrayList<>();
+
+        try {
+            // Testing-site collection
+            Collection<TestingSite> testingSites = testingSiteGet.getApi();
+
+            String typeOfFacility = browseForm.getTypeOfFacility().toLowerCase();
+
+            // Search for a substring in a string
+            for (TestingSite testingSite : testingSites) {
+                if (testingSite.getAdditonalInfo().getTypeOfFacility().toLowerCase().contains(typeOfFacility)) {
                     filteredTestingSiteModels.add(testingSite);
                 }
             }

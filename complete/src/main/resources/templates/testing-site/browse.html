@@ -36,14 +36,20 @@
                         <!-- Form -->
                         <div class="form-group">
                             <label class="my-1 mr-2" for="typeOfFacility">Type Of Facility</label>
-                            <form th:action="@{/select}" method="POST">
-                                <select class="custom-select my-1 mr-sm-2" id="typeOfFacility" name="typeOfFacility">
-                                    <option value="Drive Through">Drive Through</option>
-                                    <option value="Walk-in">Walk-in</option>
-                                    <option value="Clinics">Clinics</option>
-                                    <option value="GPs">GPs</option>
-                                    <option value="Hospitals">Hospitals</option>
-                                </select>
+                            <form th:action="@{/select}" th:object="${browseForm}" method="POST">
+                                <div class="input-group">
+                                    <select class="custom-select my-1 mr-sm-2" id="typeOfFacility" name="typeOfFacility"
+                                        th:value="${typeOfFacility}">
+                                        <option value="Drive-Through">Drive-Through</option>
+                                        <option value="Walk-in">Walk-in</option>
+                                        <option value="Clinics">Clinics</option>
+                                        <option value="GPs">GPs</option>
+                                        <option value="Hospitals">Hospitals</option>
+                                    </select>
+                                    <div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <!-- End of Form -->
