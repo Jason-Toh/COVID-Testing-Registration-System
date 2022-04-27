@@ -16,11 +16,19 @@
         <table class="table">
             <tbody class="thead-dark">
                 <tr>
-                    <th>Name: </th>
+                    <th>Name</th>
                     <td th:text="${testingSite.getName()}"></td>
                 </tr>
                 <tr>
-                    <th>Description:</th>
+                    <th>Opening Time</th>
+                    <td th:text="${testingSite.getAdditonalInfo().getOpeningTime()}"></td>
+                </tr>
+                <tr>
+                    <th>Closing Time</th>
+                    <td th:text="${testingSite.getAdditonalInfo().getClosingTime()}"></td>
+                </tr>
+                <tr>
+                    <th>Description</th>
                     <td th:text="${testingSite.getDescription()}"></td>
                 </tr>
                 <tr>
@@ -42,6 +50,10 @@
                 <tr>
                     <th>Waiting Time in Mins</th>
                     <td th:text="${testingSite.getAdditonalInfo().getWaitingTimeInMins()}"></td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td th:text="${testingSite.getAdditonalInfo().getOpenOrClosed()}"></td>
                 </tr>
             </tbody>
         </table>

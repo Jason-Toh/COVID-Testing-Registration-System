@@ -13,6 +13,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -68,9 +71,12 @@ public class TestingSiteGet extends Get {
             String typeOfFacility = additionalInfoJson.getString("typeOfFacility");
             boolean onSiteBookingAndTesting = additionalInfoJson.getBoolean("onSiteBookingAndTesting");
             int waitingTimeInMins = additionalInfoJson.getInt("waitingTimeInMins");
+            String openingTime = additionalInfoJson.getString("openingTime");
+            String closingTime = additionalInfoJson.getString("closingTime");
+            String openOrClosed = additionalInfoJson.getString("openOrClosed");
 
             TestingSiteStatus additionalInfo = new TestingSiteStatus(typeOfFacility, onSiteBookingAndTesting,
-                    waitingTimeInMins);
+                    waitingTimeInMins, openingTime, closingTime, openOrClosed);
 
             TestingSite testingSite = new TestingSite(id, name, description, websiteUrl, phoneNumber, address,
                     additionalInfo, createdAt, updatedAt);

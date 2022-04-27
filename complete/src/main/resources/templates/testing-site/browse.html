@@ -61,6 +61,7 @@
                                 <th scope="col">Type of Facility</th>
                                 <th scope="col">On Site Booking and Testing</th>
                                 <th scope="col">Waiting Times</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -72,6 +73,7 @@
                                     th:text="${testingSite.getAdditonalInfo().isOnSiteBookingAndTesting() ? 'Yes' : 'No'}">
                                 </td>
                                 <td th:text="${testingSite.getAdditonalInfo().getWaitingTimeInMins()}+ ' mins'"></td>
+                                <td th:text="${testingSite.getAdditonalInfo().getOpenOrClosed()}"></td>
                                 <td>
                                     <a th:href="@{/show/{id}(id=${testingSite.getId()})}"
                                         class="btn btn-primary">View</a>

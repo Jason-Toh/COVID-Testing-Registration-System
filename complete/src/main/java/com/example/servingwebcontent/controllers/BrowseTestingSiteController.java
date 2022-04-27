@@ -1,6 +1,9 @@
 package com.example.servingwebcontent.controllers;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -37,6 +40,7 @@ public class BrowseTestingSiteController {
             Collection<TestingSite> testingSites = testingSiteGet.getApi();
 
             for (TestingSite testingSite : testingSites) {
+                System.out.println(testingSite);
                 testingSiteModels.add(testingSite);
             }
 
