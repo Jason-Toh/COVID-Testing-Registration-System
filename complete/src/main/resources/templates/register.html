@@ -75,6 +75,7 @@
                     <td>QR Code:</td>
                     <td>
                         <input type="text" id="qrcode" value="" th:field="*{qr}">
+
                     <td>
                 </tr>
                 <tr>
@@ -89,6 +90,8 @@
 
     <button onclick="myFunction()" id="btn" style="display:none">Generate QR code</button>
     <img id="myQR" src="" />
+    <a href="https://www.w3schools.com" style="display:none" id="mylink">Visit W3Schools.com!</a>
+
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script>
@@ -118,10 +121,13 @@
         }
         function myFunction1() {
             var x = document.getElementById("btn");
+            var y = document.getElementById("mylink");
             if (x.style.display === "none") {
                 x.style.display = "block";
+                y.style.display = "block";
             } else {
                 x.style.display = "none";
+                y.style.display = "none";
             }
         }
     </script>

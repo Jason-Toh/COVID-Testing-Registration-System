@@ -101,12 +101,11 @@ public class OnSiteRegisterController {
 
         // Post Qr code String
         if(bookingForm.isOnHomeBooking()){
-            //Generate random String
 
+            //Generate random String
             APIfactory factory4 = new PhotoFactory(api,bookingForm.getQr());
             Post photoPost = factory4.createPost();
             String jsonPost1 = photoPost.postApi();
-
 
         }
 
