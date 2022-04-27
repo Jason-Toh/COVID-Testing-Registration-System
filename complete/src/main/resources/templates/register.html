@@ -15,11 +15,11 @@
     <div class="container py-4">
         <h1>Register Page (Booking)</h1>
         <form name='f' th:action="@{/register}" th:object="${bookingForm}" method='POST'>
-            <table>
+            <table class="table">
                 <tr>
                     <td>Customer:</td>
                     <td>
-                        <select th:field="*{customerUsername}">
+                        <select th:field="*{customerUsername}" class="custom-select my-1 mr-sm-2">
                             <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
                         </select>
                     <td>
@@ -27,7 +27,7 @@
                 <tr>
                     <td>Testing-sites:</td>
                     <td>
-                        <select th:field="*{testingSite}">
+                        <select th:field="*{testingSite}" class="custom-select my-1 mr-sm-2">
                             <option th:each="p : ${testingSiteModels}" th:value="${p.getId()}"
                                 th:text="${p.getName()}" />
                         </select>
@@ -36,7 +36,7 @@
                 <tr style="display:none">
                     <td>Test-type:</td>
                     <td>
-                        <select th:field="*{testType}">
+                        <select th:field="*{testType}" class="custom-select my-1 mr-sm-2">
                             <option th:each="p : ${testTypeModels}" th:value="${p}" th:text="${p}" />
                         </select>
                     <td>
@@ -44,7 +44,7 @@
                 <tr style="display:none">
                     <td>Administrator:</td>
                     <td>
-                        <select th:field="*{administrator}">
+                        <select th:field="*{administrator}" class="custom-select my-1 mr-sm-2">
                             <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
                         </select>
                     <td>
@@ -52,7 +52,7 @@
                 <tr style="display:none">
                     <td>Patient:</td>
                     <td>
-                        <select th:field="*{patient}">
+                        <select th:field="*{patient}" class="custom-select my-1 mr-sm-2">
                             <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
                         </select>
                     <td>
@@ -60,7 +60,8 @@
                 <tr>
                     <td>Date/Time:</td>
                     <td>
-                        <input type="datetime-local" id="birthdaytime" name="birthdaytime" th:field="*{time}">
+                        <input type="datetime-local" id="birthdaytime" name="birthdaytime" th:field="*{time}"
+                            class="form-control">
                     <td>
 
                 </tr>
@@ -70,18 +71,22 @@
                         <input type="checkbox" th:field="*{onHomeBooking}" id="myCheck" onchange="myFunction1()">
                     <td>
                 </tr>
-
                 <tr style="display:none">
                     <td>QR Code:</td>
                     <td>
-                        <input type="text" id="qrcode" value="" th:field="*{qr}">
+                        <input type="text" id="qrcode" value="" th:field="*{qr}" class="form-control">
                     <td>
                 </tr>
                 <tr>
-                    <td><p>INFO :If you choose on home booking you can get your testing kit from testing site you select</p></td>
+                    <td>
+                        <p>INFO: If you choose on home booking you can get your testing kit from testing site you select
+                        </p>
+                    </td>
                 </tr>
                 <tr>
-                    <td><input name="submit" type="submit" value="submit" /></td>
+                    <td>
+                        <input class="btn btn-primary" name="submit" type="submit" value="submit" />
+                    </td>
                 </tr>
             </table>
         </form>

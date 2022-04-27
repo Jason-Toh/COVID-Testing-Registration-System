@@ -13,86 +13,83 @@
 <body>
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container py-4">
-        <div class="row">
-            <div class="offset-md-3">
-                <h1>Patient Status Page (On-site Testing)</h1>
-                <form name='f' th:action="@{/interview}" th:object="${interviewForm}" method='POST'>
-                    <table>
-                        <tr>
-                            <td>PinCode:</td>
-                            <td><input type='text' name='pincode' value='' th:field="*{pinCode}"></td>
-                        </tr>
-                        <tr>
-                            <td>Administrator:</td>
-                            <td>
-                                <select th:field="*{administrator}">
-                                    <option th:each="user : ${userModels}" th:value="${user.getId()}"
-                                        th:text="${user.getFullName()}" />
-                                </select>
-                            <td>
-                        </tr>
-                        <tr>
-                            <td>Patient:</td>
-                            <td>
-                                <select th:field="*{patient}">
-                                    <option th:each="user : ${userModels}" th:value="${user.getId()}"
-                                        th:text="${user.getFullName()}" />
-                                </select>
-                            <td>
+        <h1>Patient Status Page (On-site Testing)</h1>
+        <form name='f' th:action="@{/interview}" th:object="${interviewForm}" method='POST'>
+            <table class="table">
+                <tr>
+                    <td>PinCode:</td>
+                    <td><input type='text' name='pincode' value='' th:field="*{pinCode}" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Administrator:</td>
+                    <td>
+                        <select th:field="*{administrator}" class="custom-select my-1 mr-sm-2">
+                            <option th:each="user : ${userModels}" th:value="${user.getId()}"
+                                th:text="${user.getFullName()}" />
+                        </select>
+                    <td>
+                </tr>
+                <tr>
+                    <td>Patient:</td>
+                    <td>
+                        <select th:field="*{patient}" class="custom-select my-1 mr-sm-2">
+                            <option th:each="user : ${userModels}" th:value="${user.getId()}"
+                                th:text="${user.getFullName()}" />
+                        </select>
+                    <td>
 
-                        </tr>
-                        <tr>
-                            <td>1. Do you have chills and repeated shaking?</td>
-                            <td>
-                                <input type="checkbox" th:field="*{shaking}" id="myCheck">
-                            <td>
-                        </tr>
-                        <tr>
-                            <td>2. Do you have muscle pain?</td>
-                            <td>
-                                <input type="checkbox" th:field="*{musclePain}" id="myCheck1">
-                            <td>
-                        </tr>
-                        <tr>
-                            <td>3. Do you have headache?</td>
-                            <td>
-                                <input type="checkbox" th:field="*{headache}" id="myCheck2">
-                            <td>
-                        </tr>
-                        <tr>
-                            <td>4. Do you have sore throat?</td>
-                            <td>
-                                <input type="checkbox" th:field="*{soreThroat}" id="myCheck3">
-                            <td>
-                        </tr>
-                        <tr>
-                            <td>5. Do you have loss of sense of taste or smell?</td>
-                            <td>
-                                <input type="checkbox" th:field="*{lossTasteAndSmell}" id="myCheck4">
-                            <td>
-                        </tr>
-                        <tr>
-                            <td>6. Do you have close contact with other covid patient?</td>
-                            <td>
-                                <input type="checkbox" th:field="*{closeContact}" id="myCheck5">
-                            <td>
-                        </tr>
-                        <tr>
-                            <td>Test-type:</td>
-                            <td>
-                                <select th:field="*{testType}" id="heyman" onchange="myFunction()">
-                                    <option th:each="testType : ${testTypeModels}" th:value="${testType}"
-                                        th:text="${testType}" />
-                                </select>
-                            <td>
-                        </tr>
-                        <tr>
-                            <td><input name="submit" type="submit" value="submit" /></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-        </div>
+                </tr>
+                <tr>
+                    <td>1. Do you have chills and repeated shaking?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{shaking}" id="myCheck">
+                    <td>
+                </tr>
+                <tr>
+                    <td>2. Do you have muscle pain?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{musclePain}" id="myCheck1">
+                    <td>
+                </tr>
+                <tr>
+                    <td>3. Do you have headache?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{headache}" id="myCheck2">
+                    <td>
+                </tr>
+                <tr>
+                    <td>4. Do you have sore throat?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{soreThroat}" id="myCheck3">
+                    <td>
+                </tr>
+                <tr>
+                    <td>5. Do you have loss of sense of taste or smell?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{lossTasteAndSmell}" id="myCheck4">
+                    <td>
+                </tr>
+                <tr>
+                    <td>6. Do you have close contact with other covid patient?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{closeContact}" id="myCheck5">
+                    <td>
+                </tr>
+                <tr>
+                    <td>Test-type:</td>
+                    <td>
+                        <select th:field="*{testType}" id="heyman" onchange="myFunction()"
+                            class="custom-select my-1 mr-sm-2">
+                            <option th:each="testType : ${testTypeModels}" th:value="${testType}"
+                                th:text="${testType}" />
+                        </select>
+                    <td>
+                </tr>
+                <tr>
+                    <td><input class="btn btn-primary" name="submit" type="submit" value="submit" /></td>
+                </tr>
+            </table>
+        </form>
     </div>
 
     <!-- <p>Get your greeting <a href="/greeting">here</a></p> -->
