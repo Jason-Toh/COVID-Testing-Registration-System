@@ -11,12 +11,13 @@ public class Booking {
     private String startTime;
     private List<CovidTest> covidTests;
 
-    public Booking(String bookingId, String testingSiteId, String testingSiteName, String smsPin, String startTime) {
-        this.bookingId = bookingId;
-        this.testingSiteId = testingSiteId;
-        this.testingSiteName = testingSiteName;
-        this.smsPin = smsPin;
-        this.startTime = startTime;
+    public static Booking getInstance(String bookingId, String testingSiteId, String testingSiteName, String smsPin, String startTime){
+        Booking booking = new Booking(bookingId, testingSiteId, testingSiteName, smsPin, startTime);
+
+        return booking;
+    };
+
+    private Booking(String bookingId, String testingSiteId, String testingSiteName, String smsPin, String startTime) {
         this.covidTests = new ArrayList<>();
     }
 

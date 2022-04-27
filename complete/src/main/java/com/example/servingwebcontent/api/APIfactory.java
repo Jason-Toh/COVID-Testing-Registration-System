@@ -5,7 +5,9 @@ public interface APIfactory {
 
     public Post createPost();
 
-//    public Delete createDelete();
+    // ---DELETE AND PATCH CAN BE IMPLEMENT IN FUTURE---
 
-//    public Patch createPatch;
+        //    public Delete createDelete();
+
+        //    public Patch createPatch();
 }

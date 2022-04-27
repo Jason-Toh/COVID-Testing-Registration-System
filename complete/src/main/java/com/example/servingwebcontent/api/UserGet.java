@@ -89,7 +89,7 @@ public class UserGet extends Get<User> {
                     covidTests1.add(covidTest);
                 }
 
-                Booking booking = new Booking(bookingId, testingSiteId, testingSiteName, smsPin, startTime);
+                Booking booking = Booking.getInstance(bookingId, testingSiteId, testingSiteName, smsPin, startTime);
                 booking.setCovidTests(covidTests1);
                 bookings.add(booking);
             }

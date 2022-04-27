@@ -47,7 +47,7 @@ public class BookingGet extends Get {
             String bookingId = (String) json.getJSONObject(i).get("id");
             String smsPin = (String) json.getJSONObject(i).get("smsPin");
 
-            Booking booking = new Booking(bookingId, null, null, smsPin, null);
+            Booking booking = Booking.getInstance(bookingId, null, null, smsPin, null);
             bookings.add(booking);
         }
 
