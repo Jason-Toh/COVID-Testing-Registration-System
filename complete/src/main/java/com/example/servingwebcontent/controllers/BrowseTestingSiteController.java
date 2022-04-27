@@ -31,7 +31,8 @@ public class BrowseTestingSiteController {
     public List<TestingSite> getTestingSiteModels() {
         List<TestingSite> testingSiteModels = new ArrayList<>();
 
-        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
+//        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
+        APIfactory factory = new TestingSiteFactory(System.getenv("API"));
         Get testingSiteGet = factory.createGet();
 
         try {
@@ -61,7 +62,8 @@ public class BrowseTestingSiteController {
 
     @PostMapping("/search")
     public String searchTestingSite(@ModelAttribute("browseForm") BrowseForm browseForm, Model model) {
-        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
+//        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
+        APIfactory factory = new TestingSiteFactory(System.getenv("API"));
         Get testingSiteGet = factory.createGet();
 
         List<TestingSite> filteredTestingSiteModels = new ArrayList<>();
@@ -90,7 +92,8 @@ public class BrowseTestingSiteController {
 
     @PostMapping("/select")
     public String filterByTypeOfFacility(@ModelAttribute("browseForm") BrowseForm browseForm, Model model) {
-        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
+        APIfactory factory = new TestingSiteFactory(System.getenv("API"));
+
         Get testingSiteGet = factory.createGet();
 
         List<TestingSite> filteredTestingSiteModels = new ArrayList<>();

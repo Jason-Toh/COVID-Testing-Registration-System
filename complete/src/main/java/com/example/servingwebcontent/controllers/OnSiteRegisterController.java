@@ -34,7 +34,7 @@ public class OnSiteRegisterController {
 
         // 2.1 Get testing-sites and put it into model
         // API factory
-        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
+        APIfactory factory = new TestingSiteFactory(System.getenv("API"));
         Get testingSiteGet = factory.createGet();
 
         List<TestingSite> testingSiteModels = new ArrayList<>();
@@ -51,7 +51,7 @@ public class OnSiteRegisterController {
         }
         model.addAttribute("testingSiteModels", testingSiteModels);
         // 2.2
-        APIfactory factory1 = new UserFactory(API.getAPIKey());
+        APIfactory factory1 = new UserFactory(System.getenv("API"));
         Get userGet = factory1.createGet();
 
         List<User> userModels = new ArrayList<>();
@@ -89,7 +89,7 @@ public class OnSiteRegisterController {
             throws IOException, InterruptedException, WriterException {
         // Make booking post here
         APIfactory factory3 = new BookingFactory(
-                API.getAPIKey(), bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
+                System.getenv("API"), bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
                 bookingForm.getTime());
         Post bookingPost = factory3.createPost();
         String jsonPost = bookingPost.postApi();
@@ -102,7 +102,7 @@ public class OnSiteRegisterController {
         if (bookingForm.isOnHomeBooking()) {
             // Generate random String
 
-            APIfactory factory4 = new PhotoFactory(API.getAPIKey(), bookingForm.getQr());
+            APIfactory factory4 = new PhotoFactory(System.getenv("API"), bookingForm.getQr());
             Post photoPost = factory4.createPost();
             String jsonPost1 = photoPost.postApi();
 

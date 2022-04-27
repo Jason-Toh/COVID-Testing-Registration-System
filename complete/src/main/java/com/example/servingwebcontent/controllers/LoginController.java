@@ -54,7 +54,7 @@ public class LoginController {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(URI.create(usersLoginUrl + "?jwt=true")) // Return a JWT so we can
                                                                                               // use it in Part 5 later.
-                .setHeader("Authorization", API.getAPIKey())
+                .setHeader("Authorization", System.getenv("API"))
                 .header("Content-Type", "application/json") // This header needs to be set when sending a JSON request
                                                             // body.
                 .POST(HttpRequest.BodyPublishers.ofString(jsonString))
