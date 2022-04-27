@@ -25,7 +25,6 @@ import java.util.List;
 
 @Controller
 public class OnSiteRegisterController {
-    private String api = "NrMhfCkHTjJjzHTWR8z8nP6FjcGg8K";
 
     @GetMapping("/register")
     public String getRegister(Model model) {
@@ -35,7 +34,7 @@ public class OnSiteRegisterController {
 
         // 2.1 Get testing-sites and put it into model
         // API factory
-        APIfactory factory = new TestingSiteFactory(api);
+        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
         Get testingSiteGet = factory.createGet();
 
         List<TestingSite> testingSiteModels = new ArrayList<>();
@@ -52,7 +51,7 @@ public class OnSiteRegisterController {
         }
         model.addAttribute("testingSiteModels", testingSiteModels);
         // 2.2
-        APIfactory factory1 = new UserFactory(api);
+        APIfactory factory1 = new UserFactory(API.getAPIKey());
         Get userGet = factory1.createGet();
 
         List<User> userModels = new ArrayList<>();
@@ -88,9 +87,9 @@ public class OnSiteRegisterController {
     @PostMapping("/register")
     public String submitForm(@ModelAttribute("bookingForm") BookingForm bookingForm)
             throws IOException, InterruptedException, WriterException {
-        System.out.println(bookingForm);
         // Make booking post here
-        APIfactory factory3 = new BookingFactory(api, bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
+        APIfactory factory3 = new BookingFactory(
+                API.getAPIKey(), bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
                 bookingForm.getTime());
         Post bookingPost = factory3.createPost();
         String jsonPost = bookingPost.postApi();
@@ -100,10 +99,10 @@ public class OnSiteRegisterController {
         String bookingId = book.get("id") + "";
 
         // Post Qr code String
-        if(bookingForm.isOnHomeBooking()){
+        if (bookingForm.isOnHomeBooking()) {
+            // Generate random String
 
-            //Generate random String
-            APIfactory factory4 = new PhotoFactory(api,bookingForm.getQr());
+            APIfactory factory4 = new PhotoFactory(API.getAPIKey(), bookingForm.getQr());
             Post photoPost = factory4.createPost();
             String jsonPost1 = photoPost.postApi();
 
@@ -111,6 +110,5 @@ public class OnSiteRegisterController {
 
         return "register";
     }
-
 
 }

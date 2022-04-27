@@ -1,5 +1,6 @@
 package com.example.servingwebcontent.controllers;
 
+import com.example.servingwebcontent.api.API;
 import com.example.servingwebcontent.domain.UserLogin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,16 +40,8 @@ public class LoginController {
 
     }
 
-    // @PostMapping("/testing-site")
-    // public String postTestingSite(@ModelAttribute UserLogin userLogin,
-    // BindingResult result, Model model) {
-    // model.addAttribute("UserLogin", userLogin);
-    // return "testing-site";
-    // }
-
     public boolean checkLoginFromAPI(String userName, String password) throws IOException, InterruptedException {
         boolean flag = false;
-        String myApiKey = "NrMhfCkHTjJjzHTWR8z8nP6FjcGg8K";
         String rootUrl = "https://fit3077.com/api/v1";
         String usersUrl = rootUrl + "/user";
         String usersLoginUrl = usersUrl + "/login";
@@ -61,7 +54,7 @@ public class LoginController {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(URI.create(usersLoginUrl + "?jwt=true")) // Return a JWT so we can
                                                                                               // use it in Part 5 later.
-                .setHeader("Authorization", myApiKey)
+                .setHeader("Authorization", API.getAPIKey())
                 .header("Content-Type", "application/json") // This header needs to be set when sending a JSON request
                                                             // body.
                 .POST(HttpRequest.BodyPublishers.ofString(jsonString))

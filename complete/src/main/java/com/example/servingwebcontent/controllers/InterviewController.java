@@ -19,15 +19,13 @@ import java.util.*;
 @Controller
 public class InterviewController {
 
-    private String api = "NrMhfCkHTjJjzHTWR8z8nP6FjcGg8K";
-
     @GetMapping("/interview")
     public String getRegister(Model model) {
         // 1. Interview Form
         InterviewForm interviewForm = new InterviewForm();
         model.addAttribute("interviewForm", interviewForm);
         // 2.2
-        APIfactory factory1 = new UserFactory(api);
+        APIfactory factory1 = new UserFactory(API.getAPIKey());
         Get userGet = factory1.createGet();
 
         List<User> userModels = new ArrayList<>();
@@ -57,8 +55,7 @@ public class InterviewController {
     public String submitInterviewForm(@ModelAttribute("interviewForm") InterviewForm interviewForm)
             throws IOException, InterruptedException, ParseException {
 
-
-        APIfactory factory2 = new BookingFactory(api);
+        APIfactory factory2 = new BookingFactory(API.getAPIKey());
         Get bookingGet = factory2.createGet();
         Collection jsonGet = bookingGet.getApi();
         Iterator<Booking> iterator = jsonGet.iterator();
@@ -66,19 +63,19 @@ public class InterviewController {
 
         while (iterator.hasNext()) {
 
-            if(iterator.next().getSmsPin().equals(interviewForm.getPinCode())){
+            if (iterator.next().getSmsPin().equals(interviewForm.getPinCode())) {
                 bookingId = iterator.next().getBookingId();
             }
         }
         String patientStatus = "Headache: " + interviewForm.getHeadache() +
-                "loss taste and smell: "+interviewForm.getLossTasteAndSmell() +
-                "sore throat: " +interviewForm.getSoreThroat() +
-                "muscle pain: "+interviewForm.getMusclePain()+
-                "shaking: "+interviewForm.getShaking()+
-                "close contact: "+interviewForm.getCloseContact();
+                "loss taste and smell: " + interviewForm.getLossTasteAndSmell() +
+                "sore throat: " + interviewForm.getSoreThroat() +
+                "muscle pain: " + interviewForm.getMusclePain() +
+                "shaking: " + interviewForm.getShaking() +
+                "close contact: " + interviewForm.getCloseContact();
 
-
-        APIfactory factory3 = new CovidTestFactory(api, interviewForm.getTestType(),
+        APIfactory factory3 = new CovidTestFactory(API
+                .getAPIKey(), interviewForm.getTestType(),
                 interviewForm.getPatient(), interviewForm.getAdministrator(), bookingId, patientStatus);
         Post covidTestPost = factory3.createPost();
         String jsonPost = covidTestPost.postApi();

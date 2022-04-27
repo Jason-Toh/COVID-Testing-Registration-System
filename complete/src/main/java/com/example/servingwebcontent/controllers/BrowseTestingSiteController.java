@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import com.example.servingwebcontent.api.API;
 import com.example.servingwebcontent.api.APIfactory;
 import com.example.servingwebcontent.api.Get;
 import com.example.servingwebcontent.api.TestingSiteFactory;
@@ -27,12 +28,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class BrowseTestingSiteController {
 
-    private String api = "qBDMKwFLh6bRJTnJqnfRGNDM6KRphz";
-
     public List<TestingSite> getTestingSiteModels() {
         List<TestingSite> testingSiteModels = new ArrayList<>();
 
-        APIfactory factory = new TestingSiteFactory(api);
+        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
         Get testingSiteGet = factory.createGet();
 
         try {
@@ -40,7 +39,6 @@ public class BrowseTestingSiteController {
             Collection<TestingSite> testingSites = testingSiteGet.getApi();
 
             for (TestingSite testingSite : testingSites) {
-                System.out.println(testingSite);
                 testingSiteModels.add(testingSite);
             }
 
@@ -63,7 +61,7 @@ public class BrowseTestingSiteController {
 
     @PostMapping("/search")
     public String searchTestingSite(@ModelAttribute("browseForm") BrowseForm browseForm, Model model) {
-        APIfactory factory = new TestingSiteFactory(api);
+        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
         Get testingSiteGet = factory.createGet();
 
         List<TestingSite> filteredTestingSiteModels = new ArrayList<>();
@@ -92,7 +90,7 @@ public class BrowseTestingSiteController {
 
     @PostMapping("/select")
     public String filterByTypeOfFacility(@ModelAttribute("browseForm") BrowseForm browseForm, Model model) {
-        APIfactory factory = new TestingSiteFactory(api);
+        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
         Get testingSiteGet = factory.createGet();
 
         List<TestingSite> filteredTestingSiteModels = new ArrayList<>();
