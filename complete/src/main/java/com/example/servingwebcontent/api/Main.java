@@ -13,7 +13,7 @@ import java.util.Iterator;
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException, ParseException {
 
-        String api = "NrMhfCkHTjJjzHTWR8z8nP6FjcGg8K";
+        String api = API.getAPIKey();
 
         // 1.0 Get User and return list of users information
         System.out.println("-----FACTORY CLASS CREATE GET USERS-------");
@@ -26,11 +26,10 @@ public class Main {
             // Just to show all the user in users
             Iterator<User> iterator = users.iterator();
             while (iterator.hasNext()) {
-//                System.out.println("--> " + iterator.next().toJSONStringFormat("customer"));
+                // System.out.println("--> " + iterator.next().toJSONStringFormat("customer"));
                 System.out.println("--> " + iterator.next());
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         System.out.println("\n");
@@ -45,11 +44,10 @@ public class Main {
             // Just to show all the user in users
             Iterator<TestingSite> iterator = testingSites.iterator();
             while (iterator.hasNext()) {
-//                System.out.println("--> " + iterator.next().toJSONStringFormat());
+                // System.out.println("--> " + iterator.next().toJSONStringFormat());
                 System.out.println("--> " + iterator.next());
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
@@ -58,22 +56,23 @@ public class Main {
         String patientId = "ecc52cc1-a3e4-4037-a80f-62d3799645f4";
         String startTime = "2022-04-18T13:45:01.046652100";
 
-        APIfactory factory3 = new BookingFactory(api,custId,patientId,startTime);
+        APIfactory factory3 = new BookingFactory(api, custId, patientId, startTime);
         Post bookingPost = factory3.createPost();
         String jsonPost = bookingPost.postApi();
 
         Get bookingGet = factory3.createGet();
         Collection<Booking> bookingGet1 = bookingGet.getApi();
 
-        // 2.1 Post CovidTest given testtype, admin id, patient id, booking id(obtain from 2.0), result
+        // 2.1 Post CovidTest given testtype, admin id, patient id, booking id(obtain
+        // from 2.0), result
         JSONObject book = new JSONObject(jsonPost);
 
-        String bookingId = book.get("id")+"";
+        String bookingId = book.get("id") + "";
         String testType = "PCR";
         String administererId = "70e136be-40ec-4e4b-8682-ac457f43a3cf";
         String result = "POSITIVE";
 
-        APIfactory factory4 = new CovidTestFactory(api, testType, patientId, administererId, bookingId,null);
+        APIfactory factory4 = new CovidTestFactory(api, testType, patientId, administererId, bookingId, null);
         Post covidTestPost = factory4.createPost();
         String jsonPost1 = covidTestPost.postApi();
 
