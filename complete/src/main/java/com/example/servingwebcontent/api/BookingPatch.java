@@ -13,27 +13,41 @@ public class BookingPatch extends Patch{
     private String bookingId;
     private String symptom;
     private BookingStatus bookingStatus;
+    private String qrCode;
+    private String url;
 
-    public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus) {
+    public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus, String qrCode, String url) {
         this.myApiKey = myApiKey;
         this.bookingId = bookingId;
         this.symptom = symptom;
         this.bookingStatus = bookingStatus;
+        this.qrCode = qrCode;
+        this.url = url;
     }
 
     @Override
     public String patchApi() throws IOException, InterruptedException {
 
-
+        System.out.println(bookingId);
         HttpClient client = HttpClient.newHttpClient();
         String rootUrl = "https://fit3077.com/api/v1";
         String usersUrl = rootUrl + "/booking/" + bookingId;
+        String jsonString;
+        if(qrCode != null || url != null){
+            jsonString = "{" +
+                    "\"additionalInfo\":" + "{ " +
+                    "\"qrCode\":\"" + qrCode + "\"," +
+                    "\"url\":\"" + url + "\"," +
+                    "\"symptom\":\"" + symptom + "\""
+                    + "}" + "}";
+        }else {
+            jsonString = "{" +
+                    "\"status\":\"" + bookingStatus + "\"," +
+                    "\"additionalInfo\":" + "{ " +
+                    "\"symptom\":\"" + symptom + "\""
+                    + "}" + "}";
+        }
 
-        String jsonString = "{" +
-                "\"status\":\"" + bookingStatus + "\"," +
-                "\"additionalInfo\":" + "{ " +
-                "\"symptom\":\"" + symptom + "\""
-                + "}" + "}";
 
         HttpRequest.BodyPublisher jsonPayload = HttpRequest.BodyPublishers.ofString(jsonString);
 
