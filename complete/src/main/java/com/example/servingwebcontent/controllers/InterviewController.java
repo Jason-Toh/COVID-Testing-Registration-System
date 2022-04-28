@@ -1,10 +1,7 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
-import com.example.servingwebcontent.models.Authenticate;
-import com.example.servingwebcontent.models.Booking;
-import com.example.servingwebcontent.models.TestType;
-import com.example.servingwebcontent.models.User;
+import com.example.servingwebcontent.models.*;
 import com.example.servingwebcontent.domain.InterviewForm;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
@@ -91,9 +88,11 @@ public class InterviewController {
         Post covidTestPost = factory3.createPost();
         String jsonPost = covidTestPost.postApi();
 
-        // PATCH the symptom into the additional info of the booking api using its
-        // booking id
-        APIfactory apIfactory = new BookingFactory(System.getenv("API_KEY"), bookingId, patientStatus);
+        // PATCH the symptom into the additional info of the booking api using it booking id
+        // change the booking status to completed
+
+
+        APIfactory apIfactory = new BookingFactory(System.getenv("API_KEY"), bookingId, patientStatus, BookingStatus.COMPLETED);
         Patch bookingPatch = apIfactory.createPatch();
         String returnValue = bookingPatch.patchApi();
         System.out.println(returnValue);
