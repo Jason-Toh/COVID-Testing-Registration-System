@@ -8,6 +8,7 @@ public class BookingForm {
     private String testType;
     private String time;
     private String qr;
+    private boolean receivedRATKit;
     private boolean onHomeBooking;
 
     public String getCustomerUsername() {
@@ -72,6 +73,14 @@ public class BookingForm {
 
     public void setQr(String qr) {
         this.qr = qr;
+    }
+
+    public boolean getReceivedRATKit() {
+        return receivedRATKit;
+    }
+
+    public void setReceivedRATKit(boolean receivedRATKit) {
+        this.receivedRATKit = receivedRATKit;
     }
 
     @Override

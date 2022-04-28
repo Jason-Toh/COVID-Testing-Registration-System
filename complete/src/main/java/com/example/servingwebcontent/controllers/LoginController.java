@@ -1,6 +1,5 @@
 package com.example.servingwebcontent.controllers;
 
-import com.example.servingwebcontent.api.API;
 import com.example.servingwebcontent.domain.UserLogin;
 import com.example.servingwebcontent.models.Authenticate;
 

@@ -13,7 +13,7 @@
 <body>
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container py-4">
-        <h1>Register Page (Booking)</h1>
+        <h1>Online Booking</h1>
         <form name='f' th:action="@{/register}" th:object="${bookingForm}" method='POST'>
             <table class="table">
                 <tr>
@@ -33,30 +33,6 @@
                         </select>
                     <td>
                 </tr>
-                <tr style="display:none">
-                    <td>Test-type:</td>
-                    <td>
-                        <select th:field="*{testType}" class="custom-select my-1 mr-sm-2">
-                            <option th:each="p : ${testTypeModels}" th:value="${p}" th:text="${p}" />
-                        </select>
-                    <td>
-                </tr>
-                <tr style="display:none">
-                    <td>Administrator:</td>
-                    <td>
-                        <select th:field="*{administrator}" class="custom-select my-1 mr-sm-2">
-                            <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
-                        </select>
-                    <td>
-                </tr>
-                <tr style="display:none">
-                    <td>Patient:</td>
-                    <td>
-                        <select th:field="*{patient}" class="custom-select my-1 mr-sm-2">
-                            <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
-                        </select>
-                    <td>
-                </tr>
                 <tr>
                     <td>Date/Time:</td>
                     <td>
@@ -66,7 +42,16 @@
                     <td>
                 </tr>
                 <tr>
-                    <td>On Home Booking?</td>
+                    <td>Received RAT Test Kit?</td>
+                    <td>
+                        <select th:field="*{receivedRATKit}" class="custom-select my-1 mr-sm-2">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Home Booking?</td>
                     <td>
                         <input type="checkbox" th:field="*{onHomeBooking}" id="myCheck" onchange="myFunction1()">
                     <td>
@@ -79,7 +64,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <p>INFO: If you choose on home booking you can get your testing kit from testing site you select
+                        <p>INFO: If you choose home booking you can get your testing kit from testing site you select
                         </p>
                     </td>
                 </tr>
