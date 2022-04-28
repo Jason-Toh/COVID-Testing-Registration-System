@@ -18,7 +18,10 @@
             <table class="table">
                 <tr>
                     <td>PinCode:</td>
-                    <td><input type='text' name='pincode' value='' th:field="*{pinCode}" class="form-control"></td>
+                    <td>
+                        <h6 th:text=" ${error} ? ${error} : '' " class="${error} ? text-danger : ''"></h6>
+                        <input type='text' name='pincode' value='' th:field="*{pinCode}" class="form-control">
+                    </td>
                 </tr>
                 <tr>
                     <td>Administrator:</td>

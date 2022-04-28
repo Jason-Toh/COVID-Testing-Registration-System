@@ -60,8 +60,8 @@
                 <tr>
                     <td>Date/Time:</td>
                     <td>
-                        <h6 th:text=" ${error} ? ${error} : '' "></h6>
-                        <input type="datetime-local" id="birthdaytime" name="birthdaytime" th:field="*{time}"
+                        <h6 th:text=" ${error} ? ${error} : '' " class="${error} ? text-danger : '' "></h6>
+                        <input type=" datetime-local" id="birthdaytime" name="birthdaytime" th:field="*{time}"
                             class="form-control" required>
                     <td>
 
@@ -86,7 +86,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <input class="btn btn-primary" name="submit" type="submit" value="submit" id="btn2" style="display:block"/>
+                        <input class="btn btn-primary" name="submit" type="submit" value="submit" id="btn2"
+                            style="display:block" />
                     </td>
                 </tr>
             </table>
@@ -98,7 +99,8 @@
         </div>
     </div>
     <div style="text-align:center">
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="url" style="display:none;text-decoration: underline overline; color: red">URL to connect for testing</a>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="url"
+            style="display:none;text-decoration: underline overline; color: red">URL to connect for testing</a>
         <img id="myQR" src="" />
         <div id="qrRan"></div>
     </div>
@@ -147,4 +149,5 @@
     </script>
 
 </body>
+
 </html>

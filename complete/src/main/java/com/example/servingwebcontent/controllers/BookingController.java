@@ -30,19 +30,7 @@ import java.util.List;
 @Controller
 public class BookingController {
 
-    static boolean isUserAuthenticated = Authenticate.getIsUserAuthenticated();
-
-    @GetMapping("/register")
-    public String getRegister(Model model) {
-
-        if (!Authenticate.getIsUserAuthenticated()) {
-            return "redirect:/login";
-        }
-
-        // 1.
-        BookingForm bookingForm = new BookingForm();
-        model.addAttribute("bookingForm", bookingForm);
-
+    public List<TestingSite> getTestingSites() {
         // 2.1 Get testing-sites and put it into model
         // API factory
         APIfactory factory = new TestingSiteFactory(System.getenv("API_KEY"));
@@ -53,14 +41,22 @@ public class BookingController {
         try {
             // Testing-site collection
             Collection<TestingSite> testingSites = testingSiteGet.getApi();
-            Iterator<TestingSite> iterator = testingSites.iterator();
-            while (iterator.hasNext()) {
-                testingSiteModels.add(iterator.next());
+
+            // Testing Sites which allow on site booking and testing
+            for (TestingSite testingSite : testingSites) {
+                if (testingSite.getAdditonalInfo().isOnSiteBookingAndTesting()) {
+                    testingSiteModels.add(testingSite);
+                }
             }
+
         } catch (Exception e) {
             System.out.println(e);
         }
-        model.addAttribute("testingSiteModels", testingSiteModels);
+
+        return testingSiteModels;
+    }
+
+    public List<User> getUsers() {
         // 2.2
         APIfactory factory1 = new UserFactory(System.getenv("API_KEY"));
         Get userGet = factory1.createGet();
@@ -78,13 +74,37 @@ public class BookingController {
             System.out.println(e);
         }
 
-        model.addAttribute("userModels", userModels);
+        return userModels;
+    }
 
+    public List<String> getTestTypes() {
         // 3. Get test-type and put it into model
         List<String> testTypeModels = new ArrayList<>();
         for (TestType testType : TestType.values()) {
             testTypeModels.add(testType + "");
         }
+
+        return testTypeModels;
+    }
+
+    @GetMapping("/register")
+    public String getRegister(Model model) {
+
+        if (!Authenticate.getIsUserAuthenticated()) {
+            return "redirect:/login";
+        }
+
+        // 1.
+        BookingForm bookingForm = new BookingForm();
+        model.addAttribute("bookingForm", bookingForm);
+
+        List<TestingSite> testingSiteModels = getTestingSites();
+        model.addAttribute("testingSiteModels", testingSiteModels);
+
+        List<User> userModels = getUsers();
+        model.addAttribute("userModels", userModels);
+
+        List<String> testTypeModels = getTestTypes();
         model.addAttribute("testTypeModels", testTypeModels);
 
         // 4. Get smsPin
@@ -188,10 +208,24 @@ public class BookingController {
                         String endTime = timeFormatter.format(bookingEndTime.getTime());
 
                         // Bookings can be made every 10 minutes after each booking
-                        if (bookingFormStartTime.getTime().after(bookingStartTime.getTime())
-                                && bookingFormStartTime.getTime().before(bookingEndTime.getTime())) {
+                        if (bookingFormStartTime.getTime().equals(bookingStartTime.getTime())
+                                || bookingFormStartTime.getTime().after(bookingStartTime.getTime())
+                                        && bookingFormStartTime.getTime().before(bookingEndTime.getTime())
+                                || bookingFormStartTime.getTime().equals(bookingEndTime.getTime())) {
                             model.addAttribute("error",
                                     "Booking Time " + startTime + " - " + endTime + " has been taken");
+
+                            BookingForm bookingForm2 = new BookingForm();
+                            model.addAttribute("bookingForm", bookingForm2);
+
+                            List<TestingSite> testingSiteModels = getTestingSites();
+                            model.addAttribute("testingSiteModels", testingSiteModels);
+
+                            List<User> userModels = getUsers();
+                            model.addAttribute("userModels", userModels);
+
+                            List<String> testTypeModels = getTestTypes();
+                            model.addAttribute("testTypeModels", testTypeModels);
                             return "register";
                         }
                     }
