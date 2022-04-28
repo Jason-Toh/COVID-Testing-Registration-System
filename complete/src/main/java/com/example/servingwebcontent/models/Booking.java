@@ -23,6 +23,15 @@ public class Booking {
         return booking;
     };
 
+    public static Booking getInstance(String bookingId, String testingSiteId,
+            String testingSiteName,
+            String smsPin,
+            String startTime, String status) {
+        Booking booking = new Booking(bookingId, testingSiteId, testingSiteName, smsPin,
+                startTime, status);
+        return booking;
+    };
+
     private Booking(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName, String smsPin,
             String startTime, String status) {
@@ -30,6 +39,18 @@ public class Booking {
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.customerName = customerName;
+        this.testingSiteId = testingSiteId;
+        this.testingSiteName = testingSiteName;
+        this.smsPin = smsPin;
+        this.startTime = startTime;
+        this.status = status;
+    }
+
+    private Booking(String bookingId, String testingSiteId,
+            String testingSiteName, String smsPin,
+            String startTime, String status) {
+        this.covidTests = new ArrayList<>();
+        this.bookingId = bookingId;
         this.testingSiteId = testingSiteId;
         this.testingSiteName = testingSiteName;
         this.smsPin = smsPin;

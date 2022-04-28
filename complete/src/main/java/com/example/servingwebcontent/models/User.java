@@ -1,7 +1,5 @@
 package com.example.servingwebcontent.models;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,8 @@ public class User {
     private List<CovidTest> testsTaken;
     private List<User> testsAdministered;
 
-    public User(String id, String givenName, String familyName, String userName, String phoneNumber, boolean isCustomer, boolean isReceptionist, boolean isHealthcareWorker) {
+    public User(String id, String givenName, String familyName, String userName, String phoneNumber, boolean isCustomer,
+            boolean isReceptionist, boolean isHealthcareWorker) {
         this.id = id;
         this.givenName = givenName;
         this.familyName = familyName;
@@ -58,8 +57,8 @@ public class User {
         this.familyName = familyName;
     }
 
-    public String getFullName(){
-        return givenName+" "+familyName;
+    public String getFullName() {
+        return givenName + " " + familyName;
     }
 
     public String getUserName() {
@@ -107,7 +106,7 @@ public class User {
     }
 
     public void setBookings(List<Booking> bookings) {
-        this.bookings= bookings;
+        this.bookings = bookings;
     }
 
     public List<CovidTest> getTestsTaken() {
@@ -126,8 +125,8 @@ public class User {
         this.testsAdministered.add(testsAdministered);
     }
 
-    public String toJSONStringFormat(String userType){
-        return userType+":{" +
+    public String toJSONStringFormat(String userType) {
+        return userType + ":{" +
                 "id:\"" + id + '\"' +
                 ", \"givenName\":\"" + givenName + '\"' +
                 ", \"familyName\":\"" + familyName + '\"' +

@@ -32,19 +32,26 @@ public class LoginController {
             throws IOException, InterruptedException {
         String uname = login.getUserName();
         String pass = login.getPassword();
+
         if (checkLoginFromAPI(uname, pass)) {
-            Authenticate.authenticate();
+
+            Authenticate.authenticate(uname);
+
             model.addAttribute("userName", uname);
             model.addAttribute("password", pass);
-            return "home-page";
+
+            return "redirect:/";
         }
+
         model.addAttribute("error", "Incorrect Username & Password");
         return "login";
     }
 
     @GetMapping("/logout")
     public String logout(Model model) {
+
         Authenticate.deauthenicate();
+
         model.addAttribute("UserLogin", new UserLogin());
         return "login";
     }

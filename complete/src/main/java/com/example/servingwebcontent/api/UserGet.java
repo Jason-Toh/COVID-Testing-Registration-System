@@ -75,10 +75,6 @@ public class UserGet extends Get<User> {
                     testingSiteName = (String) testingSite.get("name");
                 }
 
-                JSONObject customer = (JSONObject) bookingJsonArray.getJSONObject(i).get("customer");
-                String customerId = customer.getString("id");
-                String customerName = customer.getString("givenName") + " " + customer.getString("familyName");
-
                 // Retrieve each item from the covid-test list jsonArray
                 JSONArray covidTests = (JSONArray) bookingJsonArray.getJSONObject(j).get("covidTests");
 
@@ -92,7 +88,7 @@ public class UserGet extends Get<User> {
                     covidTests1.add(covidTest);
                 }
 
-                Booking booking = Booking.getInstance(bookingId, customerId, customerName, testingSiteId,
+                Booking booking = Booking.getInstance(bookingId, testingSiteId,
                         testingSiteName, smsPin,
                         startTime, status);
                 booking.setCovidTests(covidTests1);
