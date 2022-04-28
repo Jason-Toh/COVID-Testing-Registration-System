@@ -15,8 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class BookingGet extends Get {
-    private String myApiKey;
-    private List<Booking> bookings = new ArrayList<>();
+    private final String myApiKey;
 
     public BookingGet(String myApiKey) {
         this.myApiKey = myApiKey;
@@ -24,6 +23,7 @@ public class BookingGet extends Get {
 
     @Override
     public Collection<Booking> getApi() throws IOException, InterruptedException, ParseException {
+        List<Booking> bookings = new ArrayList<>();
         String rootUrl = "https://fit3077.com/api/v1";
         String usersUrl = rootUrl + "/booking";
 

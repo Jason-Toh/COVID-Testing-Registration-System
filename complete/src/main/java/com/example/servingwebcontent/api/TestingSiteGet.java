@@ -16,8 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class TestingSiteGet extends Get {
-    private String myApiKey;
-    private List<TestingSite> testingSites = new ArrayList<>();
+    private final String myApiKey;
 
     public TestingSiteGet(String api) {
         this.myApiKey = api;
@@ -25,6 +24,7 @@ public class TestingSiteGet extends Get {
 
     @Override
     public Collection<TestingSite> getApi() throws IOException, InterruptedException {
+        List<TestingSite> testingSites = new ArrayList<>();
         String rootUrl = "https://fit3077.com/api/v1";
         String usersUrl = rootUrl + "/testing-site";
 

@@ -9,12 +9,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class BookingPatch extends Patch{
-    private String myApiKey;
-    private String bookingId;
-    private String symptom;
-    private BookingStatus bookingStatus;
-    private String qrCode;
-    private String url;
+    private final String myApiKey;
+    private final String bookingId;
+    private final String symptom;
+    private final BookingStatus bookingStatus;
+    private final String qrCode;
+    private final String url;
 
     public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus, String qrCode, String url) {
         this.myApiKey = myApiKey;

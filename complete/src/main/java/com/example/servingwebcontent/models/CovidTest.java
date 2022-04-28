@@ -4,7 +4,6 @@ package com.example.servingwebcontent.models;
 public class CovidTest {
     private String id;
     private String testType;
-
     private String result;
 
     public CovidTest(String id, String testType, String result) {
