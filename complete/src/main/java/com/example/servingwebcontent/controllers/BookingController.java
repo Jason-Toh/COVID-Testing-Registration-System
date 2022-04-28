@@ -39,10 +39,6 @@ public class BookingController {
             return "redirect:/login";
         }
 
-        if (!Authenticate.getUser().isReceptionist() || !Authenticate.getUser().isCustomer()) {
-            return "notAuthorised";
-        }
-
         // 1.
         BookingForm bookingForm = new BookingForm();
         model.addAttribute("bookingForm", bookingForm);
