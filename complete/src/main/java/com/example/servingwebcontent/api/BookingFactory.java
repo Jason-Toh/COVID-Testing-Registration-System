@@ -1,5 +1,6 @@
 package com.example.servingwebcontent.api;
 
+import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.models.BookingStatus;
 
 public class BookingFactory implements APIfactory {
@@ -10,11 +11,19 @@ public class BookingFactory implements APIfactory {
     private String bookingId;
     private String symptom;
     private BookingStatus bookingStatus;
+    private String url;
+    private String qrCode;
+
 
     public BookingFactory(String api) {
         this.api = api;
     }
-
+    public BookingFactory(String api, String bookingId,String qrCode, String url, String idk){
+        this.api = api;
+        this.qrCode = qrCode;
+        this.url = url;
+        this.bookingId = bookingId;
+    }
     public BookingFactory(String api, String bookingId, String symptom, BookingStatus bookingStatus) {
         this.api = api;
         this.bookingId = bookingId;
@@ -41,6 +50,6 @@ public class BookingFactory implements APIfactory {
 
     @Override
     public Patch createPatch() {
-        return new BookingPatch(api, bookingId, symptom, bookingStatus);
+        return new BookingPatch(api, bookingId, symptom, bookingStatus, qrCode, url);
     }
 }

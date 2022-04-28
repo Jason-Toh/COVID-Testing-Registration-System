@@ -1,11 +1,7 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
-import com.example.servingwebcontent.models.Authenticate;
-import com.example.servingwebcontent.models.Booking;
-import com.example.servingwebcontent.models.TestType;
-import com.example.servingwebcontent.models.TestingSite;
-import com.example.servingwebcontent.models.User;
+import com.example.servingwebcontent.models.*;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.BookingStatusForm;
 import com.example.servingwebcontent.tool.RandomPinGenerator;
@@ -213,11 +209,11 @@ public class BookingController {
 
         // Post Qr code String
         if (bookingForm.isOnHomeBooking()) {
-            // Generate random String
 
-            APIfactory factory4 = new PhotoFactory(System.getenv("API_KEY"), bookingForm.getQr());
-            Post photoPost = factory4.createPost();
-            String jsonPost1 = photoPost.postApi();
+            String url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            APIfactory apIfactory = new BookingFactory(System.getenv("API_KEY"), bookingId,bookingForm.getQr(), url, "");
+            Patch bookingPatch = apIfactory.createPatch();
+            String returnValue = bookingPatch.patchApi();
         }
 
         model.addAttribute("pinCode", book.get("smsPin") + "");
