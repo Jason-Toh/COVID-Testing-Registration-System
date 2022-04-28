@@ -25,7 +25,6 @@ public class InterviewController {
         InterviewForm interviewForm = new InterviewForm();
         model.addAttribute("interviewForm", interviewForm);
         // 2.2
-        // APIfactory factory1 = new UserFactory(API.getAPIKey());
         APIfactory factory1 = new UserFactory(System.getenv("API_KEY"));
         Get userGet = factory1.createGet();
 
@@ -56,7 +55,6 @@ public class InterviewController {
     public String submitInterviewForm(@ModelAttribute("interviewForm") InterviewForm interviewForm)
             throws IOException, InterruptedException, ParseException {
 
-//        APIfactory factory2 = new BookingFactory(API.getAPIKey());
         APIfactory factory2 = new BookingFactory(System.getenv("API_KEY"));
         Get bookingGet = factory2.createGet();
         Collection jsonGet = bookingGet.getApi();

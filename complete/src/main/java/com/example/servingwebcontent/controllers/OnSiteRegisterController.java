@@ -88,6 +88,7 @@ public class OnSiteRegisterController {
     @PostMapping("/register")
     public String submitForm(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model)
             throws IOException, InterruptedException, WriterException {
+
         // Make booking post here
         APIfactory bookingFactory = new BookingFactory(
                 System.getenv("API_KEY"), bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),

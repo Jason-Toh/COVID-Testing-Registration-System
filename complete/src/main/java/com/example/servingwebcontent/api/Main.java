@@ -13,7 +13,7 @@ import java.util.Iterator;
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException, ParseException {
 
-        String api = API.getAPIKey();
+        String api = System.getenv("API_KEY");
 
         // 1.0 Get User and return list of users information
         System.out.println("-----FACTORY CLASS CREATE GET USERS-------");
