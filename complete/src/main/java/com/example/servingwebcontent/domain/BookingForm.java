@@ -8,6 +8,7 @@ public class BookingForm {
     private String testType;
     private String time;
     private String qr;
+    private String url;
     private boolean receivedRATKit;
     private boolean onHomeBooking;
 
@@ -83,6 +84,18 @@ public class BookingForm {
         this.receivedRATKit = receivedRATKit;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public boolean isReceivedRATKit() {
+        return receivedRATKit;
+    }
+
     @Override
     public String toString() {
         return "BookingForm{" +
@@ -93,6 +106,8 @@ public class BookingForm {
                 ", testType='" + testType + '\'' +
                 ", time='" + time + '\'' +
                 ", qr='" + qr + '\'' +
+                ", url='" + url + '\'' +
+                ", receivedRATKit=" + receivedRATKit +
                 ", onHomeBooking=" + onHomeBooking +
                 '}';
     }
