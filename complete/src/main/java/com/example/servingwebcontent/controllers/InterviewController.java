@@ -59,7 +59,9 @@ public class InterviewController {
         Get bookingGet = factory2.createGet();
         Collection jsonGet = bookingGet.getApi();
         Iterator<Booking> iterator = jsonGet.iterator();
+
         String bookingId = null;
+        System.out.println(jsonGet);
 
         while (iterator.hasNext()) {
 
