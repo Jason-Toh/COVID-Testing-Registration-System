@@ -46,6 +46,22 @@ public class BookingGet extends Get {
             String smsPin = (String) json.getJSONObject(i).get("smsPin");
             String startTime = (String) json.getJSONObject(i).get("startTime");
             String status = (String) json.getJSONObject(i).get("status");
+            JSONObject additionalInfoJSON = (JSONObject) json.getJSONObject(i).get("additionalInfo");
+
+            String url = "";
+            String qr = "";
+
+            try {
+                url = additionalInfoJSON.getString("url");
+            } catch (Exception exception) {
+                url = "";
+            }
+
+            try {
+                qr = additionalInfoJSON.getString("qr");
+            } catch (Exception exception) {
+                qr = "";
+            }
 
             String testingSiteName = null;
             String testingSiteId = null;
@@ -61,7 +77,7 @@ public class BookingGet extends Get {
 
             Booking booking = Booking.getInstance(bookingId, customerId, customerName, testingSiteId, testingSiteName,
                     smsPin,
-                    startTime, status);
+                    startTime, status, url, qr);
             bookings.add(booking);
         }
 

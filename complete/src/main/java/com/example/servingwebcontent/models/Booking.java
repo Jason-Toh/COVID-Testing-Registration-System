@@ -12,14 +12,16 @@ public class Booking {
     private String smsPin;
     private String startTime;
     private String status;
+    private String url;
+    private String qr;
     private List<CovidTest> covidTests;
 
     public static Booking getInstance(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName,
             String smsPin,
-            String startTime, String status) {
+            String startTime, String status, String url, String qr) {
         Booking booking = new Booking(bookingId, customerId, customerName, testingSiteId, testingSiteName, smsPin,
-                startTime, status);
+                startTime, status, url, qr);
         return booking;
     };
 
@@ -34,7 +36,7 @@ public class Booking {
 
     private Booking(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName, String smsPin,
-            String startTime, String status) {
+            String startTime, String status, String url, String qr) {
         this.covidTests = new ArrayList<>();
         this.bookingId = bookingId;
         this.customerId = customerId;
@@ -44,6 +46,8 @@ public class Booking {
         this.smsPin = smsPin;
         this.startTime = startTime;
         this.status = status;
+        this.url = url;
+        this.qr = qr;
     }
 
     private Booking(String bookingId, String testingSiteId,
@@ -120,6 +124,22 @@ public class Booking {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getQr() {
+        return qr;
+    }
+
+    public void setQr(String qr) {
+        this.qr = qr;
     }
 
     public List<CovidTest> getCovidTests() {
