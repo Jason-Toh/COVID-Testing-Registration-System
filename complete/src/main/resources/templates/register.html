@@ -86,7 +86,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input class="btn btn-primary" name="submit" type="submit" value="submit" />
+                        <input class="btn btn-primary" name="submit" type="submit" value="submit" id="btn2" style="display:block"/>
                     </td>
                 </tr>
             </table>
@@ -100,6 +100,7 @@
     <div style="text-align:center">
         <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="url" style="display:none;text-decoration: underline overline; color: red">URL to connect for testing</a>
         <img id="myQR" src="" />
+        <div id="qrRan"></div>
     </div>
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -123,7 +124,7 @@
             let qrCodeApi = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + randomString
 
             document.getElementById('qrcode').value = randomString
-
+            document.getElementById('qrRan').innerHTML = randomString
             // If the checkbox is checked, display the output text
             if (checkBox.checked == true) {
                 document.getElementById('myQR').src = qrCodeApi
@@ -132,13 +133,15 @@
         function myFunction1() {
             var x = document.getElementById("btn");
             var y = document.getElementById("url");
+            var z = document.getElementById("btn2");
             if (x.style.display === "none") {
                 x.style.display = "block";
                 y.style.display = "block";
-
+                z.style.display = "none";
             } else {
                 x.style.display = "none";
                 y.style.display = "none";
+                z.style.display = "block";
             }
         }
     </script>
