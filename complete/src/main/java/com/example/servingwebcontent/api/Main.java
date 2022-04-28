@@ -19,11 +19,7 @@ public class Main {
         Get bookingGet = factory2.createGet();
         Collection jsonGet = bookingGet.getApi();
 
-
-
         System.out.println(jsonGet);
-
-
 
     }
 }
