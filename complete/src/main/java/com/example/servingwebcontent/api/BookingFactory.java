@@ -5,9 +5,17 @@ public class BookingFactory implements APIfactory {
     private String customerId;
     private String testingSiteId;
     private String startTime;
+    private String bookingId;
+    private String symptom;
 
     public BookingFactory(String api) {
         this.api = api;
+    }
+
+    public BookingFactory(String api, String bookingId, String symptom) {
+        this.api = api;
+        this.bookingId = bookingId;
+        this.symptom = symptom;
     }
 
     public BookingFactory(String api, String customerId, String testingSiteId, String startTime) {
@@ -25,5 +33,10 @@ public class BookingFactory implements APIfactory {
     @Override
     public Post createPost() {
         return new BookingPost(api, customerId, testingSiteId, startTime);
+    }
+
+    @Override
+    public Patch createPatch() {
+        return new BookingPatch(api, bookingId, symptom);
     }
 }

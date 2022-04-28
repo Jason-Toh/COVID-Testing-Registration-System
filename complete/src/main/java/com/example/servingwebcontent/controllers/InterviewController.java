@@ -61,7 +61,6 @@ public class InterviewController {
         Iterator<Booking> iterator = jsonGet.iterator();
 
         String bookingId = null;
-        System.out.println(jsonGet);
 
         while (iterator.hasNext()) {
 
@@ -70,16 +69,22 @@ public class InterviewController {
             }
         }
         String patientStatus = "Headache: " + interviewForm.getHeadache() +
-                "loss taste and smell: " + interviewForm.getLossTasteAndSmell() +
-                "sore throat: " + interviewForm.getSoreThroat() +
-                "muscle pain: " + interviewForm.getMusclePain() +
-                "shaking: " + interviewForm.getShaking() +
-                "close contact: " + interviewForm.getCloseContact();
+                ", loss taste and smell: " + interviewForm.getLossTasteAndSmell() +
+                ", sore throat: " + interviewForm.getSoreThroat() +
+                ", muscle pain: " + interviewForm.getMusclePain() +
+                ", shaking: " + interviewForm.getShaking() +
+                ", close contact: " + interviewForm.getCloseContact();
 
         APIfactory factory3 = new CovidTestFactory(System.getenv("API_KEY"), interviewForm.getTestType(),
                 interviewForm.getPatient(), interviewForm.getAdministrator(), bookingId, patientStatus);
         Post covidTestPost = factory3.createPost();
         String jsonPost = covidTestPost.postApi();
+
+        // PATCH the symptom into the additional info of the booking api using its booking id
+        APIfactory apIfactory = new BookingFactory(System.getenv("API_KEY"), bookingId, patientStatus);
+        Patch bookingPatch = apIfactory.createPatch();
+        String returnValue = bookingPatch.patchApi();
+        System.out.println(returnValue);
 
         return "interview";
     }

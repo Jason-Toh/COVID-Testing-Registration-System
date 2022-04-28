@@ -28,4 +28,9 @@ public class CovidTestFactory implements APIfactory{
     public Post createPost() {
         return new CovidTestPost(api, testType, patientId, administererId, bookingId, result, patientStatus);
     }
+
+    @Override
+    public Patch createPatch() {
+        return null;
+    }
 }

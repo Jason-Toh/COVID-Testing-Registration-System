@@ -9,5 +9,5 @@ public interface APIfactory {
 
         //    public Delete createDelete();
 
-        //    public Patch createPatch();
+    public Patch createPatch();
 }

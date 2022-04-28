@@ -18,4 +18,9 @@ public class PhotoFactory implements APIfactory{
     public Post createPost() {
         return new PhotoPost(this.api, this.randomString);
     }
+
+    @Override
+    public Patch createPatch() {
+        return null;
+    }
 }
