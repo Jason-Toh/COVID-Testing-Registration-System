@@ -92,9 +92,16 @@
             </table>
         </form>
     </div>
+    <div class="container">
+        <div class="vertical-center">
+            <button onclick="myFunction()" id="btn" style="display:none">Generate QR code</button>
+        </div>
+    </div>
+    <div style="text-align:center">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="url" style="display:none;text-decoration: underline overline; color: red">URL to connect for testing</a>
+        <img id="myQR" src="" />
+    </div>
 
-    <button onclick="myFunction()" id="btn" style="display:none">Generate QR code</button>
-    <img id="myQR" src="" />
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script>
@@ -124,13 +131,17 @@
         }
         function myFunction1() {
             var x = document.getElementById("btn");
+            var y = document.getElementById("url");
             if (x.style.display === "none") {
                 x.style.display = "block";
+                y.style.display = "block";
+
             } else {
                 x.style.display = "none";
+                y.style.display = "none";
             }
         }
     </script>
-</body>
 
+</body>
 </html>

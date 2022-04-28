@@ -18,4 +18,9 @@ public class TestingSiteFactory implements APIfactory{
     public Post createPost() {
         return null;
     }
+
+    @Override
+    public Patch createPatch() {
+        return null;
+    }
 }

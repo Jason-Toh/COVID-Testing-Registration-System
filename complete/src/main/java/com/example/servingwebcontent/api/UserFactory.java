@@ -16,4 +16,9 @@ public class UserFactory implements APIfactory{
     public Post createPost() {
         return null;
     }
+
+    @Override
+    public Patch createPatch() {
+        return null;
+    }
 }
