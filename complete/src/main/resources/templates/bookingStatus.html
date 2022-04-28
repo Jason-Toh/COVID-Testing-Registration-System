@@ -17,19 +17,19 @@
             <tbody class="thead-dark">
                 <tr>
                     <th>Customer Name</th>
-                    <td></td>
+                    <td th:text="${booking.getCustomerName()}"></td>
                 </tr>
                 <tr>
                     <th>Testing Site Name</th>
-                    <td></td>
+                    <td th:text="${booking.getTestingSiteName()}"></td>
                 </tr>
                 <tr>
                     <th>Start Time</th>
-                    <td></td>
+                    <td th:text="${booking.getStartTime()}"></td>
                 </tr>
                 <tr>
                     <th>Booking Status</th>
-                    <td></td>
+                    <td th:text="${booking.getStatus()}"></td>
                 </tr>
             </tbody>
         </table>

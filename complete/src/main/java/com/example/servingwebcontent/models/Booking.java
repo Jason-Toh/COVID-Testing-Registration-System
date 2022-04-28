@@ -5,24 +5,36 @@ import java.util.List;
 
 public class Booking {
     private String bookingId;
+    private String customerId;
+    private String customerName;
     private String testingSiteId;
     private String testingSiteName;
     private String smsPin;
     private String startTime;
+    private String status;
     private List<CovidTest> covidTests;
 
-    public static Booking getInstance(String bookingId, String testingSiteId, String testingSiteName, String smsPin, String startTime){
-        Booking booking = new Booking(bookingId, testingSiteId, testingSiteName, smsPin, startTime);
+    public static Booking getInstance(String bookingId, String customerId, String customerName, String testingSiteId,
+            String testingSiteName,
+            String smsPin,
+            String startTime, String status) {
+        Booking booking = new Booking(bookingId, customerId, customerName, testingSiteId, testingSiteName, smsPin,
+                startTime, status);
         return booking;
     };
 
-    private Booking(String bookingId, String testingSiteId, String testingSiteName, String smsPin, String startTime) {
+    private Booking(String bookingId, String customerId, String customerName, String testingSiteId,
+            String testingSiteName, String smsPin,
+            String startTime, String status) {
         this.covidTests = new ArrayList<>();
         this.bookingId = bookingId;
+        this.customerId = customerId;
+        this.customerName = customerName;
         this.testingSiteId = testingSiteId;
         this.testingSiteName = testingSiteName;
         this.smsPin = smsPin;
         this.startTime = startTime;
+        this.status = status;
     }
 
     public String getStartTime() {
@@ -39,6 +51,22 @@ public class Booking {
 
     public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getTestingSiteId() {
@@ -63,6 +91,14 @@ public class Booking {
 
     public void setSmsPin(String smsPin) {
         this.smsPin = smsPin;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<CovidTest> getCovidTests() {

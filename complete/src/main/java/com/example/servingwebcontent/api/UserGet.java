@@ -7,7 +7,6 @@ import com.example.servingwebcontent.models.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -16,7 +15,6 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 
 public class UserGet extends Get<User> {
     private String myApiKey;
@@ -46,54 +44,62 @@ public class UserGet extends Get<User> {
         // Create users list
         // Add user into users list
 
-        //Retrieve each user from the user list jsonArray
-        for(int i = 0; i < json.length(); i++){
-            String id = (String)json.getJSONObject(i).get("id");
-            String givenName = (String)json.getJSONObject(i).get("givenName");
-            String familyName = (String)json.getJSONObject(i).get("familyName");
-            String userName = (String)json.getJSONObject(i).get("userName");
-            String phoneNumber = (String)json.getJSONObject(i).get("phoneNumber");
-            boolean isCustomer = (boolean)json.getJSONObject(i).get("isCustomer");
-            boolean isReceptionist = (boolean)json.getJSONObject(i).get("isReceptionist");
-            boolean isHealthcareWorker = (boolean)json.getJSONObject(i).get("isHealthcareWorker");
+        // Retrieve each user from the user list jsonArray
+        for (int i = 0; i < json.length(); i++) {
+            String id = (String) json.getJSONObject(i).get("id");
+            String givenName = (String) json.getJSONObject(i).get("givenName");
+            String familyName = (String) json.getJSONObject(i).get("familyName");
+            String userName = (String) json.getJSONObject(i).get("userName");
+            String phoneNumber = (String) json.getJSONObject(i).get("phoneNumber");
+            boolean isCustomer = (boolean) json.getJSONObject(i).get("isCustomer");
+            boolean isReceptionist = (boolean) json.getJSONObject(i).get("isReceptionist");
+            boolean isHealthcareWorker = (boolean) json.getJSONObject(i).get("isHealthcareWorker");
 
             JSONArray bookingJsonArray = json.getJSONObject(i).getJSONArray("bookings");
 
             List<Booking> bookings = new ArrayList<>();
             // Retrieve each item from the booking list jsonArray
-            for(int j = 0; j < bookingJsonArray.length(); j++){
+            for (int j = 0; j < bookingJsonArray.length(); j++) {
                 String bookingId = (String) bookingJsonArray.getJSONObject(j).get("id");
                 String smsPin = (String) bookingJsonArray.getJSONObject(j).get("smsPin");
+                String status = (String) bookingJsonArray.getJSONObject(j).get("status");
                 String startTime = (String) bookingJsonArray.getJSONObject(j).get("startTime");
                 JSONObject testingSite;
                 String testingSiteName = "None";
                 String testingSiteId = "None";
-                // Check whether the testing site is null because Tyler One user has null testing-site
-                if (! bookingJsonArray.getJSONObject(j).get("testingSite").equals(null)){
+                // Check whether the testing site is null because Tyler One user has null
+                // testing-site
+                if (!bookingJsonArray.getJSONObject(j).get("testingSite").equals(null)) {
                     testingSite = (JSONObject) bookingJsonArray.getJSONObject(j).get("testingSite");
                     testingSiteId = (String) testingSite.get("id");
                     testingSiteName = (String) testingSite.get("name");
                 }
 
+                JSONObject customer = (JSONObject) bookingJsonArray.getJSONObject(i).get("customer");
+                String customerId = customer.getString("id");
+                String customerName = customer.getString("givenName") + " " + customer.getString("familyName");
 
                 // Retrieve each item from the covid-test list jsonArray
                 JSONArray covidTests = (JSONArray) bookingJsonArray.getJSONObject(j).get("covidTests");
 
                 List<CovidTest> covidTests1 = new ArrayList<>();
-                for(int k = 0; k < covidTests.length(); k++){
+                for (int k = 0; k < covidTests.length(); k++) {
                     String covidTestId = (String) covidTests.getJSONObject(k).get("id");
                     String result = (String) covidTests.getJSONObject(k).get("result");
                     String type = (String) covidTests.getJSONObject(k).get("type");
-                    CovidTest covidTest = new CovidTest(covidTestId,type,result);
+                    CovidTest covidTest = new CovidTest(covidTestId, type, result);
 
                     covidTests1.add(covidTest);
                 }
 
-                Booking booking = Booking.getInstance(bookingId, testingSiteId, testingSiteName, smsPin, startTime);
+                Booking booking = Booking.getInstance(bookingId, customerId, customerName, testingSiteId,
+                        testingSiteName, smsPin,
+                        startTime, status);
                 booking.setCovidTests(covidTests1);
                 bookings.add(booking);
             }
-            User user = new User(id, givenName, familyName, userName, phoneNumber, isCustomer, isReceptionist, isHealthcareWorker);
+            User user = new User(id, givenName, familyName, userName, phoneNumber, isCustomer, isReceptionist,
+                    isHealthcareWorker);
             user.setBookings(bookings);
             users.add(user);
         }

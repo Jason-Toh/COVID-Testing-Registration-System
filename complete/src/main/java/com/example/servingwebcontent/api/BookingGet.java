@@ -45,17 +45,23 @@ public class BookingGet extends Get {
             String bookingId = (String) json.getJSONObject(i).get("id");
             String smsPin = (String) json.getJSONObject(i).get("smsPin");
             String startTime = (String) json.getJSONObject(i).get("startTime");
+            String status = (String) json.getJSONObject(i).get("status");
 
             String testingSiteName = null;
             String testingSiteId = null;
-            if (!json.getJSONObject(i).get("testingSite").equals(null)){
+            if (!json.getJSONObject(i).get("testingSite").equals(null)) {
                 JSONObject testingSite = (JSONObject) json.getJSONObject(i).get("testingSite");
                 testingSiteName = testingSite.getString("name");
                 testingSiteId = testingSite.getString("id");
             }
 
+            JSONObject customer = (JSONObject) json.getJSONObject(i).get("customer");
+            String customerId = customer.getString("id");
+            String customerName = customer.getString("givenName") + " " + customer.getString("familyName");
 
-            Booking booking = Booking.getInstance(bookingId, testingSiteId, testingSiteName, smsPin, startTime);
+            Booking booking = Booking.getInstance(bookingId, customerId, customerName, testingSiteId, testingSiteName,
+                    smsPin,
+                    startTime, status);
             bookings.add(booking);
         }
 
