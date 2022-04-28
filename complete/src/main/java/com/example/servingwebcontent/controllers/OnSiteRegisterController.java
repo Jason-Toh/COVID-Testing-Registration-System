@@ -1,15 +1,13 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
-import com.example.servingwebcontent.apiclasses.Booking;
-import com.example.servingwebcontent.apiclasses.TestType;
-import com.example.servingwebcontent.apiclasses.TestingSite;
-import com.example.servingwebcontent.apiclasses.User;
+import com.example.servingwebcontent.models.Booking;
+import com.example.servingwebcontent.models.TestType;
+import com.example.servingwebcontent.models.TestingSite;
+import com.example.servingwebcontent.models.User;
 import com.example.servingwebcontent.domain.BookingForm;
-
-import com.example.servingwebcontent.tool.MyQr;
+import com.example.servingwebcontent.domain.BookingStatusForm;
 import com.example.servingwebcontent.tool.RandomPinGenerator;
-import com.example.servingwebcontent.tool.RandomStringGenerator;
 import com.google.zxing.WriterException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -94,6 +91,46 @@ public class OnSiteRegisterController {
         return (c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR) &&
                 c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH) &&
                 c1.get(Calendar.DAY_OF_MONTH) == c2.get(Calendar.DAY_OF_MONTH));
+    }
+
+    @GetMapping("/bookingStatus")
+    public String askForPinCode(Model model) {
+        return "pinVerification";
+    }
+
+    @PostMapping("/submitPinCode")
+    public String displayBookingStatus(@ModelAttribute("bookingStatusForm") BookingStatusForm bookingStatusForm,
+            Model model) {
+
+        APIfactory bookingFactory = new BookingFactory(System.getenv("API_KEY"));
+
+        Get bookingGet = bookingFactory.createGet();
+
+        String pinCode = bookingStatusForm.getPinCode();
+        System.out.println(pinCode);
+        boolean exist = false;
+
+        try {
+            Collection<Booking> bookingCollection = bookingGet.getApi();
+            for (Booking booking : bookingCollection) {
+                if (booking.getSmsPin().equals(pinCode)) {
+                    model.addAttribute("booking", booking);
+                    exist = true;
+                    break;
+                }
+            }
+
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
+
+        if (!exist) {
+            model.addAttribute("error", "Pin code does not exist");
+            return "pinVerification";
+        } else {
+            return "bookingStatus";
+        }
+
     }
 
     @PostMapping("/register")

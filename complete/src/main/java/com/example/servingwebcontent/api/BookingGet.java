@@ -1,8 +1,6 @@
 package com.example.servingwebcontent.api;
 
-import com.example.servingwebcontent.apiclasses.Address;
-import com.example.servingwebcontent.apiclasses.Booking;
-import com.example.servingwebcontent.apiclasses.TestingSite;
+import com.example.servingwebcontent.models.Booking;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;

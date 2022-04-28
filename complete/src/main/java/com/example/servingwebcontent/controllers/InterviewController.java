@@ -1,13 +1,10 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
-import com.example.servingwebcontent.apiclasses.Booking;
-import com.example.servingwebcontent.apiclasses.TestType;
-import com.example.servingwebcontent.apiclasses.TestingSite;
-import com.example.servingwebcontent.apiclasses.User;
-import com.example.servingwebcontent.domain.BookingForm;
+import com.example.servingwebcontent.models.Booking;
+import com.example.servingwebcontent.models.TestType;
+import com.example.servingwebcontent.models.User;
 import com.example.servingwebcontent.domain.InterviewForm;
-import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.apiclasses;
+package com.example.servingwebcontent.models;
 
 
 

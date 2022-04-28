@@ -1,21 +1,16 @@
 package com.example.servingwebcontent.api;
 
-import com.example.servingwebcontent.apiclasses.Address;
-import com.example.servingwebcontent.apiclasses.TestingSite;
-import com.example.servingwebcontent.apiclasses.TestingSiteStatus;
-import com.example.servingwebcontent.apiclasses.User;
+import com.example.servingwebcontent.models.Address;
+import com.example.servingwebcontent.models.TestingSite;
+import com.example.servingwebcontent.models.TestingSiteStatus;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

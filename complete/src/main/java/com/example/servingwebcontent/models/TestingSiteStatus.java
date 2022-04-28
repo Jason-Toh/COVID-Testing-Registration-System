@@ -1,10 +1,6 @@
-package com.example.servingwebcontent.apiclasses;
+package com.example.servingwebcontent.models;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
-import org.apache.tomcat.jni.Local;
 
 public class TestingSiteStatus {
     private String typeOfFacility;

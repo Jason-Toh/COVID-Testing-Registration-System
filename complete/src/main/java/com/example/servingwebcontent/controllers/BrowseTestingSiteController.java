@@ -1,19 +1,14 @@
 package com.example.servingwebcontent.controllers;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
-import com.example.servingwebcontent.api.API;
 import com.example.servingwebcontent.api.APIfactory;
 import com.example.servingwebcontent.api.Get;
 import com.example.servingwebcontent.api.TestingSiteFactory;
-import com.example.servingwebcontent.apiclasses.TestingSite;
+import com.example.servingwebcontent.models.TestingSite;
 import com.example.servingwebcontent.domain.BrowseForm;
 
 import org.springframework.stereotype.Controller;
@@ -23,7 +18,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BrowseTestingSiteController {
