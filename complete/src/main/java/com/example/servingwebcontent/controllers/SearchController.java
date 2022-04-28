@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class BrowseTestingSiteController {
+public class SearchController {
 
     public List<TestingSite> getTestingSiteModels() {
         List<TestingSite> testingSiteModels = new ArrayList<>();

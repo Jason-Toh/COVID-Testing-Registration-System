@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Controller
-public class OnSiteRegisterController {
+public class BookingController {
 
     static boolean isUserAuthenticated = Authenticate.getIsUserAuthenticated();
 
@@ -39,7 +39,7 @@ public class OnSiteRegisterController {
             return "redirect:/login";
         }
 
-        if (!Authenticate.getUser().isReceptionist()) {
+        if (!Authenticate.getUser().isReceptionist() || !Authenticate.getUser().isCustomer()) {
             return "notAuthorised";
         }
 
