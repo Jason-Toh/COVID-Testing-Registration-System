@@ -1,5 +1,7 @@
 package com.example.servingwebcontent.api;
 
+import com.example.servingwebcontent.models.BookingStatus;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -10,11 +12,13 @@ public class BookingPatch extends Patch{
     private String myApiKey;
     private String bookingId;
     private String symptom;
+    private BookingStatus bookingStatus;
 
-    public BookingPatch(String myApiKey, String bookingId, String symptom) {
+    public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus) {
         this.myApiKey = myApiKey;
         this.bookingId = bookingId;
         this.symptom = symptom;
+        this.bookingStatus = bookingStatus;
     }
 
     @Override
@@ -26,6 +30,7 @@ public class BookingPatch extends Patch{
         String usersUrl = rootUrl + "/booking/" + bookingId;
 
         String jsonString = "{" +
+                "\"status\":\"" + bookingStatus + "\"," +
                 "\"additionalInfo\":" + "{ " +
                 "\"symptom\":\"" + symptom + "\""
                 + "}" + "}";
