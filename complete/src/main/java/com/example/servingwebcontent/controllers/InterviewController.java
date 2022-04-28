@@ -24,6 +24,10 @@ public class InterviewController {
             return "redirect:/login";
         }
 
+        if (!Authenticate.getUser().isHealthcareWorker()) {
+            return "notAuthorised";
+        }
+
         // 1. Interview Form
         InterviewForm interviewForm = new InterviewForm();
         model.addAttribute("interviewForm", interviewForm);

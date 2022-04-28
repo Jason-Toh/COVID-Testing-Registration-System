@@ -24,9 +24,9 @@ public class MainController {
 
         if (user.isCustomer()) {
             model.addAttribute("role", "Customer");
-        } else if (user.isHealthcareWorker()) {
-            model.addAttribute("role", "Administrator");
         } else if (user.isReceptionist()) {
+            model.addAttribute("role", "Administrator");
+        } else if (user.isHealthcareWorker()) {
             model.addAttribute("role", "Health Care Worker");
         } else {
             model.addAttribute("role", "No Role");

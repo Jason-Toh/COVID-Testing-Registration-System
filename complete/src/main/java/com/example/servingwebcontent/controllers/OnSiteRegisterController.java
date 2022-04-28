@@ -39,6 +39,10 @@ public class OnSiteRegisterController {
             return "redirect:/login";
         }
 
+        if (!Authenticate.getUser().isReceptionist()) {
+            return "notAuthorised";
+        }
+
         // 1.
         BookingForm bookingForm = new BookingForm();
         model.addAttribute("bookingForm", bookingForm);
