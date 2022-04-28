@@ -19,8 +19,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -85,6 +90,12 @@ public class OnSiteRegisterController {
         return "register";
     }
 
+    private boolean isDateSame(Calendar c1, Calendar c2) {
+        return (c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR) &&
+                c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH) &&
+                c1.get(Calendar.DAY_OF_MONTH) == c2.get(Calendar.DAY_OF_MONTH));
+    }
+
     @PostMapping("/register")
     public String submitForm(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model)
             throws IOException, InterruptedException, WriterException {
@@ -93,6 +104,57 @@ public class OnSiteRegisterController {
         APIfactory bookingFactory = new BookingFactory(
                 System.getenv("API_KEY"), bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
                 bookingForm.getTime());
+
+        Get bookingGet = bookingFactory.createGet();
+
+        try {
+            Collection<Booking> bookingCollection = bookingGet.getApi();
+            for (Booking booking : bookingCollection) {
+
+                // Some testing sites have null information
+                if (booking.getTestingSiteId() == null) {
+                    continue;
+                }
+                if (booking.getTestingSiteId().equals(bookingForm.getTestingSite())) {
+                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+                    Date bookingFormDate = (Date) formatter.parse(bookingForm.getTime());
+                    Date bookingDate = (Date) formatter.parse(booking.getStartTime());
+
+                    Calendar bookingFormStartTime = Calendar.getInstance();
+                    bookingFormStartTime.setTime(bookingFormDate);
+
+                    Calendar bookingStartTime = Calendar.getInstance();
+                    bookingStartTime.setTime(bookingDate);
+
+                    // Add 10 minutes interval for each booking
+                    Calendar bookingEndTime = Calendar.getInstance();
+                    bookingEndTime.setTime(bookingDate);
+                    bookingEndTime.add(Calendar.MINUTE, 10);
+
+                    SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+
+                    if (isDateSame(bookingFormStartTime, bookingEndTime)) {
+                        String startTime = timeFormatter.format(bookingStartTime.getTime());
+                        String endTime = timeFormatter.format(bookingEndTime.getTime());
+
+                        // Bookings can be made every 10 minutes after each booking
+                        if (bookingFormStartTime.getTime().after(bookingStartTime.getTime())
+                                && bookingFormStartTime.getTime().before(bookingEndTime.getTime())) {
+                            model.addAttribute("error",
+                                    "Booking Time " + startTime + " - " + endTime + " has been taken");
+                            return "register";
+                        }
+                    }
+                }
+            }
+
+        } catch (
+
+        Exception exception) {
+            System.out.println(exception);
+        }
+
         Post bookingPost = bookingFactory.createPost();
         String jsonPost = bookingPost.postApi();
 

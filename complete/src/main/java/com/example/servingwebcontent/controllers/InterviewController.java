@@ -21,6 +21,7 @@ public class InterviewController {
 
     @GetMapping("/interview")
     public String getRegister(Model model) {
+
         // 1. Interview Form
         InterviewForm interviewForm = new InterviewForm();
         model.addAttribute("interviewForm", interviewForm);
