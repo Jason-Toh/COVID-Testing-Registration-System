@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
+import com.example.servingwebcontent.apiclasses.Booking;
 import com.example.servingwebcontent.apiclasses.TestType;
 import com.example.servingwebcontent.apiclasses.TestingSite;
 import com.example.servingwebcontent.apiclasses.User;
@@ -34,7 +35,7 @@ public class OnSiteRegisterController {
 
         // 2.1 Get testing-sites and put it into model
         // API factory
-        APIfactory factory = new TestingSiteFactory(System.getenv("API"));
+        APIfactory factory = new TestingSiteFactory(System.getenv("API_KEY"));
         Get testingSiteGet = factory.createGet();
 
         List<TestingSite> testingSiteModels = new ArrayList<>();
@@ -51,7 +52,7 @@ public class OnSiteRegisterController {
         }
         model.addAttribute("testingSiteModels", testingSiteModels);
         // 2.2
-        APIfactory factory1 = new UserFactory(System.getenv("API"));
+        APIfactory factory1 = new UserFactory(System.getenv("API_KEY"));
         Get userGet = factory1.createGet();
 
         List<User> userModels = new ArrayList<>();
@@ -85,13 +86,13 @@ public class OnSiteRegisterController {
     }
 
     @PostMapping("/register")
-    public String submitForm(@ModelAttribute("bookingForm") BookingForm bookingForm)
+    public String submitForm(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model)
             throws IOException, InterruptedException, WriterException {
         // Make booking post here
-        APIfactory factory3 = new BookingFactory(
-                System.getenv("API"), bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
+        APIfactory bookingFactory = new BookingFactory(
+                System.getenv("API_KEY"), bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
                 bookingForm.getTime());
-        Post bookingPost = factory3.createPost();
+        Post bookingPost = bookingFactory.createPost();
         String jsonPost = bookingPost.postApi();
 
         // Convert booking return JSON string to JSONObject and get the booking id
@@ -102,13 +103,14 @@ public class OnSiteRegisterController {
         if (bookingForm.isOnHomeBooking()) {
             // Generate random String
 
-            APIfactory factory4 = new PhotoFactory(System.getenv("API"), bookingForm.getQr());
+            APIfactory factory4 = new PhotoFactory(System.getenv("API_KEY"), bookingForm.getQr());
             Post photoPost = factory4.createPost();
             String jsonPost1 = photoPost.postApi();
-
         }
 
-        return "register";
+        model.addAttribute("pinCode", book.get("smsPin") + "");
+
+        return "pinCode";
     }
 
 }

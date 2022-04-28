@@ -32,7 +32,7 @@ public class BrowseTestingSiteController {
         List<TestingSite> testingSiteModels = new ArrayList<>();
 
 //        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
-        APIfactory factory = new TestingSiteFactory(System.getenv("API"));
+        APIfactory factory = new TestingSiteFactory(System.getenv("API_KEY"));
         Get testingSiteGet = factory.createGet();
 
         try {
@@ -63,7 +63,7 @@ public class BrowseTestingSiteController {
     @PostMapping("/search")
     public String searchTestingSite(@ModelAttribute("browseForm") BrowseForm browseForm, Model model) {
 //        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
-        APIfactory factory = new TestingSiteFactory(System.getenv("API"));
+        APIfactory factory = new TestingSiteFactory(System.getenv("API_KEY"));
         Get testingSiteGet = factory.createGet();
 
         List<TestingSite> filteredTestingSiteModels = new ArrayList<>();
@@ -76,6 +76,7 @@ public class BrowseTestingSiteController {
 
             // Search for a substring in a string
             for (TestingSite testingSite : testingSites) {
+                // Filter the testing site based on suburb name
                 if (testingSite.getName().toLowerCase().contains(suburbName)) {
                     filteredTestingSiteModels.add(testingSite);
                 }
@@ -92,7 +93,8 @@ public class BrowseTestingSiteController {
 
     @PostMapping("/select")
     public String filterByTypeOfFacility(@ModelAttribute("browseForm") BrowseForm browseForm, Model model) {
-        APIfactory factory = new TestingSiteFactory(System.getenv("API"));
+//        APIfactory factory = new TestingSiteFactory(API.getAPIKey());
+        APIfactory factory = new TestingSiteFactory(System.getenv("API_KEY"));
 
         Get testingSiteGet = factory.createGet();
 
@@ -106,6 +108,7 @@ public class BrowseTestingSiteController {
 
             // Search for a substring in a string
             for (TestingSite testingSite : testingSites) {
+                // Filter the testing site based on type of facility
                 if (testingSite.getAdditonalInfo().getTypeOfFacility().toLowerCase().contains(typeOfFacility)) {
                     filteredTestingSiteModels.add(testingSite);
                 }

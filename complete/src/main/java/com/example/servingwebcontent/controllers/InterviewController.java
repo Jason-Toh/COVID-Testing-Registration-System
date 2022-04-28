@@ -25,7 +25,8 @@ public class InterviewController {
         InterviewForm interviewForm = new InterviewForm();
         model.addAttribute("interviewForm", interviewForm);
         // 2.2
-        APIfactory factory1 = new UserFactory(System.getenv("API"));
+        // APIfactory factory1 = new UserFactory(API.getAPIKey());
+        APIfactory factory1 = new UserFactory(System.getenv("API_KEY"));
         Get userGet = factory1.createGet();
 
         List<User> userModels = new ArrayList<>();
@@ -55,7 +56,8 @@ public class InterviewController {
     public String submitInterviewForm(@ModelAttribute("interviewForm") InterviewForm interviewForm)
             throws IOException, InterruptedException, ParseException {
 
-        APIfactory factory2 = new BookingFactory(System.getenv("API"));
+//        APIfactory factory2 = new BookingFactory(API.getAPIKey());
+        APIfactory factory2 = new BookingFactory(System.getenv("API_KEY"));
         Get bookingGet = factory2.createGet();
         Collection jsonGet = bookingGet.getApi();
         Iterator<Booking> iterator = jsonGet.iterator();
@@ -74,7 +76,7 @@ public class InterviewController {
                 "shaking: " + interviewForm.getShaking() +
                 "close contact: " + interviewForm.getCloseContact();
 
-        APIfactory factory3 = new CovidTestFactory(System.getenv("API"), interviewForm.getTestType(),
+        APIfactory factory3 = new CovidTestFactory(System.getenv("API_KEY"), interviewForm.getTestType(),
                 interviewForm.getPatient(), interviewForm.getAdministrator(), bookingId, patientStatus);
         Post covidTestPost = factory3.createPost();
         String jsonPost = covidTestPost.postApi();
