@@ -68,12 +68,16 @@ public class InterviewController {
                 bookingId = iterator.next().getBookingId();
             }
         }
-        String patientStatus = "Headache: " + interviewForm.getHeadache() +
-                ", loss taste and smell: " + interviewForm.getLossTasteAndSmell() +
-                ", sore throat: " + interviewForm.getSoreThroat() +
-                ", muscle pain: " + interviewForm.getMusclePain() +
-                ", shaking: " + interviewForm.getShaking() +
-                ", close contact: " + interviewForm.getCloseContact();
+        String patientStatus = "no symptoms";
+        if(interviewForm.getHeadache() || interviewForm.getLossTasteAndSmell() || interviewForm.getSoreThroat() || interviewForm.getMusclePain() || interviewForm.getShaking() || interviewForm.getCloseContact()){
+            patientStatus = "Headache: " + interviewForm.getHeadache() +
+                    ", loss taste and smell: " + interviewForm.getLossTasteAndSmell() +
+                    ", sore throat: " + interviewForm.getSoreThroat() +
+                    ", muscle pain: " + interviewForm.getMusclePain() +
+                    ", shaking: " + interviewForm.getShaking() +
+                    ", close contact: " + interviewForm.getCloseContact();
+        }
+
 
         APIfactory factory3 = new CovidTestFactory(System.getenv("API_KEY"), interviewForm.getTestType(),
                 interviewForm.getPatient(), interviewForm.getAdministrator(), bookingId, patientStatus);
