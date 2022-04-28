@@ -16,8 +16,8 @@
         <form name='f' th:action="@{/submitPinCode}" th:object="${bookingStatusForm}" method='POST' class="mt-4">
             <label for="pinCode">Please enter your PIN Code</label>
             <input type='text' name='pinCode' value='' th:value="${pinCode}" class=" form-control"
-                placeholder="e.g. 12345">
-            <button type="submit" class="btn btn-primary">Submit</button>
+                placeholder="e.g. 12345" required>
+            <button type="submit" class="btn btn-primary mt-4">Submit</button>
         </form>
     </div>
     <div th:replace="fragments/scripts :: scripts"></div>

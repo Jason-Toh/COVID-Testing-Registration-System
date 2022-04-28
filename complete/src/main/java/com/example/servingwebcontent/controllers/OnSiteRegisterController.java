@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
+import com.example.servingwebcontent.models.Authenticate;
 import com.example.servingwebcontent.models.Booking;
 import com.example.servingwebcontent.models.TestType;
 import com.example.servingwebcontent.models.TestingSite;
@@ -29,8 +30,15 @@ import java.util.List;
 @Controller
 public class OnSiteRegisterController {
 
+    static boolean isUserAuthenticated = Authenticate.getIsUserAuthenticated();
+
     @GetMapping("/register")
     public String getRegister(Model model) {
+
+        if (!Authenticate.getIsUserAuthenticated()) {
+            return "redirect:/login";
+        }
+
         // 1.
         BookingForm bookingForm = new BookingForm();
         model.addAttribute("bookingForm", bookingForm);
@@ -95,6 +103,11 @@ public class OnSiteRegisterController {
 
     @GetMapping("/bookingStatus")
     public String askForPinCode(Model model) {
+
+        if (!Authenticate.getIsUserAuthenticated()) {
+            return "redirect:/login";
+        }
+
         return "pinVerification";
     }
 
@@ -107,7 +120,6 @@ public class OnSiteRegisterController {
         Get bookingGet = bookingFactory.createGet();
 
         String pinCode = bookingStatusForm.getPinCode();
-        System.out.println(pinCode);
         boolean exist = false;
 
         try {

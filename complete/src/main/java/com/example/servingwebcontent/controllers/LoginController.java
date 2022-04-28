@@ -2,6 +2,8 @@ package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.API;
 import com.example.servingwebcontent.domain.UserLogin;
+import com.example.servingwebcontent.models.Authenticate;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,13 +33,20 @@ public class LoginController {
         String uname = login.getUserName();
         String pass = login.getPassword();
         if (checkLoginFromAPI(uname, pass)) {
+            Authenticate.authenticate();
             model.addAttribute("userName", uname);
             model.addAttribute("password", pass);
             return "home-page";
         }
         model.addAttribute("error", "Incorrect Username & Password");
         return "login";
+    }
 
+    @GetMapping("/logout")
+    public String logout(Model model) {
+        Authenticate.deauthenicate();
+        model.addAttribute("UserLogin", new UserLogin());
+        return "login";
     }
 
     public boolean checkLoginFromAPI(String userName, String password) throws IOException, InterruptedException {

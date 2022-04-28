@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
+import com.example.servingwebcontent.models.Authenticate;
 import com.example.servingwebcontent.models.Booking;
 import com.example.servingwebcontent.models.TestType;
 import com.example.servingwebcontent.models.User;
@@ -18,6 +19,10 @@ public class InterviewController {
 
     @GetMapping("/interview")
     public String getRegister(Model model) {
+
+        if (!Authenticate.getIsUserAuthenticated()) {
+            return "redirect:/login";
+        }
 
         // 1. Interview Form
         InterviewForm interviewForm = new InterviewForm();
@@ -67,7 +72,8 @@ public class InterviewController {
             }
         }
         String patientStatus = "no symptoms";
-        if(interviewForm.getHeadache() || interviewForm.getLossTasteAndSmell() || interviewForm.getSoreThroat() || interviewForm.getMusclePain() || interviewForm.getShaking() || interviewForm.getCloseContact()){
+        if (interviewForm.getHeadache() || interviewForm.getLossTasteAndSmell() || interviewForm.getSoreThroat()
+                || interviewForm.getMusclePain() || interviewForm.getShaking() || interviewForm.getCloseContact()) {
             patientStatus = "Headache: " + interviewForm.getHeadache() +
                     ", loss taste and smell: " + interviewForm.getLossTasteAndSmell() +
                     ", sore throat: " + interviewForm.getSoreThroat() +
@@ -76,13 +82,13 @@ public class InterviewController {
                     ", close contact: " + interviewForm.getCloseContact();
         }
 
-
         APIfactory factory3 = new CovidTestFactory(System.getenv("API_KEY"), interviewForm.getTestType(),
                 interviewForm.getPatient(), interviewForm.getAdministrator(), bookingId, patientStatus);
         Post covidTestPost = factory3.createPost();
         String jsonPost = covidTestPost.postApi();
 
-        // PATCH the symptom into the additional info of the booking api using its booking id
+        // PATCH the symptom into the additional info of the booking api using its
+        // booking id
         APIfactory apIfactory = new BookingFactory(System.getenv("API_KEY"), bookingId, patientStatus);
         Patch bookingPatch = apIfactory.createPatch();
         String returnValue = bookingPatch.patchApi();
