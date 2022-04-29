@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.domain;
 
 public class InterviewForm {
+
     private String pinCode;
     private boolean shaking;
     private boolean musclePain;

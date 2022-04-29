@@ -8,7 +8,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class BookingPatch extends Patch{
+public class BookingPatch extends Patch {
     private final String myApiKey;
     private final String bookingId;
     private final String symptom;
@@ -16,7 +16,8 @@ public class BookingPatch extends Patch{
     private final String qrCode;
     private final String url;
 
-    public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus, String qrCode, String url) {
+    public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus, String qrCode,
+            String url) {
         this.myApiKey = myApiKey;
         this.bookingId = bookingId;
         this.symptom = symptom;
@@ -33,14 +34,14 @@ public class BookingPatch extends Patch{
         String rootUrl = "https://fit3077.com/api/v1";
         String usersUrl = rootUrl + "/booking/" + bookingId;
         String jsonString;
-        if(qrCode != null || url != null){
+        if (qrCode != null || url != null) {
             jsonString = "{" +
                     "\"additionalInfo\":" + "{ " +
                     "\"qrCode\":\"" + qrCode + "\"," +
                     "\"url\":\"" + url + "\"," +
                     "\"symptom\":\"" + symptom + "\""
                     + "}" + "}";
-        }else if(this.bookingStatus != null){
+        } else if (this.bookingStatus != null) {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"" +
                     "}";
@@ -51,7 +52,6 @@ public class BookingPatch extends Patch{
                     "\"symptom\":\"" + symptom + "\""
                     + "}" + "}";
         }
-
 
         HttpRequest.BodyPublisher jsonPayload = HttpRequest.BodyPublishers.ofString(jsonString);
 
@@ -64,10 +64,10 @@ public class BookingPatch extends Patch{
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println("Booking Patch :> \n----");
+        // System.out.println("Booking Patch :> \n----");
         // System.out.println(request.uri());
-        System.out.println("Response code: " + response.statusCode());
-        System.out.println("Full JSON response: " + response.body());
+        // System.out.println("Response code: " + response.statusCode());
+        // System.out.println("Full JSON response: " + response.body());
         return response.body();
     }
 }

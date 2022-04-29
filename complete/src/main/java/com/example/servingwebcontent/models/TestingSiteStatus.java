@@ -3,6 +3,7 @@ package com.example.servingwebcontent.models;
 import java.time.LocalTime;
 
 public class TestingSiteStatus {
+
     private String typeOfFacility;
     private boolean onSiteBookingAndTesting;
     private int waitingTimeInMins;
@@ -24,6 +25,8 @@ public class TestingSiteStatus {
         LocalTime close = LocalTime.parse(closingTime);
         int openValue = timeNow.compareTo(open);
         int closeValue = timeNow.compareTo(close);
+
+        // Get local time and change the status from "open" to "closed"
         if (openValue > 0 && closeValue < 0) {
             this.openOrClosed = "Open";
         } else {

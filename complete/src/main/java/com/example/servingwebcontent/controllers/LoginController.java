@@ -34,6 +34,7 @@ public class LoginController {
         String username = login.getUserName();
         String password = login.getPassword();
 
+        // Check the login form using the API
         if (checkLoginFromAPI(username, password)) {
 
             authenticateInstance.authenticate(username);

@@ -58,7 +58,7 @@ public class HomeBookingController {
         List<User> userModels = new ArrayList<>();
 
         try {
-            // Testing-site collection
+            // User collection
             Collection<User> users = userGet.getApi();
             Iterator<User> iterator = users.iterator();
             while (iterator.hasNext()) {
@@ -130,12 +130,15 @@ public class HomeBookingController {
 
         try {
             Collection<Booking> bookingCollection = bookingGet.getApi();
+
             for (Booking booking : bookingCollection) {
+                // If the booking status is already completed, throw an errors
                 if (booking.getStatus().toLowerCase().equals("completed")) {
                     model.addAttribute("error", "Booking has already been completed");
                     return "scanQR";
                 }
 
+                // If the qr code matches any of the booking object, patch the booking status
                 if (booking.getQr().equals(qrCode)) {
                     String bookingId = booking.getBookingId();
                     APIfactory bookingFactory1 = new BookingFactory(System.getenv("API_KEY"), bookingId,
@@ -151,10 +154,6 @@ public class HomeBookingController {
         }
 
         model.addAttribute("error", "Qr Code does not exist");
-        // TODO: Need to add patch method to change booking status to completed
-        // Patch bookingPost = bookingFactory.createPatch();
-        // String returnValue = bookingPost.patchApi();
-
         return "scanQR";
     }
 }

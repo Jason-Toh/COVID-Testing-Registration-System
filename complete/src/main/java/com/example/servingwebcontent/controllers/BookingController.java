@@ -30,10 +30,10 @@ public class BookingController {
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
     public List<TestingSite> getTestingSites() {
-        // 2.1 Get testing-sites and put it into model
-        // API factory
-        APIfactory factory = new TestingSiteFactory(System.getenv("API_KEY"));
-        Get testingSiteGet = factory.createGet();
+
+        // Get testing-sites and put it into model
+        APIfactory testingFactory = new TestingSiteFactory(System.getenv("API_KEY"));
+        Get testingSiteGet = testingFactory.createGet();
 
         List<TestingSite> testingSiteModels = new ArrayList<>();
 
@@ -56,16 +56,18 @@ public class BookingController {
     }
 
     public List<User> getUsers() {
-        // 2.2
-        APIfactory factory1 = new UserFactory(System.getenv("API_KEY"));
-        Get userGet = factory1.createGet();
+
+        // Get the users and put it in a model
+        APIfactory userFactory = new UserFactory(System.getenv("API_KEY"));
+        Get userGet = userFactory.createGet();
 
         List<User> userModels = new ArrayList<>();
 
         try {
-            // Testing-site collection
+            // Users collection
             Collection<User> users = userGet.getApi();
             Iterator<User> iterator = users.iterator();
+
             while (iterator.hasNext()) {
                 userModels.add(iterator.next());
             }
@@ -77,7 +79,8 @@ public class BookingController {
     }
 
     public List<String> getTestTypes() {
-        // 3. Get test-type and put it into model
+
+        // Get test-type and put it into model
         List<String> testTypeModels = new ArrayList<>();
         for (TestType testType : TestType.values()) {
             testTypeModels.add(testType + "");
@@ -89,15 +92,16 @@ public class BookingController {
     @GetMapping("/register")
     public String getRegister(Model model) {
 
+        // If the user is not authenticated, redirect to login
         if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
 
+        // If the user is not a receptioniset, redirect to notAuthorised
         if (!authenticateInstance.getUser().isReceptionist()) {
             return "notAuthorised";
         }
 
-        // 1.
         BookingForm bookingForm = new BookingForm();
         model.addAttribute("bookingForm", bookingForm);
 
@@ -113,7 +117,6 @@ public class BookingController {
         // 4. Get smsPin
         RandomPinGenerator rad = new RandomPinGenerator();
         String smsPin = rad.getPin();
-        // model.addAttribute("smsPinModel", smsPinModel);
 
         return "register";
     }
@@ -147,7 +150,9 @@ public class BookingController {
 
         try {
             Collection<Booking> bookingCollection = bookingGet.getApi();
+
             for (Booking booking : bookingCollection) {
+                // If the pincode exists in any of the booking object
                 if (booking.getSmsPin().equals(pinCode)) {
                     model.addAttribute("booking", booking);
                     exist = true;
@@ -187,18 +192,24 @@ public class BookingController {
                 if (booking.getTestingSiteId() == null) {
                     continue;
                 }
+
+                // Check if the chose testing site is the same of any of the existing testing
+                // site
                 if (booking.getTestingSiteId().equals(bookingForm.getTestingSite())) {
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
                     Date bookingFormDate = (Date) formatter.parse(bookingForm.getTime());
                     Date bookingDate = (Date) formatter.parse(booking.getStartTime());
 
+                    // Start time of the chosen booking timeslot
                     Calendar bookingFormStartTime = Calendar.getInstance();
                     bookingFormStartTime.setTime(bookingFormDate);
 
+                    // Start time of the existing booking timeslot
                     Calendar bookingStartTime = Calendar.getInstance();
                     bookingStartTime.setTime(bookingDate);
 
+                    // Each timeslot is 10 minutes (10am to 10:05 am)
                     // Add 10 minutes interval for each booking
                     Calendar bookingEndTime = Calendar.getInstance();
                     bookingEndTime.setTime(bookingDate);
@@ -206,6 +217,7 @@ public class BookingController {
 
                     SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
 
+                    // If the booking date is the same as the existing booking timeslot
                     if (isDateSame(bookingFormStartTime, bookingEndTime)) {
                         String startTime = timeFormatter.format(bookingStartTime.getTime());
                         String endTime = timeFormatter.format(bookingEndTime.getTime());

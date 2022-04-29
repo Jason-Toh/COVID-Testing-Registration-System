@@ -16,25 +16,7 @@ public class Booking {
     private String qr;
     private List<CovidTest> covidTests;
 
-    public static Booking getInstance(String bookingId, String customerId, String customerName, String testingSiteId,
-            String testingSiteName,
-            String smsPin,
-            String startTime, String status, String url, String qr) {
-        Booking booking = new Booking(bookingId, customerId, customerName, testingSiteId, testingSiteName, smsPin,
-                startTime, status, url, qr);
-        return booking;
-    };
-
-    public static Booking getInstance(String bookingId, String testingSiteId,
-            String testingSiteName,
-            String smsPin,
-            String startTime, String status) {
-        Booking booking = new Booking(bookingId, testingSiteId, testingSiteName, smsPin,
-                startTime, status);
-        return booking;
-    };
-
-    private Booking(String bookingId, String customerId, String customerName, String testingSiteId,
+    public Booking(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName, String smsPin,
             String startTime, String status, String url, String qr) {
         this.covidTests = new ArrayList<>();
@@ -50,7 +32,7 @@ public class Booking {
         this.qr = qr;
     }
 
-    private Booking(String bookingId, String testingSiteId,
+    public Booking(String bookingId, String testingSiteId,
             String testingSiteName, String smsPin,
             String startTime, String status) {
         this.covidTests = new ArrayList<>();

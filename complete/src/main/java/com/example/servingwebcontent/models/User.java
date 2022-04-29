@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    // later modified to singleton
+
     private String id;
     private String givenName;
     private String familyName;

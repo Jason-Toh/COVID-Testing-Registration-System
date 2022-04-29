@@ -26,7 +26,7 @@ public class InterviewController {
         List<User> userModels = new ArrayList<>();
 
         try {
-            // Testing-site collection
+            // User collection
             Collection<User> users = userGet.getApi();
             Iterator<User> iterator = users.iterator();
             while (iterator.hasNext()) {
@@ -142,7 +142,6 @@ public class InterviewController {
                 BookingStatus.COMPLETED);
         Patch bookingPatch = bookingFactory.createPatch();
         String returnValue = bookingPatch.patchApi();
-        // System.out.println(returnValue);
 
         return "testingDone";
     }

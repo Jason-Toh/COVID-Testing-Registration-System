@@ -88,12 +88,13 @@ public class UserGet extends Get<User> {
                     covidTests1.add(covidTest);
                 }
 
-                Booking booking = Booking.getInstance(bookingId, testingSiteId,
+                Booking booking = new Booking(bookingId, testingSiteId,
                         testingSiteName, smsPin,
                         startTime, status);
                 booking.setCovidTests(covidTests1);
                 bookings.add(booking);
             }
+
             User user = new User(id, givenName, familyName, userName, phoneNumber, isCustomer, isReceptionist,
                     isHealthcareWorker);
             user.setBookings(bookings);

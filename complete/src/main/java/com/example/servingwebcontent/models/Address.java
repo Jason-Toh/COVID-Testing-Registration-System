@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.models;
 
 public class Address {
+
     private double latitude;
     private double longitude;
     private String unitNumber;
@@ -9,7 +10,8 @@ public class Address {
     private String state;
     private String postcode;
 
-    public Address(double latitude, double longitude, String unitNumber, String street, String suburb, String state, String postcode) {
+    public Address(double latitude, double longitude, String unitNumber, String street, String suburb, String state,
+            String postcode) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.unitNumber = unitNumber;
@@ -74,7 +76,6 @@ public class Address {
     public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
-
 
     public String toJSONStringFormat() {
         return "Address:{" +

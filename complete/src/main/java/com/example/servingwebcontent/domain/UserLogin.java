@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.domain;
 
 public class UserLogin {
+
     private String userName;
     private String password;
 

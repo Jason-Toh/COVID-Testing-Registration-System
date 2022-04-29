@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestingSite {
+
     private String id;
     private String name;
     private String description;
@@ -15,7 +16,8 @@ public class TestingSite {
     private String createdAt;
     private String updatedAt;
 
-    public TestingSite(String id, String name, String description, String websiteUrl, String phoneNumber, Address address, TestingSiteStatus additonalInfo, String createdAt, String updatedAt) {
+    public TestingSite(String id, String name, String description, String websiteUrl, String phoneNumber,
+            Address address, TestingSiteStatus additonalInfo, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -92,7 +94,7 @@ public class TestingSite {
         this.additonalInfo = additonalInfo;
     }
 
-    public String toJSONStringFormat(){
+    public String toJSONStringFormat() {
         return "testingSite:{" +
                 "\"id\":\"" + id + '\"' +
                 ", \"name\":\"" + name + '\"' +
@@ -105,6 +107,7 @@ public class TestingSite {
                 "," + additonalInfo.toJSONStringFormat() +
                 '}';
     }
+
     @Override
     public String toString() {
         return "TestingSite{" +

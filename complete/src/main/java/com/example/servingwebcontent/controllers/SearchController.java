@@ -121,6 +121,7 @@ public class SearchController {
         List<TestingSite> testingSiteModels = getTestingSiteModels();
 
         for (TestingSite testingSite : testingSiteModels) {
+            // Get the testing site if it matches the ID
             if (id.equals(testingSite.getId())) {
                 model.addAttribute("testingSite", testingSite);
                 break;
