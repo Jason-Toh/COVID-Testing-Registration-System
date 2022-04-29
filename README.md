@@ -17,6 +17,7 @@ The source code for the project is stored inside the complete folder.
 Navigate to MainApplication.java by following the file path below
 
 File path to MainApplication.java
+
 complete -> src -> main -> java -> come -> example - >servingwebcontent -> MainApplication.java
 
 Run Main.application.java
