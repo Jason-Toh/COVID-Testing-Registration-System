@@ -9,6 +9,8 @@ import java.util.List;
 import com.example.servingwebcontent.api.*;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.ScanQRForm;
+import com.example.servingwebcontent.enumeration.BookingStatus;
+import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.models.*;
 
 import org.springframework.stereotype.Controller;

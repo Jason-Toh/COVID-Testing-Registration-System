@@ -1,7 +1,6 @@
 package com.example.servingwebcontent.api;
 
-import com.example.servingwebcontent.domain.BookingForm;
-import com.example.servingwebcontent.models.BookingStatus;
+import com.example.servingwebcontent.enumeration.BookingStatus;
 
 public class BookingFactory implements APIfactory {
     private String api;

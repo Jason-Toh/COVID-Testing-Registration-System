@@ -1,6 +1,6 @@
 package com.example.servingwebcontent.api;
 
-import com.example.servingwebcontent.models.BookingStatus;
+import com.example.servingwebcontent.enumeration.BookingStatus;
 
 import java.io.IOException;
 import java.net.URI;

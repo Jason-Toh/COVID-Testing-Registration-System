@@ -1,6 +1,8 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
+import com.example.servingwebcontent.enumeration.BookingStatus;
+import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.models.*;
 import com.example.servingwebcontent.domain.InterviewForm;
 import org.json.simple.parser.ParseException;

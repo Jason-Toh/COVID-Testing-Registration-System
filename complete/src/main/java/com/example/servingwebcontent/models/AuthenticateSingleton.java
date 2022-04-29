@@ -9,6 +9,8 @@ import com.example.servingwebcontent.api.UserFactory;
 public class AuthenticateSingleton {
 
     private static AuthenticateSingleton instance;
+    private boolean isUserAuthenticated = false;
+    private User user = null;
 
     private AuthenticateSingleton() {
     };
@@ -17,12 +19,10 @@ public class AuthenticateSingleton {
         if (instance == null) {
             instance = new AuthenticateSingleton();
         }
-
         return instance;
     }
 
-    private boolean isUserAuthenticated = false;
-    private User user = null;
+
 
     public boolean getIsUserAuthenticated() {
         return isUserAuthenticated;

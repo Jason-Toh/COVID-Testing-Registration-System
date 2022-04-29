@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
+import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.models.*;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.BookingStatusForm;
