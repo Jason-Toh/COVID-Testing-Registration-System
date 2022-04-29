@@ -40,7 +40,11 @@ public class BookingPatch extends Patch{
                     "\"url\":\"" + url + "\"," +
                     "\"symptom\":\"" + symptom + "\""
                     + "}" + "}";
-        }else {
+        }else if(this.bookingStatus != null){
+            jsonString = "{" +
+                    "\"status\":\"" + bookingStatus + "\"" +
+                    "}" + "}";
+        } else {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"," +
                     "\"additionalInfo\":" + "{ " +

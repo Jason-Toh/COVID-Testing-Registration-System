@@ -1,22 +1,15 @@
 package com.example.servingwebcontent.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import com.example.servingwebcontent.api.APIfactory;
-import com.example.servingwebcontent.api.BookingFactory;
-import com.example.servingwebcontent.api.Get;
-import com.example.servingwebcontent.api.TestingSiteFactory;
-import com.example.servingwebcontent.api.UserFactory;
+import com.example.servingwebcontent.api.*;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.ScanQRForm;
-import com.example.servingwebcontent.models.Authenticate;
-import com.example.servingwebcontent.models.Booking;
-import com.example.servingwebcontent.models.TestType;
-import com.example.servingwebcontent.models.TestingSite;
-import com.example.servingwebcontent.models.User;
+import com.example.servingwebcontent.models.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -122,7 +115,7 @@ public class HomeBookingController {
     }
 
     @PostMapping("/scanQRCode")
-    public String postScanQRCode(@ModelAttribute("interviewForm") ScanQRForm scanQRForm, Model model) {
+    public String postScanQRCode(@ModelAttribute("interviewForm") ScanQRForm scanQRForm, Model model) throws IOException, InterruptedException {
 
         APIfactory bookingFactory = new BookingFactory(System.getenv("API_KEY"));
 
@@ -139,6 +132,10 @@ public class HomeBookingController {
                 }
 
                 if (booking.getQr().equals(qrCode)) {
+                    String bookingId = booking.getBookingId();
+                    APIfactory bookingFactory1 = new BookingFactory(System.getenv("API_KEY"), bookingId, BookingStatus.COMPLETED);
+                    Patch bookingPatch = bookingFactory1.createPatch();
+                    String returnValue = bookingPatch.patchApi();
                     return "bookingDone";
                 }
             }
@@ -149,6 +146,10 @@ public class HomeBookingController {
 
         model.addAttribute("error", "Qr Code does not exist");
         // TODO: Need to add patch method to change booking status to completed
+//        Patch bookingPost = bookingFactory.createPatch();
+//        String returnValue = bookingPost.patchApi();
+
+
         return "scanQR";
     }
 }

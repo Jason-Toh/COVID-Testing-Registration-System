@@ -15,9 +15,17 @@ public class BookingFactory implements APIfactory {
     private String qrCode;
 
 
+
     public BookingFactory(String api) {
         this.api = api;
     }
+
+    public BookingFactory(String api, String bookingId, BookingStatus bookingStatus){
+        this.api = api;
+        this.bookingId = bookingId;
+        this.bookingStatus = bookingStatus;
+    }
+
     public BookingFactory(String api, String bookingId,String qrCode, String url, String idk){
         this.api = api;
         this.qrCode = qrCode;
