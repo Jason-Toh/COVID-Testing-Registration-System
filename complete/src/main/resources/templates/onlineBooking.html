@@ -44,7 +44,8 @@
                 <tr>
                     <td>Received RAT Test Kit?</td>
                     <td>
-                        <select th:field="*{receivedRATKit}" class="custom-select my-1 mr-sm-2" id="rev" onchange="myFunction1()">
+                        <select th:field="*{receivedRATKit}" class="custom-select my-1 mr-sm-2" id="rev"
+                            onchange="myFunction1()">
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
@@ -76,8 +77,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input class="btn btn-primary" name="submit" type="submit" value="submit" id="btn2"
-                            />
+                        <input class="btn btn-primary" name="submit" type="submit" value="submit" id="btn2" />
                     </td>
                 </tr>
             </table>
@@ -89,8 +89,8 @@
         </div>
     </div>
     <div style="text-align:center">
-        <a href="" id="url"
-            style="display:none;text-decoration: underline overline; color: red">URL to connect for testing</a>
+        <a href="" id="url" style="display:none;text-decoration: underline overline; color: red">URL to connect for
+            testing</a>
         <img id="myQR" src="" />
         <div id="qrRan"></div>
     </div>
@@ -137,10 +137,10 @@
             var x = document.getElementById("btn");
             var y = document.getElementById("url");
 
-            if (checkBox.checked == true && isRATKit == "Yes") {
+            if (checkBox.checked == true && isRATKit == "No") {
                 x.style.display = "block";
                 y.style.display = "block";
-            }else{
+            } else {
                 x.style.display = "none";
                 y.style.display = "none";
             }
