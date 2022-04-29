@@ -10,6 +10,10 @@ tohjason28@gmail.com (Jason) is my personal email address. (14 commits)
 
 jtoh0003@studentmonash.edu is my monash email address.
 
+## Design Documents
+
+The class diagram, design rationale, git contributions and system demonstration are stored inside the Documents folder.
+
 ### How to run the application
 
 The source code for the project is stored inside the complete folder.
