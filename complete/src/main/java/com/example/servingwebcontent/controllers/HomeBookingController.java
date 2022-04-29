@@ -107,7 +107,7 @@ public class HomeBookingController {
             return "redirect:/login";
         }
 
-        if (!Authenticate.getUser().isHealthcareWorker()) {
+        if (!Authenticate.getUser().isReceptionist()) {
             return "notAuthorised";
         }
 
@@ -115,7 +115,8 @@ public class HomeBookingController {
     }
 
     @PostMapping("/scanQRCode")
-    public String postScanQRCode(@ModelAttribute("interviewForm") ScanQRForm scanQRForm, Model model) throws IOException, InterruptedException {
+    public String postScanQRCode(@ModelAttribute("interviewForm") ScanQRForm scanQRForm, Model model)
+            throws IOException, InterruptedException {
 
         APIfactory bookingFactory = new BookingFactory(System.getenv("API_KEY"));
 
@@ -133,7 +134,8 @@ public class HomeBookingController {
 
                 if (booking.getQr().equals(qrCode)) {
                     String bookingId = booking.getBookingId();
-                    APIfactory bookingFactory1 = new BookingFactory(System.getenv("API_KEY"), bookingId, BookingStatus.COMPLETED);
+                    APIfactory bookingFactory1 = new BookingFactory(System.getenv("API_KEY"), bookingId,
+                            BookingStatus.COMPLETED);
                     Patch bookingPatch = bookingFactory1.createPatch();
                     String returnValue = bookingPatch.patchApi();
                     return "bookingDone";
@@ -146,9 +148,8 @@ public class HomeBookingController {
 
         model.addAttribute("error", "Qr Code does not exist");
         // TODO: Need to add patch method to change booking status to completed
-//        Patch bookingPost = bookingFactory.createPatch();
-//        String returnValue = bookingPost.patchApi();
-
+        // Patch bookingPost = bookingFactory.createPatch();
+        // String returnValue = bookingPost.patchApi();
 
         return "scanQR";
     }

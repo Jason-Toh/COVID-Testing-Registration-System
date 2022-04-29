@@ -90,6 +90,10 @@ public class BookingController {
             return "redirect:/login";
         }
 
+        if (!Authenticate.getUser().isReceptionist()) {
+            return "notAuthorised";
+        }
+
         // 1.
         BookingForm bookingForm = new BookingForm();
         model.addAttribute("bookingForm", bookingForm);
@@ -245,7 +249,8 @@ public class BookingController {
         if (bookingForm.isOnHomeBooking()) {
 
             String url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-            APIfactory apIfactory = new BookingFactory(System.getenv("API_KEY"), bookingId,bookingForm.getQr(), url, "");
+            APIfactory apIfactory = new BookingFactory(System.getenv("API_KEY"), bookingId, bookingForm.getQr(), url,
+                    "");
             Patch bookingPatch = apIfactory.createPatch();
             String returnValue = bookingPatch.patchApi();
         }

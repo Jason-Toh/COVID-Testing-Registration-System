@@ -13,7 +13,7 @@
 <body>
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container py-4">
-        <h1>Register Page (Booking)</h1>
+        <h1>OnSite Booking</h1>
         <form name='f' th:action="@{/register}" th:object="${bookingForm}" method='POST'>
             <table class="table">
                 <tr>
@@ -65,24 +65,24 @@
                             class="form-control" required>
                     <td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>On Home Booking?</td>
                     <td>
                         <input type="checkbox" th:field="*{onHomeBooking}" id="myCheck" onchange="myFunction1()">
                     <td>
-                </tr>
+                </tr> -->
                 <tr style="display:none">
                     <td>QR Code:</td>
                     <td>
                         <input type="text" id="qrcode" value="" th:field="*{qr}" class="form-control">
                     <td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>
                         <p>INFO: If you choose on home booking you can get your testing kit from testing site you select
                         </p>
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td>
                         <input class="btn btn-primary" name="submit" type="submit" value="submit" id="btn2"
