@@ -6,10 +6,23 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch MainApplication",
+      "request": "launch",
+      "mainClass": "com.example.servingwebcontent.MainApplication",
+      "projectName": "serving-web-content-complete",
+      "env": {
+        "API_KEY": "qBDMKwFLh6bRJTnJqnfRGNDM6KRphz"
+      }
+    },
+    {
+      "type": "java",
       "name": "Launch Main2",
       "request": "launch",
       "mainClass": "com.example.servingwebcontent.api.Main2",
-      "projectName": "serving-web-content-complete"
+      "projectName": "serving-web-content-complete",
+      "env": {
+        "API_KEY": "qBDMKwFLh6bRJTnJqnfRGNDM6KRphz"
+      }
     },
     {
       "type": "java",
