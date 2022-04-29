@@ -43,7 +43,7 @@ public class BookingPatch extends Patch{
         }else if(this.bookingStatus != null){
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"" +
-                    "}" + "}";
+                    "}";
         } else {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"," +
