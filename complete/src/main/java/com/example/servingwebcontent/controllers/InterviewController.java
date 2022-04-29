@@ -14,6 +14,8 @@ import java.util.*;
 @Controller
 public class InterviewController {
 
+    AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
+
     public List<User> getUsers() {
         // 2.2
         APIfactory factory1 = new UserFactory(System.getenv("API_KEY"));
@@ -48,11 +50,11 @@ public class InterviewController {
     @GetMapping("/interview")
     public String getRegister(Model model) {
 
-        if (!Authenticate.getIsUserAuthenticated()) {
+        if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
 
-        if (!Authenticate.getUser().isHealthcareWorker()) {
+        if (!authenticateInstance.getUser().isHealthcareWorker()) {
             return "notAuthorised";
         }
 

@@ -26,6 +26,8 @@ import java.util.List;
 @Controller
 public class BookingController {
 
+    AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
+
     public List<TestingSite> getTestingSites() {
         // 2.1 Get testing-sites and put it into model
         // API factory
@@ -86,11 +88,11 @@ public class BookingController {
     @GetMapping("/register")
     public String getRegister(Model model) {
 
-        if (!Authenticate.getIsUserAuthenticated()) {
+        if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
 
-        if (!Authenticate.getUser().isReceptionist()) {
+        if (!authenticateInstance.getUser().isReceptionist()) {
             return "notAuthorised";
         }
 
@@ -124,7 +126,7 @@ public class BookingController {
     @GetMapping("/bookingStatus")
     public String askForPinCode(Model model) {
 
-        if (!Authenticate.getIsUserAuthenticated()) {
+        if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
 

@@ -6,15 +6,29 @@ import com.example.servingwebcontent.api.APIfactory;
 import com.example.servingwebcontent.api.Get;
 import com.example.servingwebcontent.api.UserFactory;
 
-public class Authenticate {
-    public static boolean isUserAuthenticated = false;
-    public static User user = null;
+public class AuthenticateSingleton {
 
-    public static boolean getIsUserAuthenticated() {
+    private static AuthenticateSingleton instance;
+
+    private AuthenticateSingleton() {
+    };
+
+    public static AuthenticateSingleton getInstance() {
+        if (instance == null) {
+            instance = new AuthenticateSingleton();
+        }
+
+        return instance;
+    }
+
+    private boolean isUserAuthenticated = false;
+    private User user = null;
+
+    public boolean getIsUserAuthenticated() {
         return isUserAuthenticated;
     }
 
-    public static void authenticate(String username) {
+    public void authenticate(String username) {
         isUserAuthenticated = true;
 
         APIfactory userFactory = new UserFactory(System.getenv("API_KEY"));
@@ -34,12 +48,12 @@ public class Authenticate {
         }
     }
 
-    public static void deauthenicate() {
+    public void deauthenicate() {
         isUserAuthenticated = false;
         user = null;
     }
 
-    public static User getUser() {
+    public User getUser() {
         return user;
     }
 }

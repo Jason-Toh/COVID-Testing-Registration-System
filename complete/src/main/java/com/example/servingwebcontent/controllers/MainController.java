@@ -1,6 +1,6 @@
 package com.example.servingwebcontent.controllers;
 
-import com.example.servingwebcontent.models.Authenticate;
+import com.example.servingwebcontent.models.AuthenticateSingleton;
 import com.example.servingwebcontent.models.User;
 
 import org.springframework.stereotype.Controller;
@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
+    AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
+
     @GetMapping("/")
     public String index(Model model) {
 
-        if (!Authenticate.getIsUserAuthenticated()) {
+        if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
 
-        User user = Authenticate.getUser();
+        User user = authenticateInstance.getUser();
 
         String userName = user.getUserName();
         model.addAttribute("userName", userName);

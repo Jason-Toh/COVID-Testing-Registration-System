@@ -1,7 +1,7 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.domain.UserLogin;
-import com.example.servingwebcontent.models.Authenticate;
+import com.example.servingwebcontent.models.AuthenticateSingleton;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +19,8 @@ import java.net.http.HttpResponse;
 @Controller
 public class LoginController {
 
+    AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
+
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("UserLogin", new UserLogin());
@@ -29,15 +31,15 @@ public class LoginController {
     @PostMapping("/login")
     public String postlogin(@ModelAttribute("userLogin") UserLogin login, Model model)
             throws IOException, InterruptedException {
-        String uname = login.getUserName();
-        String pass = login.getPassword();
+        String username = login.getUserName();
+        String password = login.getPassword();
 
-        if (checkLoginFromAPI(uname, pass)) {
+        if (checkLoginFromAPI(username, password)) {
 
-            Authenticate.authenticate(uname);
+            authenticateInstance.authenticate(username);
 
-            model.addAttribute("userName", uname);
-            model.addAttribute("password", pass);
+            model.addAttribute("userName", username);
+            model.addAttribute("password", password);
 
             return "redirect:/";
         }
@@ -49,7 +51,7 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(Model model) {
 
-        Authenticate.deauthenicate();
+        authenticateInstance.deauthenicate();
 
         model.addAttribute("UserLogin", new UserLogin());
         return "login";
