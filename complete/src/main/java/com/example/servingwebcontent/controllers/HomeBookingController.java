@@ -139,10 +139,6 @@ public class HomeBookingController {
 
             for (Booking booking : bookingCollection) {
 
-                if (booking.getBookingId().equals("ceff7cc5-d261-4e06-8760-85a267e128fc")) {
-                    System.out.println(booking.getQr());
-                }
-
                 // If the booking status is already completed, throw an errors
                 if (booking.getQr().equals(qrCode)
                         && booking.getStatus().toUpperCase().equals("COMPLETED")) {
