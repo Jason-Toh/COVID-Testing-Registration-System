@@ -20,7 +20,8 @@
                     <td>Customer:</td>
                     <td>
                         <select th:field="*{customerUsername}" class="custom-select my-1 mr-sm-2" required>
-                            <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
+                            <option th:each="user : ${userList}" th:value="${user.getId()}"
+                                th:text="${user.getFullName()}" />
                         </select>
                     <td>
                 </tr>
@@ -28,8 +29,8 @@
                     <td>Testing-sites:</td>
                     <td>
                         <select th:field="*{testingSite}" class="custom-select my-1 mr-sm-2" required>
-                            <option th:each="p : ${testingSiteModels}" th:value="${p.getId()}"
-                                th:text="${p.getName()}" />
+                            <option th:each="testingSite : ${testingSiteList}" th:value="${testingSite.getId()}"
+                                th:text="${testingSite.getName()}" />
                         </select>
                     <td>
                 </tr>

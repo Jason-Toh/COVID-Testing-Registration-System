@@ -1,6 +1,8 @@
 package com.example.servingwebcontent.api;
 
-public class CovidTestFactory implements APIfactory{
+import com.example.servingwebcontent.models.CovidTest;
+
+public class CovidTestFactory implements APIfactory<CovidTest> {
     private final String api;
     private final String testType;
     private final String patientId;
@@ -9,7 +11,8 @@ public class CovidTestFactory implements APIfactory{
     private final String result;
     private final String patientStatus;
 
-    public CovidTestFactory(String api, String testType, String patientId, String administererId, String bookingId, String patientStatus) {
+    public CovidTestFactory(String api, String testType, String patientId, String administererId, String bookingId,
+            String patientStatus) {
         this.api = api;
         this.testType = testType;
         this.patientId = patientId;
@@ -20,7 +23,7 @@ public class CovidTestFactory implements APIfactory{
     }
 
     @Override
-    public Get createGet() {
+    public Get<CovidTest> createGet() {
         return null;
     }
 

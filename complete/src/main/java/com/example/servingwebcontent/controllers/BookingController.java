@@ -1,11 +1,12 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
+import com.example.servingwebcontent.enumeration.BookingStatus;
 import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.models.*;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.BookingStatusForm;
-import com.example.servingwebcontent.tool.RandomPinGenerator;
+// import com.example.servingwebcontent.tool.RandomPinGenerator;
 import com.google.zxing.WriterException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -29,22 +29,22 @@ public class BookingController {
 
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
-    public List<TestingSite> getTestingSites() {
+    public List<TestingSite> getTestingSiteList() {
 
         // Get testing-sites and put it into model
-        APIfactory testingFactory = new TestingSiteFactory(System.getenv("API_KEY"));
-        Get testingSiteGet = testingFactory.createGet();
+        APIfactory<TestingSite> testingFactory = new TestingSiteFactory(System.getenv("API_KEY"));
+        Get<TestingSite> testingSiteGet = testingFactory.createGet();
 
-        List<TestingSite> testingSiteModels = new ArrayList<>();
+        List<TestingSite> testingSiteList = new ArrayList<>();
 
         try {
             // Testing-site collection
-            Collection<TestingSite> testingSites = testingSiteGet.getApi();
+            Collection<TestingSite> testingSiteCollection = testingSiteGet.getApi();
 
             // Testing Sites which allow on site booking and testing
-            for (TestingSite testingSite : testingSites) {
+            for (TestingSite testingSite : testingSiteCollection) {
                 if (testingSite.getAdditonalInfo().isOnSiteBookingAndTesting()) {
-                    testingSiteModels.add(testingSite);
+                    testingSiteList.add(testingSite);
                 }
             }
 
@@ -52,45 +52,46 @@ public class BookingController {
             System.out.println(e);
         }
 
-        return testingSiteModels;
+        return testingSiteList;
     }
 
-    public List<User> getUsers() {
+    public List<User> getUserList() {
 
         // Get the users and put it in a model
-        APIfactory userFactory = new UserFactory(System.getenv("API_KEY"));
-        Get userGet = userFactory.createGet();
+        APIfactory<User> userFactory = new UserFactory(System.getenv("API_KEY"));
+        Get<User> userGet = userFactory.createGet();
 
-        List<User> userModels = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
 
         try {
             // Users collection
-            Collection<User> users = userGet.getApi();
-            Iterator<User> iterator = users.iterator();
+            Collection<User> userCollection = userGet.getApi();
 
-            while (iterator.hasNext()) {
-                userModels.add(iterator.next());
+            for (User user : userCollection) {
+                userList.add(user);
             }
+
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        return userModels;
+        return userList;
     }
 
-    public List<String> getTestTypes() {
+    public List<String> getTestTypeList() {
 
         // Get test-type and put it into model
-        List<String> testTypeModels = new ArrayList<>();
+        List<String> testTypeList = new ArrayList<>();
+
         for (TestType testType : TestType.values()) {
-            testTypeModels.add(testType + "");
+            testTypeList.add(testType + "");
         }
 
-        return testTypeModels;
+        return testTypeList;
     }
 
     @GetMapping("/register")
-    public String getRegister(Model model) {
+    public String getOnsiteBooking(Model model) {
 
         // If the user is not authenticated, redirect to login
         if (!authenticateInstance.getIsUserAuthenticated()) {
@@ -105,20 +106,20 @@ public class BookingController {
         BookingForm bookingForm = new BookingForm();
         model.addAttribute("bookingForm", bookingForm);
 
-        List<TestingSite> testingSiteModels = getTestingSites();
-        model.addAttribute("testingSiteModels", testingSiteModels);
+        List<TestingSite> testingSiteList = getTestingSiteList();
+        model.addAttribute("testingSiteList", testingSiteList);
 
-        List<User> userModels = getUsers();
-        model.addAttribute("userModels", userModels);
+        List<User> userList = getUserList();
+        model.addAttribute("userList", userList);
 
-        List<String> testTypeModels = getTestTypes();
-        model.addAttribute("testTypeModels", testTypeModels);
+        List<String> testTypeList = getTestTypeList();
+        model.addAttribute("testTypeList", testTypeList);
 
         // 4. Get smsPin
-        RandomPinGenerator rad = new RandomPinGenerator();
-        String smsPin = rad.getPin();
+        // RandomPinGenerator rad = new RandomPinGenerator();
+        // String smsPin = rad.getPin();
 
-        return "register";
+        return "onsiteBooking";
     }
 
     private boolean isDateSame(Calendar c1, Calendar c2) {
@@ -141,9 +142,9 @@ public class BookingController {
     public String displayBookingStatus(@ModelAttribute("bookingStatusForm") BookingStatusForm bookingStatusForm,
             Model model) {
 
-        APIfactory bookingFactory = new BookingFactory(System.getenv("API_KEY"));
+        APIfactory<Booking> bookingFactory = new BookingFactory(System.getenv("API_KEY"));
 
-        Get bookingGet = bookingFactory.createGet();
+        Get<Booking> bookingGet = bookingFactory.createGet();
 
         String pinCode = bookingStatusForm.getPinCode();
         boolean exist = false;
@@ -178,11 +179,11 @@ public class BookingController {
             throws IOException, InterruptedException, WriterException {
 
         // Make booking post here
-        APIfactory bookingFactory = new BookingFactory(
+        APIfactory<Booking> bookingFactory = new BookingFactory(
                 System.getenv("API_KEY"), bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
                 bookingForm.getTime());
 
-        Get bookingGet = bookingFactory.createGet();
+        Get<Booking> bookingGet = bookingFactory.createGet();
 
         try {
             Collection<Booking> bookingCollection = bookingGet.getApi();
@@ -233,13 +234,13 @@ public class BookingController {
                             BookingForm bookingForm2 = new BookingForm();
                             model.addAttribute("bookingForm", bookingForm2);
 
-                            List<TestingSite> testingSiteModels = getTestingSites();
-                            model.addAttribute("testingSiteModels", testingSiteModels);
+                            List<TestingSite> testingSiteList = getTestingSiteList();
+                            model.addAttribute("testingSiteList", testingSiteList);
 
-                            List<User> userModels = getUsers();
-                            model.addAttribute("userModels", userModels);
+                            List<User> userList = getUserList();
+                            model.addAttribute("userList", userList);
 
-                            List<String> testTypeModels = getTestTypes();
+                            List<String> testTypeModels = getTestTypeList();
                             model.addAttribute("testTypeModels", testTypeModels);
                             return "register";
                         }
@@ -260,19 +261,27 @@ public class BookingController {
         JSONObject book = new JSONObject(jsonPost);
         String bookingId = book.get("id") + "";
 
+        // OnSite Booking should have COMPLETED as Booking Status
+        APIfactory<Booking> bookingFactory2 = new BookingFactory(System.getenv("API_KEY"), bookingId,
+                BookingStatus.COMPLETED);
+        Patch bookingPatch = bookingFactory2.createPatch();
+        // String returnValue = bookingPatch.patchApi();
+        bookingPatch.patchApi();
+
         // Post Qr code String
         if (bookingForm.isOnHomeBooking()) {
 
             String url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-            APIfactory apIfactory = new BookingFactory(System.getenv("API_KEY"), bookingId, bookingForm.getQr(), url,
+            APIfactory<Booking> bookingFactory3 = new BookingFactory(System.getenv("API_KEY"), bookingId,
+                    bookingForm.getQr(), url,
                     "");
-            Patch bookingPatch = apIfactory.createPatch();
-            String returnValue = bookingPatch.patchApi();
+            Patch bookingPatch2 = bookingFactory3.createPatch();
+            // String returnValue = bookingPatch.patchApi();
+            bookingPatch2.patchApi();
         }
 
         model.addAttribute("pinCode", book.get("smsPin") + "");
 
         return "pinCode";
     }
-
 }

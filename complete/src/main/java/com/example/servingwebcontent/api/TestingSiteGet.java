@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class TestingSiteGet extends Get {
+public class TestingSiteGet extends Get<TestingSite> {
     private final String myApiKey;
 
     public TestingSiteGet(String api) {

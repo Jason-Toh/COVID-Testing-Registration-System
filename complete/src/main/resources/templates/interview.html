@@ -20,7 +20,7 @@
                     <td>PinCode:</td>
                     <td>
                         <h6 th:text=" ${error} ? ${error} : '' " class="${error} ? text-danger : ''"></h6>
-                        <input type='text' name='pincode' value='' th:field="*{pinCode}" class="form-control">
+                        <input type='text' name='pinCode' value='' th:field="*{pinCode}" class="form-control">
                     </td>
                 </tr>
                 <tr>
@@ -83,8 +83,7 @@
                     <td>
                         <select th:field="*{testType}" id="heyman" onchange="myFunction()"
                             class="custom-select my-1 mr-sm-2">
-                            <option th:each="testType : ${testTypeModels}" th:value="${testType}"
-                                th:text="${testType}" />
+                            <option th:each="testType : ${testTypeList}" th:value="${testType}" th:text="${testType}" />
                         </select>
                     <td>
                 </tr>

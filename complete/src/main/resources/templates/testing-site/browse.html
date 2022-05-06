@@ -54,6 +54,9 @@
                         </div>
                         <!-- End of Form -->
                     </div>
+                    <div class="col-lg-4 col-sm-6 mt-4">
+                        <a href="/browse" class="btn btn-primary">Clear Filter</a>
+                    </div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -65,7 +68,7 @@
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
-                        <tbody th:each="testingSite : ${testingSites}">
+                        <tbody th:each="testingSite : ${testingSiteList}">
                             <tr>
                                 <td th:text="${testingSite.getName()}"></td>
                                 <td th:text="${testingSite.getAdditonalInfo().getTypeOfFacility()}"></td>

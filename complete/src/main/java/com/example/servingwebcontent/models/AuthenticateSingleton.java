@@ -22,8 +22,6 @@ public class AuthenticateSingleton {
         return instance;
     }
 
-
-
     public boolean getIsUserAuthenticated() {
         return isUserAuthenticated;
     }
@@ -31,9 +29,9 @@ public class AuthenticateSingleton {
     public void authenticate(String username) {
         isUserAuthenticated = true;
 
-        APIfactory userFactory = new UserFactory(System.getenv("API_KEY"));
+        APIfactory<User> userFactory = new UserFactory(System.getenv("API_KEY"));
 
-        Get userGet = userFactory.createGet();
+        Get<User> userGet = userFactory.createGet();
         try {
             Collection<User> userCollection = userGet.getApi();
 

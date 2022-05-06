@@ -18,35 +18,36 @@ public class InterviewController {
 
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
-    public List<User> getUsers() {
+    public List<User> getUserList() {
         // 2.2
-        APIfactory factory1 = new UserFactory(System.getenv("API_KEY"));
-        Get userGet = factory1.createGet();
+        APIfactory<User> userFactory = new UserFactory(System.getenv("API_KEY"));
+        Get<User> userGet = userFactory.createGet();
 
-        List<User> userModels = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
 
         try {
             // User collection
-            Collection<User> users = userGet.getApi();
-            Iterator<User> iterator = users.iterator();
-            while (iterator.hasNext()) {
-                userModels.add(iterator.next());
+            Collection<User> userCollection = userGet.getApi();
+
+            for (User user : userCollection) {
+                userList.add(user);
             }
+
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        return userModels;
+        return userList;
     }
 
-    public List<String> getTestTypeModels() {
+    public List<String> getTestTypeList() {
 
-        List<String> testTypeModels = new ArrayList<>();
+        List<String> testTypeList = new ArrayList<>();
         for (TestType testType : TestType.values()) {
-            testTypeModels.add(testType + "");
+            testTypeList.add(testType + "");
         }
 
-        return testTypeModels;
+        return testTypeList;
     }
 
     @GetMapping("/interview")
@@ -64,12 +65,12 @@ public class InterviewController {
         InterviewForm interviewForm = new InterviewForm();
         model.addAttribute("interviewForm", interviewForm);
 
-        List<User> userModels = getUsers();
-        model.addAttribute("userModels", userModels);
+        List<User> userList = getUserList();
+        model.addAttribute("userList", userList);
 
         // 3. Get test-type and put it into model
-        List<String> testTypeModels = getTestTypeModels();
-        model.addAttribute("testTypeModels", testTypeModels);
+        List<String> testTypeList = getTestTypeList();
+        model.addAttribute("testTypeList", testTypeList);
 
         return "interview";
     }
@@ -78,10 +79,9 @@ public class InterviewController {
     public String submitInterviewForm(@ModelAttribute("interviewForm") InterviewForm interviewForm, Model model)
             throws IOException, InterruptedException, ParseException {
 
-        APIfactory factory2 = new BookingFactory(System.getenv("API_KEY"));
-        Get bookingGet = factory2.createGet();
+        APIfactory<Booking> bookingFactory = new BookingFactory(System.getenv("API_KEY"));
+        Get<Booking> bookingGet = bookingFactory.createGet();
         Collection<Booking> bookingCollection = bookingGet.getApi();
-        Iterator<Booking> iterator = bookingCollection.iterator();
 
         String pinCode = interviewForm.getPinCode();
 
@@ -98,12 +98,12 @@ public class InterviewController {
             InterviewForm interviewForm2 = new InterviewForm();
             model.addAttribute("interviewForm", interviewForm2);
 
-            List<User> userModels = getUsers();
-            model.addAttribute("userModels", userModels);
+            List<User> userList = getUserList();
+            model.addAttribute("userList", userList);
 
             // 3. Get test-type and put it into model
-            List<String> testTypeModels = getTestTypeModels();
-            model.addAttribute("testTypeModels", testTypeModels);
+            List<String> testTypeList = getTestTypeList();
+            model.addAttribute("testTypeList", testTypeList);
 
             model.addAttribute("error", "Pin Code does not exist. Please try again");
 
@@ -111,10 +111,10 @@ public class InterviewController {
         }
 
         String bookingId = null;
-
-        while (iterator.hasNext()) {
-            if (iterator.next().getSmsPin().equals(interviewForm.getPinCode())) {
-                bookingId = iterator.next().getBookingId();
+        for (Booking booking : bookingCollection) {
+            if (booking.getSmsPin().equals(interviewForm.getPinCode())) {
+                bookingId = booking.getBookingId();
+                break;
             }
         }
 
@@ -129,19 +129,22 @@ public class InterviewController {
                     ", close contact: " + interviewForm.getCloseContact();
         }
 
-        APIfactory factory3 = new CovidTestFactory(System.getenv("API_KEY"), interviewForm.getTestType(),
+        APIfactory<CovidTest> covidTestFactory = new CovidTestFactory(System.getenv("API_KEY"),
+                interviewForm.getTestType(),
                 interviewForm.getPatient(), interviewForm.getAdministrator(), bookingId, patientStatus);
-        Post covidTestPost = factory3.createPost();
-        String jsonPost = covidTestPost.postApi();
+        Post covidTestPost = covidTestFactory.createPost();
+        // String jsonPost = covidTestPost.postApi();
+        covidTestPost.postApi();
 
         // PATCH the symptom into the additional info of the booking api using it
         // booking id
         // change the booking status to completed
 
-        APIfactory bookingFactory = new BookingFactory(System.getenv("API_KEY"), bookingId, patientStatus,
+        APIfactory<Booking> bookingFactory2 = new BookingFactory(System.getenv("API_KEY"), bookingId, patientStatus,
                 BookingStatus.COMPLETED);
-        Patch bookingPatch = bookingFactory.createPatch();
-        String returnValue = bookingPatch.patchApi();
+        Patch bookingPatch = bookingFactory2.createPatch();
+        // String returnValue = bookingPatch.patchApi();
+        bookingPatch.patchApi();
 
         return "testingDone";
     }

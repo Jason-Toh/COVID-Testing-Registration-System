@@ -3,7 +3,6 @@ package com.example.servingwebcontent.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import com.example.servingwebcontent.api.*;
@@ -24,22 +23,22 @@ public class HomeBookingController {
 
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
-    public List<TestingSite> getTestingSites() {
+    public List<TestingSite> getTestingSiteList() {
         // 2.1 Get testing-sites and put it into model
         // API factory
-        APIfactory factory = new TestingSiteFactory(System.getenv("API_KEY"));
-        Get testingSiteGet = factory.createGet();
+        APIfactory<TestingSite> testingSiteFactory = new TestingSiteFactory(System.getenv("API_KEY"));
+        Get<TestingSite> testingSiteGet = testingSiteFactory.createGet();
 
-        List<TestingSite> testingSiteModels = new ArrayList<>();
+        List<TestingSite> testingSiteList = new ArrayList<>();
 
         try {
             // Testing-site collection
-            Collection<TestingSite> testingSites = testingSiteGet.getApi();
+            Collection<TestingSite> testingSiteCollection = testingSiteGet.getApi();
 
             // Testing Sites which allow on site booking and testing
-            for (TestingSite testingSite : testingSites) {
+            for (TestingSite testingSite : testingSiteCollection) {
                 if (testingSite.getAdditonalInfo().isOnSiteBookingAndTesting()) {
-                    testingSiteModels.add(testingSite);
+                    testingSiteList.add(testingSite);
                 }
             }
 
@@ -47,38 +46,39 @@ public class HomeBookingController {
             System.out.println(e);
         }
 
-        return testingSiteModels;
+        return testingSiteList;
     }
 
-    public List<User> getUsers() {
+    public List<User> getUserList() {
         // 2.2
-        APIfactory factory1 = new UserFactory(System.getenv("API_KEY"));
-        Get userGet = factory1.createGet();
+        APIfactory<User> userFactory = new UserFactory(System.getenv("API_KEY"));
+        Get<User> userGet = userFactory.createGet();
 
-        List<User> userModels = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
 
         try {
             // User collection
-            Collection<User> users = userGet.getApi();
-            Iterator<User> iterator = users.iterator();
-            while (iterator.hasNext()) {
-                userModels.add(iterator.next());
+            Collection<User> userCollection = userGet.getApi();
+
+            for (User user : userCollection) {
+                userList.add(user);
             }
+
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        return userModels;
+        return userList;
     }
 
-    public List<String> getTestTypes() {
+    public List<String> getTestTypeList() {
         // 3. Get test-type and put it into model
-        List<String> testTypeModels = new ArrayList<>();
+        List<String> testTypeList = new ArrayList<>();
         for (TestType testType : TestType.values()) {
-            testTypeModels.add(testType + "");
+            testTypeList.add(testType + "");
         }
 
-        return testTypeModels;
+        return testTypeList;
     }
 
     @GetMapping("/homeBooking")
@@ -92,14 +92,14 @@ public class HomeBookingController {
         BookingForm bookingForm = new BookingForm();
         model.addAttribute("bookingForm", bookingForm);
 
-        List<TestingSite> testingSiteModels = getTestingSites();
-        model.addAttribute("testingSiteModels", testingSiteModels);
+        List<TestingSite> testingSiteList = getTestingSiteList();
+        model.addAttribute("testingSiteList", testingSiteList);
 
-        List<User> userModels = getUsers();
-        model.addAttribute("userModels", userModels);
+        List<User> userList = getUserList();
+        model.addAttribute("userList", userList);
 
-        List<String> testTypeModels = getTestTypes();
-        model.addAttribute("testTypeModels", testTypeModels);
+        List<String> testTypeList = getTestTypeList();
+        model.addAttribute("testTypeList", testTypeList);
 
         return "onlineBooking";
     }
@@ -122,9 +122,9 @@ public class HomeBookingController {
     public String postScanQRCode(@ModelAttribute("interviewForm") ScanQRForm scanQRForm, Model model)
             throws IOException, InterruptedException {
 
-        APIfactory bookingFactory = new BookingFactory(System.getenv("API_KEY"));
+        APIfactory<Booking> bookingFactory = new BookingFactory(System.getenv("API_KEY"));
 
-        Get bookingGet = bookingFactory.createGet();
+        Get<Booking> bookingGet = bookingFactory.createGet();
 
         String qrCode = scanQRForm.getQrCode();
 
@@ -141,10 +141,11 @@ public class HomeBookingController {
                 // If the qr code matches any of the booking object, patch the booking status
                 if (booking.getQr().equals(qrCode)) {
                     String bookingId = booking.getBookingId();
-                    APIfactory bookingFactory1 = new BookingFactory(System.getenv("API_KEY"), bookingId,
+                    APIfactory<Booking> bookingFactory2 = new BookingFactory(System.getenv("API_KEY"), bookingId,
                             BookingStatus.COMPLETED);
-                    Patch bookingPatch = bookingFactory1.createPatch();
-                    String returnValue = bookingPatch.patchApi();
+                    Patch bookingPatch = bookingFactory2.createPatch();
+                    // String returnValue = bookingPatch.patchApi();
+                    bookingPatch.patchApi();
                     return "bookingDone";
                 }
             }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class BookingGet extends Get {
+public class BookingGet extends Get<Booking> {
 
     private final String myApiKey;
 

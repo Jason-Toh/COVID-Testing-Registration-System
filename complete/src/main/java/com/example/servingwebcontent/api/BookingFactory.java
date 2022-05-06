@@ -1,8 +1,9 @@
 package com.example.servingwebcontent.api;
 
 import com.example.servingwebcontent.enumeration.BookingStatus;
+import com.example.servingwebcontent.models.Booking;
 
-public class BookingFactory implements APIfactory {
+public class BookingFactory implements APIfactory<Booking> {
 
     private String api;
     private String customerId;
@@ -46,7 +47,7 @@ public class BookingFactory implements APIfactory {
     }
 
     @Override
-    public Get createGet() {
+    public Get<Booking> createGet() {
         return new BookingGet(api);
     }
 

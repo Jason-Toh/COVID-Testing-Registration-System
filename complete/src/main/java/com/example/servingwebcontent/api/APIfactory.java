@@ -1,8 +1,8 @@
 package com.example.servingwebcontent.api;
 
-public interface APIfactory {
+public interface APIfactory<E> {
 
-    public Get createGet();
+    public Get<E> createGet();
 
     public Post createPost();
 

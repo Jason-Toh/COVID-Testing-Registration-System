@@ -1,6 +1,8 @@
 package com.example.servingwebcontent.api;
 
-public class TestingSiteFactory implements APIfactory{
+import com.example.servingwebcontent.models.TestingSite;
+
+public class TestingSiteFactory implements APIfactory<TestingSite> {
     private String api;
 
     public TestingSiteFactory(String api) {
@@ -8,7 +10,7 @@ public class TestingSiteFactory implements APIfactory{
     }
 
     @Override
-    public Get createGet() {
+    public Get<TestingSite> createGet() {
         return new TestingSiteGet(this.api);
     }
 

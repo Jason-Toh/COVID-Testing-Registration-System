@@ -1,6 +1,5 @@
 package com.example.servingwebcontent.tool;
 
-import java.nio.charset.Charset;
 import java.util.Random;
 
 public class RandomStringGenerator {
@@ -20,5 +19,3 @@ public class RandomStringGenerator {
         return generatedString;
     }
 }
-
-

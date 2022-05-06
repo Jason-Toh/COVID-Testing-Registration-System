@@ -20,7 +20,8 @@
                     <td>Customer:</td>
                     <td>
                         <select th:field="*{customerUsername}" class="custom-select my-1 mr-sm-2" required>
-                            <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
+                            <option th:each="user : ${userList}" th:value="${user.getId()}"
+                                th:text="${user.getFullName()}" />
                         </select>
                     <td>
                 </tr>
@@ -28,32 +29,8 @@
                     <td>Testing-sites:</td>
                     <td>
                         <select th:field="*{testingSite}" class="custom-select my-1 mr-sm-2" required>
-                            <option th:each="p : ${testingSiteModels}" th:value="${p.getId()}"
-                                th:text="${p.getName()}" />
-                        </select>
-                    <td>
-                </tr>
-                <tr style="display:none">
-                    <td>Test-type:</td>
-                    <td>
-                        <select th:field="*{testType}" class="custom-select my-1 mr-sm-2">
-                            <option th:each="p : ${testTypeModels}" th:value="${p}" th:text="${p}" />
-                        </select>
-                    <td>
-                </tr>
-                <tr style="display:none">
-                    <td>Administrator:</td>
-                    <td>
-                        <select th:field="*{administrator}" class="custom-select my-1 mr-sm-2">
-                            <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
-                        </select>
-                    <td>
-                </tr>
-                <tr style="display:none">
-                    <td>Patient:</td>
-                    <td>
-                        <select th:field="*{patient}" class="custom-select my-1 mr-sm-2">
-                            <option th:each="p : ${userModels}" th:value="${p.getId}" th:text="${p.getFullName}" />
+                            <option th:each="testingSite : ${testingSiteList}" th:value="${testingSite.getId()}"
+                                th:text="${testingSite.getName()}" />
                         </select>
                     <td>
                 </tr>
@@ -65,24 +42,6 @@
                             class="form-control" required>
                     <td>
                 </tr>
-                <!-- <tr>
-                    <td>On Home Booking?</td>
-                    <td>
-                        <input type="checkbox" th:field="*{onHomeBooking}" id="myCheck" onchange="myFunction1()">
-                    <td>
-                </tr> -->
-                <tr style="display:none">
-                    <td>QR Code:</td>
-                    <td>
-                        <input type="text" id="qrcode" value="" th:field="*{qr}" class="form-control">
-                    <td>
-                </tr>
-                <!-- <tr>
-                    <td>
-                        <p>INFO: If you choose on home booking you can get your testing kit from testing site you select
-                        </p>
-                    </td>
-                </tr> -->
                 <tr>
                     <td>
                         <input class="btn btn-primary" name="submit" type="submit" value="submit" id="btn2"

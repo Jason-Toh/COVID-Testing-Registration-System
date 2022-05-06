@@ -22,55 +22,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SearchController {
 
-    public List<TestingSite> getTestingSiteModels() {
-        List<TestingSite> testingSiteModels = new ArrayList<>();
+    public List<TestingSite> getTestingSiteList() {
+        List<TestingSite> testingSiteList = new ArrayList<>();
 
-        APIfactory factory = new TestingSiteFactory(System.getenv("API_KEY"));
-        Get testingSiteGet = factory.createGet();
+        APIfactory<TestingSite> testingSiteFactory = new TestingSiteFactory(System.getenv("API_KEY"));
+        Get<TestingSite> testingSiteGet = testingSiteFactory.createGet();
 
         try {
             // Testing-site collection
-            Collection<TestingSite> testingSites = testingSiteGet.getApi();
+            Collection<TestingSite> testingSiteCollection = testingSiteGet.getApi();
 
-            for (TestingSite testingSite : testingSites) {
-                testingSiteModels.add(testingSite);
+            for (TestingSite testingSite : testingSiteCollection) {
+                testingSiteList.add(testingSite);
             }
 
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        return testingSiteModels;
+        return testingSiteList;
     }
 
     @GetMapping("/browse")
     public String browseTestingSite(Model model) {
 
-        List<TestingSite> testingSiteModels = getTestingSiteModels();
+        List<TestingSite> testingSiteList = getTestingSiteList();
 
-        model.addAttribute("testingSites", testingSiteModels);
+        model.addAttribute("testingSiteList", testingSiteList);
 
         return "testing-site/browse";
     }
 
     @PostMapping("/search")
     public String searchTestingSite(@ModelAttribute("browseForm") BrowseForm browseForm, Model model) {
-        APIfactory factory = new TestingSiteFactory(System.getenv("API_KEY"));
-        Get testingSiteGet = factory.createGet();
+        APIfactory<TestingSite> testingSiteFactory = new TestingSiteFactory(System.getenv("API_KEY"));
+        Get<TestingSite> testingSiteGet = testingSiteFactory.createGet();
 
-        List<TestingSite> filteredTestingSiteModels = new ArrayList<>();
+        List<TestingSite> filteredTestingSiteList = new ArrayList<>();
 
         try {
             // Testing-site collection
-            Collection<TestingSite> testingSites = testingSiteGet.getApi();
+            Collection<TestingSite> testingSiteCollection = testingSiteGet.getApi();
 
             String suburbName = browseForm.getSuburbName().toLowerCase();
 
             // Search for a substring in a string
-            for (TestingSite testingSite : testingSites) {
+            for (TestingSite testingSite : testingSiteCollection) {
                 // Filter the testing site based on suburb name
                 if (testingSite.getName().toLowerCase().contains(suburbName)) {
-                    filteredTestingSiteModels.add(testingSite);
+                    filteredTestingSiteList.add(testingSite);
                 }
             }
 
@@ -78,30 +78,30 @@ public class SearchController {
             System.out.println(e);
         }
 
-        model.addAttribute("testingSites", filteredTestingSiteModels);
+        model.addAttribute("testingSiteList", filteredTestingSiteList);
 
         return "testing-site/browse";
     }
 
     @PostMapping("/select")
     public String filterByTypeOfFacility(@ModelAttribute("browseForm") BrowseForm browseForm, Model model) {
-        APIfactory factory = new TestingSiteFactory(System.getenv("API_KEY"));
+        APIfactory<TestingSite> testingSiteFactory = new TestingSiteFactory(System.getenv("API_KEY"));
 
-        Get testingSiteGet = factory.createGet();
+        Get<TestingSite> testingSiteGet = testingSiteFactory.createGet();
 
-        List<TestingSite> filteredTestingSiteModels = new ArrayList<>();
+        List<TestingSite> filteredTestingSiteList = new ArrayList<>();
+
+        String typeOfFacility = browseForm.getTypeOfFacility().toLowerCase();
 
         try {
             // Testing-site collection
-            Collection<TestingSite> testingSites = testingSiteGet.getApi();
-
-            String typeOfFacility = browseForm.getTypeOfFacility().toLowerCase();
+            Collection<TestingSite> testingSiteCollection = testingSiteGet.getApi();
 
             // Search for a substring in a string
-            for (TestingSite testingSite : testingSites) {
+            for (TestingSite testingSite : testingSiteCollection) {
                 // Filter the testing site based on type of facility
                 if (testingSite.getAdditonalInfo().getTypeOfFacility().toLowerCase().contains(typeOfFacility)) {
-                    filteredTestingSiteModels.add(testingSite);
+                    filteredTestingSiteList.add(testingSite);
                 }
             }
 
@@ -109,7 +109,7 @@ public class SearchController {
             System.out.println(e);
         }
 
-        model.addAttribute("testingSites", filteredTestingSiteModels);
+        model.addAttribute("testingSiteList", filteredTestingSiteList);
 
         return "testing-site/browse";
     }
@@ -118,9 +118,9 @@ public class SearchController {
     public String showTestingSite(@PathVariable String id, Model model)
             throws IOException, InterruptedException {
 
-        List<TestingSite> testingSiteModels = getTestingSiteModels();
+        List<TestingSite> testingSiteList = getTestingSiteList();
 
-        for (TestingSite testingSite : testingSiteModels) {
+        for (TestingSite testingSite : testingSiteList) {
             // Get the testing site if it matches the ID
             if (id.equals(testingSite.getId())) {
                 model.addAttribute("testingSite", testingSite);
