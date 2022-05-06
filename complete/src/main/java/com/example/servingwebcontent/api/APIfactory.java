@@ -8,7 +8,7 @@ public interface APIfactory<E> {
 
     // ---DELETE AND PATCH CAN BE IMPLEMENT IN FUTURE---
 
-    // public Delete createDelete();
+    public Delete createDelete();
 
     public Patch createPatch();
 }

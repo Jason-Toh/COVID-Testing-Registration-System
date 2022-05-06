@@ -20,6 +20,11 @@ public class UserFactory implements APIfactory<User> {
     }
 
     @Override
+    public Delete createDelete() {
+        return null;
+    }
+
+    @Override
     public Patch createPatch() {
         return null;
     }

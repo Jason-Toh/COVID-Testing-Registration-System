@@ -28,7 +28,7 @@ public class CovidTestPost extends Post {
 
         @Override
         public String postApi() throws IOException, InterruptedException {
-                String rootUrl = "https://fit3077.com/api/v1";
+                String rootUrl = "https://fit3077.com/api/v2";
 
                 String jsonString = "{" +
                                 "\"type\":\"" + testType + "\"," +

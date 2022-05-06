@@ -25,7 +25,7 @@ public class BookingGet extends Get<Booking> {
     @Override
     public Collection<Booking> getApi() throws IOException, InterruptedException, ParseException {
         List<Booking> bookings = new ArrayList<>();
-        String rootUrl = "https://fit3077.com/api/v1";
+        String rootUrl = "https://fit3077.com/api/v2";
         String usersUrl = rootUrl + "/booking";
 
         HttpClient client = HttpClient.newHttpClient();

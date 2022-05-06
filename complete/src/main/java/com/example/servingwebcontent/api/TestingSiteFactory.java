@@ -20,6 +20,11 @@ public class TestingSiteFactory implements APIfactory<TestingSite> {
     }
 
     @Override
+    public Delete createDelete() {
+        return null;
+    }
+
+    @Override
     public Patch createPatch() {
         return null;
     }

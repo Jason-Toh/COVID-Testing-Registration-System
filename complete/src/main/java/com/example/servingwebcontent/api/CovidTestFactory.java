@@ -3,13 +3,14 @@ package com.example.servingwebcontent.api;
 import com.example.servingwebcontent.models.CovidTest;
 
 public class CovidTestFactory implements APIfactory<CovidTest> {
-    private final String api;
-    private final String testType;
-    private final String patientId;
-    private final String administererId;
-    private final String bookingId;
-    private final String result;
-    private final String patientStatus;
+    private String api;
+    private String testType;
+    private String patientId;
+    private String administererId;
+    private String bookingId;
+    private String result;
+    private String patientStatus;
+    private String covidId;
 
     public CovidTestFactory(String api, String testType, String patientId, String administererId, String bookingId,
             String patientStatus) {
@@ -22,6 +23,10 @@ public class CovidTestFactory implements APIfactory<CovidTest> {
         this.patientStatus = patientStatus;
     }
 
+    public CovidTestFactory(String api) {
+        this.api = api;
+    }
+
     @Override
     public Get<CovidTest> createGet() {
         return null;
@@ -30,6 +35,11 @@ public class CovidTestFactory implements APIfactory<CovidTest> {
     @Override
     public Post createPost() {
         return new CovidTestPost(api, testType, patientId, administererId, bookingId, result, patientStatus);
+    }
+
+    @Override
+    public Delete createDelete() {
+        return new CovidTestDelete(api);
     }
 
     @Override

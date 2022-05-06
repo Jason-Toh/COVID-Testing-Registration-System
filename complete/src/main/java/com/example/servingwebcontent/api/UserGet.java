@@ -26,7 +26,7 @@ public class UserGet extends Get<User> {
     @Override
     public Collection<User> getApi() throws IOException, InterruptedException {
         List<User> users = new ArrayList<>();
-        String rootUrl = "https://fit3077.com/api/v1";
+        String rootUrl = "https://fit3077.com/api/v2";
         String usersUrl = rootUrl + "/user?fields=bookings.covidTests";
 
         HttpClient client = HttpClient.newHttpClient();

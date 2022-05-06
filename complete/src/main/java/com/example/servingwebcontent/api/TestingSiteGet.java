@@ -25,7 +25,7 @@ public class TestingSiteGet extends Get<TestingSite> {
     @Override
     public Collection<TestingSite> getApi() throws IOException, InterruptedException {
         List<TestingSite> testingSites = new ArrayList<>();
-        String rootUrl = "https://fit3077.com/api/v1";
+        String rootUrl = "https://fit3077.com/api/v2";
         String usersUrl = rootUrl + "/testing-site";
 
         HttpClient client = HttpClient.newHttpClient();
