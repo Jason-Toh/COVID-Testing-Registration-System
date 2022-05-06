@@ -9,7 +9,7 @@ public class InterviewForm {
     private boolean soreThroat;
     private boolean lossTasteAndSmell;
     private boolean closeContact;
-    private String administrator;
+    private String administerer;
     private String patient;
     private String testType;
 
@@ -29,12 +29,12 @@ public class InterviewForm {
         this.shaking = shaking;
     }
 
-    public String getAdministrator() {
-        return administrator;
+    public String getAdministerer() {
+        return administerer;
     }
 
-    public void setAdministrator(String administrator) {
-        this.administrator = administrator;
+    public void setAdministerer(String administerer) {
+        this.administerer = administerer;
     }
 
     public String getPatient() {
@@ -103,7 +103,7 @@ public class InterviewForm {
                 ", soreThroat=" + soreThroat +
                 ", lossTasteAndSmell=" + lossTasteAndSmell +
                 ", closeContact=" + closeContact +
-                ", administrator='" + administrator + '\'' +
+                ", administerer='" + administerer + '\'' +
                 ", patient='" + patient + '\'' +
                 ", testType='" + testType + '\'' +
                 '}';
