@@ -140,7 +140,10 @@ public class Booking {
                 ", testingSiteName='" + testingSiteName + '\'' +
                 ", smsPin='" + smsPin + '\'' +
                 ", startTime='" + startTime + '\'' +
-                ", covidTests=" + covidTests +
+                ", covidTests=" + covidTests + '\'' +
+                ", status='" + status + '\'' +
+                ", url='" + url + '\'' +
+                ", qr='" + qr +
                 '}';
     }
 }
