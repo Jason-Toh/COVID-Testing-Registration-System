@@ -61,7 +61,7 @@ public class BookingGet extends Get<Booking> {
 
             // Get the QR from JSON if the attribute exists
             try {
-                qr = additionalInfoJSON.getString("qr");
+                qr = additionalInfoJSON.getString("qrCode");
             } catch (Exception exception) {
                 qr = "";
             }
