@@ -61,7 +61,9 @@ public class HomeBookingController {
             Collection<User> userCollection = userGet.getApi();
 
             for (User user : userCollection) {
-                userList.add(user);
+                if (user.isCustomer()) {
+                    userList.add(user);
+                }
             }
 
         } catch (Exception e) {
@@ -86,6 +88,10 @@ public class HomeBookingController {
 
         if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
+        }
+
+        if (!authenticateInstance.getUser().isCustomer()) {
+            return "notAuthorised";
         }
 
         // 1.
@@ -132,8 +138,10 @@ public class HomeBookingController {
             Collection<Booking> bookingCollection = bookingGet.getApi();
 
             for (Booking booking : bookingCollection) {
+
                 // If the booking status is already completed, throw an errors
-                if (booking.getStatus().toLowerCase().equals("completed")) {
+                if (booking.getQr().equals(qrCode)
+                        && booking.getStatus().toUpperCase().equals("COMPLETED")) {
                     model.addAttribute("error", "Booking has already been completed");
                     return "scanQR";
                 }

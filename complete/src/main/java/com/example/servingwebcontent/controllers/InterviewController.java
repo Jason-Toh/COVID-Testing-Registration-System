@@ -18,6 +18,30 @@ public class InterviewController {
 
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
+    public List<User> getAdministererList() {
+        // 2.2
+        APIfactory<User> userFactory = new UserFactory(System.getenv("API_KEY"));
+        Get<User> userGet = userFactory.createGet();
+
+        List<User> administererList = new ArrayList<>();
+
+        try {
+            // User collection
+            Collection<User> userCollection = userGet.getApi();
+
+            for (User user : userCollection) {
+                if (user.isHealthcareWorker()) {
+                    administererList.add(user);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return administererList;
+    }
+
     public List<User> getUserList() {
         // 2.2
         APIfactory<User> userFactory = new UserFactory(System.getenv("API_KEY"));
@@ -30,7 +54,9 @@ public class InterviewController {
             Collection<User> userCollection = userGet.getApi();
 
             for (User user : userCollection) {
-                userList.add(user);
+                if (user.isCustomer()) {
+                    userList.add(user);
+                }
             }
 
         } catch (Exception e) {
@@ -68,6 +94,9 @@ public class InterviewController {
         List<User> userList = getUserList();
         model.addAttribute("userList", userList);
 
+        List<User> administererList = getAdministererList();
+        model.addAttribute("administererList", administererList);
+
         // 3. Get test-type and put it into model
         List<String> testTypeList = getTestTypeList();
         model.addAttribute("testTypeList", testTypeList);
@@ -85,10 +114,13 @@ public class InterviewController {
 
         String pinCode = interviewForm.getPinCode();
 
+        String bookingStatus = "";
+
         boolean check = false;
         for (Booking booking : bookingCollection) {
             if (booking.getSmsPin().equals(pinCode)) {
                 check = true;
+                bookingStatus = booking.getStatus();
                 break;
             }
         }
@@ -101,11 +133,35 @@ public class InterviewController {
             List<User> userList = getUserList();
             model.addAttribute("userList", userList);
 
+            List<User> administererList = getAdministererList();
+            model.addAttribute("administererList", administererList);
+
             // 3. Get test-type and put it into model
             List<String> testTypeList = getTestTypeList();
             model.addAttribute("testTypeList", testTypeList);
 
             model.addAttribute("error", "Pin Code does not exist. Please try again");
+
+            return "interview";
+        }
+
+        // User can only go for interview if the booking status is completed
+        if (!bookingStatus.toUpperCase().equals("COMPLETED")) {
+            // 1. Interview Form
+            InterviewForm interviewForm2 = new InterviewForm();
+            model.addAttribute("interviewForm", interviewForm2);
+
+            List<User> userList = getUserList();
+            model.addAttribute("userList", userList);
+
+            List<User> administererList = getAdministererList();
+            model.addAttribute("administererList", administererList);
+
+            // 3. Get test-type and put it into model
+            List<String> testTypeList = getTestTypeList();
+            model.addAttribute("testTypeList", testTypeList);
+
+            model.addAttribute("error", "Booking Status is not Completed");
 
             return "interview";
         }
@@ -131,7 +187,7 @@ public class InterviewController {
 
         APIfactory<CovidTest> covidTestFactory = new CovidTestFactory(System.getenv("API_KEY"),
                 interviewForm.getTestType(),
-                interviewForm.getPatient(), interviewForm.getAdministrator(), bookingId, patientStatus);
+                interviewForm.getPatient(), interviewForm.getAdministerer(), bookingId, patientStatus);
         Post covidTestPost = covidTestFactory.createPost();
         // String jsonPost = covidTestPost.postApi();
         covidTestPost.postApi();

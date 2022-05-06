@@ -68,7 +68,9 @@ public class BookingController {
             Collection<User> userCollection = userGet.getApi();
 
             for (User user : userCollection) {
-                userList.add(user);
+                if (user.isCustomer()) {
+                    userList.add(user);
+                }
             }
 
         } catch (Exception e) {
@@ -261,16 +263,9 @@ public class BookingController {
         JSONObject book = new JSONObject(jsonPost);
         String bookingId = book.get("id") + "";
 
-        // OnSite Booking should have COMPLETED as Booking Status
-        APIfactory<Booking> bookingFactory2 = new BookingFactory(System.getenv("API_KEY"), bookingId,
-                BookingStatus.COMPLETED);
-        Patch bookingPatch = bookingFactory2.createPatch();
-        // String returnValue = bookingPatch.patchApi();
-        bookingPatch.patchApi();
-
         // Post Qr code String
         if (bookingForm.isOnHomeBooking()) {
-
+            System.out.println(bookingId);
             String url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             APIfactory<Booking> bookingFactory3 = new BookingFactory(System.getenv("API_KEY"), bookingId,
                     bookingForm.getQr(), url,
@@ -278,6 +273,13 @@ public class BookingController {
             Patch bookingPatch2 = bookingFactory3.createPatch();
             // String returnValue = bookingPatch.patchApi();
             bookingPatch2.patchApi();
+        } else {
+            // OnSite Booking should have COMPLETED as Booking Status
+            APIfactory<Booking> bookingFactory2 = new BookingFactory(System.getenv("API_KEY"), bookingId,
+                    BookingStatus.COMPLETED);
+            Patch bookingPatch = bookingFactory2.createPatch();
+            // String returnValue = bookingPatch.patchApi();
+            bookingPatch.patchApi();
         }
 
         model.addAttribute("pinCode", book.get("smsPin") + "");
