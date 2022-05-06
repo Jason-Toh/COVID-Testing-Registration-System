@@ -68,7 +68,9 @@ public class BookingController {
             Collection<User> userCollection = userGet.getApi();
 
             for (User user : userCollection) {
-                userList.add(user);
+                if (user.isCustomer()) {
+                    userList.add(user);
+                }
             }
 
         } catch (Exception e) {
