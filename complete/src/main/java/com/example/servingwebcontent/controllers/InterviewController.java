@@ -18,54 +18,6 @@ public class InterviewController {
 
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
-    public List<User> getAdministererList() {
-        // 2.2
-        APIfactory<User> userFactory = new UserFactory(System.getenv("API_KEY"));
-        Get<User> userGet = userFactory.createGet();
-
-        List<User> administererList = new ArrayList<>();
-
-        try {
-            // User collection
-            Collection<User> userCollection = userGet.getApi();
-
-            for (User user : userCollection) {
-                if (user.isHealthcareWorker()) {
-                    administererList.add(user);
-                }
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return administererList;
-    }
-
-    public List<User> getUserList() {
-        // 2.2
-        APIfactory<User> userFactory = new UserFactory(System.getenv("API_KEY"));
-        Get<User> userGet = userFactory.createGet();
-
-        List<User> userList = new ArrayList<>();
-
-        try {
-            // User collection
-            Collection<User> userCollection = userGet.getApi();
-
-            for (User user : userCollection) {
-                if (user.isCustomer()) {
-                    userList.add(user);
-                }
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return userList;
-    }
-
     public List<String> getTestTypeList() {
 
         List<String> testTypeList = new ArrayList<>();
@@ -87,21 +39,6 @@ public class InterviewController {
             return "notAuthorised";
         }
 
-        // // 1. Interview Form
-        // InterviewForm interviewForm = new InterviewForm();
-        // model.addAttribute("interviewForm", interviewForm);
-
-        // List<User> userList = getUserList();
-        // model.addAttribute("userList", userList);
-
-        // List<User> administererList = getAdministererList();
-        // model.addAttribute("administererList", administererList);
-
-        // // 3. Get test-type and put it into model
-        // List<String> testTypeList = getTestTypeList();
-        // model.addAttribute("testTypeList", testTypeList);
-
-        // return "interview";
         return "pinInterview";
     }
 
@@ -158,12 +95,6 @@ public class InterviewController {
 
         model.addAttribute("administerer", administerer);
 
-        // List<User> userList = getUserList();
-        // model.addAttribute("userList", userList);
-
-        // List<User> administererList = getAdministererList();
-        // model.addAttribute("administererList", administererList);
-
         // 3. Get test-type and put it into model
         List<String> testTypeList = getTestTypeList();
         model.addAttribute("testTypeList", testTypeList);
@@ -174,9 +105,6 @@ public class InterviewController {
     @PostMapping("/interview")
     public String submitInterviewForm(@ModelAttribute("interviewForm") InterviewForm interviewForm, Model model)
             throws IOException, InterruptedException, ParseException {
-
-        // TODO Fix Interview Submit Form
-        // FIXME interview.html needs fixing as well
 
         APIfactory<Booking> bookingFactory = new BookingFactory(System.getenv("API_KEY"));
         Get<Booking> bookingGet = bookingFactory.createGet();
