@@ -28,8 +28,6 @@ public class BookingPatch extends Patch {
 
     @Override
     public String patchApi() throws IOException, InterruptedException {
-
-        System.out.println(bookingId);
         HttpClient client = HttpClient.newHttpClient();
         String rootUrl = "https://fit3077.com/api/v2";
         String usersUrl = rootUrl + "/booking/" + bookingId;

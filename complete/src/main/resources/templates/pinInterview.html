@@ -1,5 +1,5 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -13,11 +13,11 @@
 <body>
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container py-4">
-        <form name='f' th:action="@{/scanQRCode}" th:object="${scanQRForm}" method='POST' class="mt-4">
-            <label for="qrCode">Please scan the QR Code</label>
+        <form name='f' th:action="@{/verifyPinCode}" th:object="${interviewForm}" method='POST' class="mt-4">
+            <label for="pinCode">Please enter your PIN Code</label>
             <h6 th:text=" ${error} ? ${error} : '' " class="${error} ? text-danger : '' "></h6>
-            <input type='text' name='qrCode' value='' th:value="${qrCode}" class="form-control"
-                placeholder="e.g. NQfetaf" required>
+            <input type='text' name='pinCode' value='' th:value="${pinCode}" class=" form-control"
+                placeholder="e.g. 12345" required>
             <button type="submit" class="btn btn-primary mt-4">Submit</button>
         </form>
     </div>
