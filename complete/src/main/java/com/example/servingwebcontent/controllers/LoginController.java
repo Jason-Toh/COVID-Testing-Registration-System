@@ -59,7 +59,7 @@ public class LoginController {
 
     public boolean checkLoginFromAPI(String userName, String password) throws IOException, InterruptedException {
         boolean flag = false;
-        String rootUrl = "https://fit3077.com/api/v1";
+        String rootUrl = "https://fit3077.com/api/v2";
         String usersUrl = rootUrl + "/user";
         String usersLoginUrl = usersUrl + "/login";
 

@@ -25,6 +25,7 @@
                             <!-- Form -->
                             <div class="form-group">
                                 <label for="userName">Username</label>
+                                <h6 th:text=" ${error} ? ${error} : '' " class="${error} ? text-danger : '' "></h6>
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><span class="fas fa-user"></span></span>

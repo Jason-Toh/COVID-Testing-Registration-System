@@ -11,7 +11,7 @@
       "mainClass": "com.example.servingwebcontent.MainApplication",
       "projectName": "serving-web-content-complete",
       "env": {
-        "API_KEY": "qBDMKwFLh6bRJTnJqnfRGNDM6KRphz"
+        "API_KEY": "LfJNRgdPqdCmLbGJzPjm6mbdfKKGMw"
       }
     },
     {
@@ -21,7 +21,7 @@
       "mainClass": "com.example.servingwebcontent.api.Main2",
       "projectName": "serving-web-content-complete",
       "env": {
-        "API_KEY": "qBDMKwFLh6bRJTnJqnfRGNDM6KRphz"
+        "API_KEY": "LfJNRgdPqdCmLbGJzPjm6mbdfKKGMw"
       }
     },
     {
@@ -30,7 +30,7 @@
       "request": "launch",
       "mainClass": "${file}",
       "env": {
-        "API_KEY": "qBDMKwFLh6bRJTnJqnfRGNDM6KRphz"
+        "API_KEY": "LfJNRgdPqdCmLbGJzPjm6mbdfKKGMw"
       }
     },
     {
@@ -40,7 +40,7 @@
       "mainClass": "com.example.servingwebcontent.ServingWebContentApplication",
       "projectName": "serving-web-content-complete",
       "env": {
-        "API_KEY": "qBDMKwFLh6bRJTnJqnfRGNDM6KRphz"
+        "API_KEY": "LfJNRgdPqdCmLbGJzPjm6mbdfKKGMw"
       }
     },
     {
@@ -50,7 +50,7 @@
       "mainClass": "com.example.servingwebcontent.api.Main",
       "projectName": "serving-web-content-complete",
       "env": {
-        "API_KEY": "qBDMKwFLh6bRJTnJqnfRGNDM6KRphz"
+        "API_KEY": "LfJNRgdPqdCmLbGJzPjm6mbdfKKGMw"
       }
     },
     {
@@ -60,7 +60,7 @@
       "mainClass": "com.example.servingwebcontent.tool.Main1",
       "projectName": "serving-web-content-complete",
       "env": {
-        "API_KEY": "qBDMKwFLh6bRJTnJqnfRGNDM6KRphz"
+        "API_KEY": "LfJNRgdPqdCmLbGJzPjm6mbdfKKGMw"
       }
     },
     {
@@ -70,7 +70,7 @@
       "mainClass": "com.example.servingwebcontent.ServingWebContentApplication",
       "projectName": "serving-web-content-initial",
       "env": {
-        "API_KEY": "qBDMKwFLh6bRJTnJqnfRGNDM6KRphz"
+        "API_KEY": "LfJNRgdPqdCmLbGJzPjm6mbdfKKGMw"
       }
     }
   ]

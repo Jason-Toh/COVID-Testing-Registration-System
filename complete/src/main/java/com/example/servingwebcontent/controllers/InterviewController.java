@@ -87,15 +87,82 @@ public class InterviewController {
             return "notAuthorised";
         }
 
+        // // 1. Interview Form
+        // InterviewForm interviewForm = new InterviewForm();
+        // model.addAttribute("interviewForm", interviewForm);
+
+        // List<User> userList = getUserList();
+        // model.addAttribute("userList", userList);
+
+        // List<User> administererList = getAdministererList();
+        // model.addAttribute("administererList", administererList);
+
+        // // 3. Get test-type and put it into model
+        // List<String> testTypeList = getTestTypeList();
+        // model.addAttribute("testTypeList", testTypeList);
+
+        // return "interview";
+        return "pinInterview";
+    }
+
+    @PostMapping("verifyPinCode")
+    public String verifyPinCode(@ModelAttribute("interviewForm") InterviewForm interviewForm, Model model)
+            throws IOException, InterruptedException, ParseException {
+
+        APIfactory<Booking> bookingFactory = new BookingFactory(System.getenv("API_KEY"));
+        Get<Booking> bookingGet = bookingFactory.createGet();
+
+        String pinCode = interviewForm.getPinCode();
+        boolean check = false;
+        boolean check2 = false;
+
+        String patientName = "";
+        String patientId = "";
+
+        Collection<Booking> bookingCollection = bookingGet.getApi();
+
+        for (Booking booking : bookingCollection) {
+            if (booking.getSmsPin().equals(pinCode)) {
+                check = true;
+                patientId = booking.getCustomerId();
+                patientName = booking.getCustomerName();
+                if (!booking.getStatus().equals("COMPLETED")) {
+                    check2 = true;
+                }
+                break;
+            }
+        }
+
+        if (!check) {
+            model.addAttribute("error", "Pin Code does not exist. Please try again");
+
+            return "pinInterview";
+        }
+
+        if (check2) {
+            model.addAttribute("error", "Booking Status is not COMPLETED");
+
+            return "pinInterview";
+        }
+
+        User administerer = authenticateInstance.getUser();
+
         // 1. Interview Form
-        InterviewForm interviewForm = new InterviewForm();
-        model.addAttribute("interviewForm", interviewForm);
+        InterviewForm interviewForm2 = new InterviewForm();
+        model.addAttribute("interviewForm", interviewForm2);
 
-        List<User> userList = getUserList();
-        model.addAttribute("userList", userList);
+        model.addAttribute("pinCode", pinCode);
 
-        List<User> administererList = getAdministererList();
-        model.addAttribute("administererList", administererList);
+        model.addAttribute("patientId", patientId);
+        model.addAttribute("patientName", patientName);
+
+        model.addAttribute("administerer", administerer);
+
+        // List<User> userList = getUserList();
+        // model.addAttribute("userList", userList);
+
+        // List<User> administererList = getAdministererList();
+        // model.addAttribute("administererList", administererList);
 
         // 3. Get test-type and put it into model
         List<String> testTypeList = getTestTypeList();
@@ -108,67 +175,19 @@ public class InterviewController {
     public String submitInterviewForm(@ModelAttribute("interviewForm") InterviewForm interviewForm, Model model)
             throws IOException, InterruptedException, ParseException {
 
+        // TODO Fix Interview Submit Form
+        // FIXME interview.html needs fixing as well
+
         APIfactory<Booking> bookingFactory = new BookingFactory(System.getenv("API_KEY"));
         Get<Booking> bookingGet = bookingFactory.createGet();
         Collection<Booking> bookingCollection = bookingGet.getApi();
 
         String pinCode = interviewForm.getPinCode();
 
-        String bookingStatus = "";
+        String bookingId = "";
 
-        boolean check = false;
         for (Booking booking : bookingCollection) {
             if (booking.getSmsPin().equals(pinCode)) {
-                check = true;
-                bookingStatus = booking.getStatus();
-                break;
-            }
-        }
-
-        if (!check) {
-            // 1. Interview Form
-            InterviewForm interviewForm2 = new InterviewForm();
-            model.addAttribute("interviewForm", interviewForm2);
-
-            List<User> userList = getUserList();
-            model.addAttribute("userList", userList);
-
-            List<User> administererList = getAdministererList();
-            model.addAttribute("administererList", administererList);
-
-            // 3. Get test-type and put it into model
-            List<String> testTypeList = getTestTypeList();
-            model.addAttribute("testTypeList", testTypeList);
-
-            model.addAttribute("error", "Pin Code does not exist. Please try again");
-
-            return "interview";
-        }
-
-        // User can only go for interview if the booking status is completed
-        if (!bookingStatus.toUpperCase().equals("COMPLETED")) {
-            // 1. Interview Form
-            InterviewForm interviewForm2 = new InterviewForm();
-            model.addAttribute("interviewForm", interviewForm2);
-
-            List<User> userList = getUserList();
-            model.addAttribute("userList", userList);
-
-            List<User> administererList = getAdministererList();
-            model.addAttribute("administererList", administererList);
-
-            // 3. Get test-type and put it into model
-            List<String> testTypeList = getTestTypeList();
-            model.addAttribute("testTypeList", testTypeList);
-
-            model.addAttribute("error", "Booking Status is not Completed");
-
-            return "interview";
-        }
-
-        String bookingId = null;
-        for (Booking booking : bookingCollection) {
-            if (booking.getSmsPin().equals(interviewForm.getPinCode())) {
                 bookingId = booking.getBookingId();
                 break;
             }
@@ -204,5 +223,4 @@ public class InterviewController {
 
         return "testingDone";
     }
-
 }
