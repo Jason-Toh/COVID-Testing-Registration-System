@@ -19,5 +19,7 @@ public class Main {
         APIfactory testFactory = new BookingFactory(api);
         Delete bookingDelete = testFactory.createDelete();
         bookingDelete.deleteApi(covidTestId);
+
+        //TODAY
     }
 }
