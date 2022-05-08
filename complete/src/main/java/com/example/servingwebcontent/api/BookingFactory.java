@@ -57,7 +57,7 @@ public class BookingFactory implements APIfactory<Booking> {
     }
 
     @Override
-    public Delete createDelete() { return new BookingDelete(api, bookingId); }
+    public Delete createDelete() { return new BookingDelete(api); }
 
     @Override
     public Patch createPatch() {

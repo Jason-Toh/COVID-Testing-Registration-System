@@ -1,7 +1,9 @@
 package com.example.servingwebcontent.api;
 
+import org.json.simple.parser.ParseException;
+
 import java.io.IOException;
 
 public abstract class Delete {
-    public abstract void deleteApi(String id) throws IOException, InterruptedException;
+    public abstract void deleteApi(String id) throws IOException, InterruptedException, ParseException;
 }
