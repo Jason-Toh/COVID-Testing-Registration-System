@@ -136,14 +136,16 @@ public class Booking {
     public String toString() {
         return "Booking{" +
                 "bookingId='" + bookingId + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", customerName='" + customerName + '\'' +
                 ", testingSiteId='" + testingSiteId + '\'' +
                 ", testingSiteName='" + testingSiteName + '\'' +
                 ", smsPin='" + smsPin + '\'' +
                 ", startTime='" + startTime + '\'' +
-                ", covidTests=" + covidTests + '\'' +
                 ", status='" + status + '\'' +
                 ", url='" + url + '\'' +
-                ", qr='" + qr +
+                ", qr='" + qr + '\'' +
+                ", covidTests=" + covidTests +
                 '}';
     }
 }

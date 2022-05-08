@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.api;
 
 import com.example.servingwebcontent.models.Booking;
+import com.example.servingwebcontent.models.CovidTest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -26,7 +27,7 @@ public class BookingGet extends Get<Booking> {
     public Collection<Booking> getApi() throws IOException, InterruptedException, ParseException {
         List<Booking> bookings = new ArrayList<>();
         String rootUrl = "https://fit3077.com/api/v2";
-        String usersUrl = rootUrl + "/booking";
+        String usersUrl = rootUrl + "/booking?fields=covidTests";
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest
@@ -42,12 +43,24 @@ public class BookingGet extends Get<Booking> {
         JSONArray json = new JSONArray(response.body());
 
         // Add user into users list
+
         for (int i = 0; i < json.length(); i++) {
             String bookingId = (String) json.getJSONObject(i).get("id");
             String smsPin = (String) json.getJSONObject(i).get("smsPin");
             String startTime = (String) json.getJSONObject(i).get("startTime");
             String status = (String) json.getJSONObject(i).get("status");
             JSONObject additionalInfoJSON = (JSONObject) json.getJSONObject(i).get("additionalInfo");
+
+            // Put covidTests into each Booking
+            List<CovidTest> covidTests = new ArrayList<>();
+            JSONArray covidTestsJsonArray = (JSONArray) json.getJSONObject(i).get("covidTests");
+            for (int j = 0; j < covidTestsJsonArray.length(); j++){
+                String covidTestId = (String) covidTestsJsonArray.getJSONObject(j).get("id");
+                CovidTest covidTest = new CovidTest(covidTestId, null, null);
+                covidTests.add(covidTest);
+
+            }
+
 
             String url = "";
             String qr = "";
@@ -84,7 +97,9 @@ public class BookingGet extends Get<Booking> {
             Booking booking = new Booking(bookingId, customerId, customerName, testingSiteId, testingSiteName,
                     smsPin,
                     startTime, status, url, qr);
+            booking.setCovidTests(covidTests);
             bookings.add(booking);
+
         }
 
         return bookings;
