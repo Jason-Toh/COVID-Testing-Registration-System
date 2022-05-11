@@ -54,7 +54,8 @@ public class UserGet extends Get<User> {
             boolean isCustomer = (boolean) json.getJSONObject(i).get("isCustomer");
             boolean isReceptionist = (boolean) json.getJSONObject(i).get("isReceptionist");
             boolean isHealthcareWorker = (boolean) json.getJSONObject(i).get("isHealthcareWorker");
-
+            JSONObject addiInfo = (JSONObject) json.getJSONObject(i).get("additionalInfo");
+            String adminTestingSiteId = addiInfo.getString("testingSiteId");
             JSONArray bookingJsonArray = json.getJSONObject(i).getJSONArray("bookings");
 
             List<Booking> bookings = new ArrayList<>();
@@ -96,7 +97,7 @@ public class UserGet extends Get<User> {
             }
 
             User user = new User(id, givenName, familyName, userName, phoneNumber, isCustomer, isReceptionist,
-                    isHealthcareWorker);
+                    isHealthcareWorker,adminTestingSiteId);
             user.setBookings(bookings);
             users.add(user);
         }

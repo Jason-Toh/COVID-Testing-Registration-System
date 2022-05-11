@@ -18,8 +18,10 @@ public class User {
     private List<CovidTest> testsTaken;
     private List<User> testsAdministered;
 
+    private String testingSiteId;
+
     public User(String id, String givenName, String familyName, String userName, String phoneNumber, boolean isCustomer,
-            boolean isReceptionist, boolean isHealthcareWorker) {
+            boolean isReceptionist, boolean isHealthcareWorker, String testingSiteId) {
         this.id = id;
         this.givenName = givenName;
         this.familyName = familyName;
@@ -31,6 +33,7 @@ public class User {
         this.bookings = new ArrayList<>();
         this.testsTaken = new ArrayList<>();
         this.testsAdministered = new ArrayList<>();
+        this.testingSiteId = testingSiteId;
     }
 
     public String getId() {
@@ -125,6 +128,14 @@ public class User {
         this.testsAdministered.add(testsAdministered);
     }
 
+    public String getTestingSiteId() {
+        return testingSiteId;
+    }
+
+    public void setTestingSiteId(String testingSiteId) {
+        this.testingSiteId = testingSiteId;
+    }
+
     public String toJSONStringFormat(String userType) {
         return userType + ":{" +
                 "id:\"" + id + '\"' +
@@ -142,17 +153,18 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id:\"" + id + '\'' +
-                ", \"givenName\":\"" + givenName + '\"' +
-                ", \"familyName\":\"" + familyName + '\"' +
-                ", \"userName\":\"" + userName + '\"' +
-                ", \"phoneNumber\":\"" + phoneNumber + '\"' +
-                ", \"isCustomer\":\"" + isCustomer +
-                ", \"isReceptionist\":\"" + isReceptionist +
-                ", \"isHealthcareWorker\":\"" + isHealthcareWorker +
-                ", \"bookings\":" + bookings +
-                ", \"testsTaken\":" + testsTaken +
-                ", \"testsAdministered\":" + testsAdministered +
+                "id='" + id + '\'' +
+                ", givenName='" + givenName + '\'' +
+                ", familyName='" + familyName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", isCustomer=" + isCustomer +
+                ", isReceptionist=" + isReceptionist +
+                ", isHealthcareWorker=" + isHealthcareWorker +
+                ", bookings=" + bookings +
+                ", testsTaken=" + testsTaken +
+                ", testsAdministered=" + testsAdministered +
+                ", testingSiteId='" + testingSiteId + '\'' +
                 '}';
     }
 }

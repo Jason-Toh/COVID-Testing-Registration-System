@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.api;
 
 import com.example.servingwebcontent.models.Address;
+import com.example.servingwebcontent.models.Booking;
 import com.example.servingwebcontent.models.TestingSite;
 import com.example.servingwebcontent.models.TestingSiteStatus;
 import org.json.JSONArray;
@@ -24,9 +25,9 @@ public class TestingSiteGet extends Get<TestingSite> {
 
     @Override
     public Collection<TestingSite> getApi() throws IOException, InterruptedException {
-        List<TestingSite> testingSites = new ArrayList<>();
+
         String rootUrl = "https://fit3077.com/api/v2";
-        String usersUrl = rootUrl + "/testing-site";
+        String usersUrl = rootUrl + "/testing-site?fields=bookings";
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest
@@ -41,10 +42,11 @@ public class TestingSiteGet extends Get<TestingSite> {
         // Convert String into JSONArray
         JSONArray json = new JSONArray(response.body());
 
-        // Add user into users list
+        // Add testing-site into testing-sites list
+        List<TestingSite> testingSites = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
-            String id = (String) json.getJSONObject(i).get("id");
-            String name = (String) json.getJSONObject(i).get("name");
+            String testingSiteId = (String) json.getJSONObject(i).get("id");
+            String testingSiteName = (String) json.getJSONObject(i).get("name");
             String description = (String) json.getJSONObject(i).get("description");
             String websiteUrl = (String) json.getJSONObject(i).get("websiteUrl");
             String phoneNumber = (String) json.getJSONObject(i).get("phoneNumber");
@@ -61,6 +63,31 @@ public class TestingSiteGet extends Get<TestingSite> {
             String postcode = addressJson.getString("postcode");
             Address address = new Address(latitude, longitude, unitNumber, street, suburb, state, postcode);
 
+            // Bookings
+            List<Booking> bookings = new ArrayList<>();
+            JSONArray bookingsJson = (JSONArray) json.getJSONObject(i).get("bookings");
+            for(int j = 0; j < bookingsJson.length(); j++){
+                String bookingId = (String) bookingsJson.getJSONObject(j).get("id");
+                // Customer name, id
+                JSONObject customerObj = (JSONObject) bookingsJson.getJSONObject(j).get("customer");
+                String customerFName = (String) customerObj.get("familyName");
+                String customerLName = (String) customerObj.get("givenName");
+                String customerFullName = customerLName + " " +customerFName;
+                String customerId = (String) customerObj.get("id");
+
+                // smsPin, status, startTime
+                String smsPin = (String) bookingsJson.getJSONObject(j).get("smsPin");
+                String status = (String) bookingsJson.getJSONObject(j).get("status");
+                String startTime = (String) bookingsJson.getJSONObject(j).get("startTime");
+
+                Booking booking = new Booking(bookingId,customerId,customerFullName, testingSiteId,
+                        testingSiteName, smsPin,
+                        startTime, status, null, null);
+
+                bookings.add(booking);
+            }
+
+
             // Additional Info class
             JSONObject additionalInfoJson = (JSONObject) json.getJSONObject(i).get("additionalInfo");
             String typeOfFacility = additionalInfoJson.getString("typeOfFacility");
@@ -73,8 +100,9 @@ public class TestingSiteGet extends Get<TestingSite> {
             TestingSiteStatus additionalInfo = new TestingSiteStatus(typeOfFacility, onSiteBookingAndTesting,
                     waitingTimeInMins, openingTime, closingTime, openOrClosed);
 
-            TestingSite testingSite = new TestingSite(id, name, description, websiteUrl, phoneNumber, address,
+            TestingSite testingSite = new TestingSite(testingSiteId, testingSiteName, description, websiteUrl, phoneNumber, address,
                     additionalInfo, createdAt, updatedAt);
+            testingSite.setBookings(bookings);
             testingSites.add(testingSite);
         }
         return testingSites;

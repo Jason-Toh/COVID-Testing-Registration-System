@@ -67,7 +67,6 @@ public class LoginController {
                 "\"userName\":\"" + userName + "\"," +
                 "\"password\":\"" + password + "\"" +
                 "}";
-
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(URI.create(usersLoginUrl + "?jwt=true")) // Return a JWT so we can
                                                                                               // use it in Part 5 later.
@@ -81,6 +80,7 @@ public class LoginController {
         if (response.statusCode() == 200) {
             flag = true;
         }
+
         return flag;
     }
 }
