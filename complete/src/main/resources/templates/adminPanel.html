@@ -17,43 +17,24 @@
     <table class="table">
         <tbody class="thead-dark">
         <tr>
-            <th>Name</th>
+            <th>BOOKING ID</th>
+            <th>CUSTOMER ID</th>
+            <th>CUSTOMER NAME</th>
+            <th>SMSPIN</th>
+            <th>STARTTIME</th>
+            <th>STATUS</th>
 
         </tr>
-        <tr>
-            <th>Opening Time</th>
+        <tr th:each="booking: ${bookings}">
+            <td th:text="${booking.bookingId}" />
+            <td th:text="${booking.customerId}" />
+            <td th:text="${booking.customerName}" />
+            <td th:text="${booking.smsPin}" />
+            <td th:text="${booking.startTime}" />
+            <td th:text="${booking.status}" />
 
-        </tr>
-        <tr>
-            <th>Closing Time</th>
-
-        </tr>
-        <tr>
-            <th>Description</th>
-
-        </tr>
-        <tr>
-            <th>Phone Number</th>
-
-        </tr>
-        <tr>
-            <th>Address</th>
-
-        </tr>
-        <tr>
-            <th>Type of Facility</th>
-
-        </tr>
-        <tr>
-            <th>On Site Booking and Testing</th>
-
-        </tr>
-        <tr>
-            <th>Waiting Time in Mins</th>
-
-        </tr>
-        <tr>
-            <th>Status</th>
+            <td><a th:href="@{/adminPanel/{id}(id=${booking.bookingId})}"
+               class="btn btn-primary">DELETE</a><td>
 
         </tr>
         </tbody>

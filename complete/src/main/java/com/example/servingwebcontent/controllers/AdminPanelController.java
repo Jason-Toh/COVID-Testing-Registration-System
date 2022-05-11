@@ -1,8 +1,6 @@
 package com.example.servingwebcontent.controllers;
 
-import com.example.servingwebcontent.api.APIfactory;
-import com.example.servingwebcontent.api.Get;
-import com.example.servingwebcontent.api.TestingSiteFactory;
+import com.example.servingwebcontent.api.*;
 import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.models.AuthenticateSingleton;
 import com.example.servingwebcontent.models.Booking;
@@ -12,6 +10,8 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +30,11 @@ public class AdminPanelController {
 
         // TO DO SEARCH FOR TESTING SITE WHICH THAT ADMIN RESPONSIBLE
         User user = authenticateInstance.getUser();
-        System.out.println("mom" + user.getTestingSiteId());
+        for(TestingSite testingSite: testingSites){
+            if(testingSite.getId().equals(user.getTestingSiteId())){
+                return testingSite.getBookings();
+            }
+        }
         return null;
     }
 
@@ -45,6 +49,21 @@ public class AdminPanelController {
         }
 
         List<Booking> bookings = getBookingListUsingTestingSite();
+
+        model.addAttribute("bookings", bookings);
+
+        return "adminPanel";
+    }
+    @RequestMapping("/adminPanel/{id}")
+    public String showTestingSite(@PathVariable String id, Model model)
+            throws IOException, InterruptedException, ParseException {
+
+        APIfactory apiFactory = new BookingFactory(System.getenv("API_KEY"));
+        Delete deleteBooking = apiFactory.createDelete();
+        deleteBooking.deleteApi(id);
+
+        List<Booking> bookings = getBookingListUsingTestingSite();
+        model.addAttribute("bookings", bookings);
 
         return "adminPanel";
     }
