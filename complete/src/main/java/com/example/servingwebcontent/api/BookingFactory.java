@@ -61,6 +61,6 @@ public class BookingFactory implements APIfactory<Booking> {
 
     @Override
     public Patch createPatch() {
-        return new BookingPatch(api, bookingId, symptom, bookingStatus, qrCode, url);
+        return new BookingPatch(api, bookingId, symptom, bookingStatus, qrCode, url, testingSiteId);
     }
 }

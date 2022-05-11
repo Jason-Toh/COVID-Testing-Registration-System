@@ -15,15 +15,17 @@ public class BookingPatch extends Patch {
     private final BookingStatus bookingStatus;
     private final String qrCode;
     private final String url;
+    private final String testingSiteId;
 
     public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus, String qrCode,
-            String url) {
+            String url,String testingSiteId) {
         this.myApiKey = myApiKey;
         this.bookingId = bookingId;
         this.symptom = symptom;
         this.bookingStatus = bookingStatus;
         this.qrCode = qrCode;
         this.url = url;
+        this.testingSiteId = testingSiteId;
     }
 
     @Override
@@ -43,7 +45,12 @@ public class BookingPatch extends Patch {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"" +
                     "}";
-        } else {
+        } else if(this.testingSiteId != null){
+            jsonString = "{" +
+                    "\"testingSiteId\":\"" + testingSiteId + "\"" +
+                    "}";
+        }
+        else {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"," +
                     "\"additionalInfo\":" + "{ " +

@@ -38,6 +38,27 @@ public class AdminPanelController {
         return null;
     }
 
+    public List<TestingSite> getTestingSiteList() {
+        List<TestingSite> testingSiteList = new ArrayList<>();
+
+        APIfactory<TestingSite> testingSiteFactory = new TestingSiteFactory(System.getenv("API_KEY"));
+        Get<TestingSite> testingSiteGet = testingSiteFactory.createGet();
+
+        try {
+            // Testing-site collection
+            Collection<TestingSite> testingSiteCollection = testingSiteGet.getApi();
+
+            for (TestingSite testingSite : testingSiteCollection) {
+                testingSiteList.add(testingSite);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return testingSiteList;
+    }
+
     @GetMapping("/adminPanel")
     public String getAdmin(Model model) throws InterruptedException, ParseException, IOException {
         if (!authenticateInstance.getIsUserAuthenticated()) {
@@ -49,8 +70,10 @@ public class AdminPanelController {
         }
 
         List<Booking> bookings = getBookingListUsingTestingSite();
-
         model.addAttribute("bookings", bookings);
+
+        List<TestingSite> testingSiteList = getTestingSiteList();
+        model.addAttribute("testingSiteList", testingSiteList);
 
         return "adminPanel";
     }
@@ -64,6 +87,9 @@ public class AdminPanelController {
 
         List<Booking> bookings = getBookingListUsingTestingSite();
         model.addAttribute("bookings", bookings);
+
+        List<TestingSite> testingSiteList = getTestingSiteList();
+        model.addAttribute("testingSiteList", testingSiteList);
 
         return "adminPanel";
     }

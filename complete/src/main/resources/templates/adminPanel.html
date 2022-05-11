@@ -32,7 +32,12 @@
             <td th:text="${booking.smsPin}" />
             <td th:text="${booking.startTime}" />
             <td th:text="${booking.status}" />
-
+            <td>
+            <select>
+                <option disabled selected value> -- select an option -- </option>
+                <option th:each="testType : ${testingSiteList}" th:value="${testType.id}" th:text="${testType.name}" />
+            </select>
+            </td>
             <td><a th:href="@{/adminPanel/{id}(id=${booking.bookingId})}"
                class="btn btn-primary">DELETE</a><td>
 
