@@ -10,29 +10,28 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Collection;
-import java.util.List;
 
-public class BookingDelete extends Delete{
+public class BookingDelete extends Delete {
     private final String myApiKey;
 
     public BookingDelete(String myApiKey) {
         this.myApiKey = myApiKey;
 
     }
-    //TO DO delete the CovidTest by Id first before deleting the Booking by Id
+    // TO DO delete the CovidTest by Id first before deleting the Booking by Id
 
     @Override
     public void deleteApi(String bookingId) throws InterruptedException, ParseException, IOException {
-        APIfactory apifactory = new BookingFactory(myApiKey);
-        Get bookingGet = apifactory.createGet();
-        Collection<Booking> bookings = bookingGet.getApi();
+        APIfactory<Booking> bookingFactory = new BookingFactory(myApiKey);
+        Get<Booking> bookingGet = bookingFactory.createGet();
+        Collection<Booking> bookingCollection = bookingGet.getApi();
 
         // Delete all covid test of the selected booking
-        APIfactory apiFactory2 = new CovidTestFactory(myApiKey);
-        Delete covidTestDelete = apiFactory2.createDelete();
-        for(Booking booking : bookings){
-            if(booking.getBookingId().equals(bookingId)){
-                for(CovidTest covidTest : booking.getCovidTests()){
+        APIfactory<CovidTest> covidTestFactory = new CovidTestFactory(myApiKey);
+        Delete covidTestDelete = covidTestFactory.createDelete();
+        for (Booking booking : bookingCollection) {
+            if (booking.getBookingId().equals(bookingId)) {
+                for (CovidTest covidTest : booking.getCovidTests()) {
                     covidTestDelete.deleteApi(covidTest.getId());
                 }
 
@@ -42,7 +41,7 @@ public class BookingDelete extends Delete{
         // Delete the selected booking
         String rootUrl = "https://fit3077.com/api/v2";
 
-        String usersVerifyTokenUrl = rootUrl + "/booking/"+bookingId;
+        String usersVerifyTokenUrl = rootUrl + "/booking/" + bookingId;
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(URI.create(usersVerifyTokenUrl)) // Return a JWT so we can
                 // use it in Part 5 later.

@@ -10,7 +10,7 @@ public class CovidTestFactory implements APIfactory<CovidTest> {
     private String bookingId;
     private String result;
     private String patientStatus;
-    private String covidId;
+    // private String covidId;
 
     public CovidTestFactory(String api, String testType, String patientId, String administererId, String bookingId,
             String patientStatus) {
