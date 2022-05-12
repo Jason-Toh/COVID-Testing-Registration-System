@@ -14,11 +14,12 @@ public class Booking {
     private String status;
     private String url;
     private String qr;
+    private boolean testingDone;
     private List<CovidTest> covidTests;
 
     public Booking(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName, String smsPin,
-            String startTime, String status, String url, String qr) {
+            String startTime, String status, String url, String qr, boolean testingDone) {
         this.covidTests = new ArrayList<>();
         this.bookingId = bookingId;
         this.customerId = customerId;
@@ -30,6 +31,7 @@ public class Booking {
         this.status = status;
         this.url = url;
         this.qr = qr;
+        this.testingDone = testingDone;
     }
 
     public Booking(String bookingId, String testingSiteId,
@@ -122,6 +124,14 @@ public class Booking {
 
     public void setQr(String qr) {
         this.qr = qr;
+    }
+
+    public boolean getTestingDone() {
+        return testingDone;
+    }
+
+    public void setTestingDone(boolean testingDone) {
+        this.testingDone = testingDone;
     }
 
     public List<CovidTest> getCovidTests() {

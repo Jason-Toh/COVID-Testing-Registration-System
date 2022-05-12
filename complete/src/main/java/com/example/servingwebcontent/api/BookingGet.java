@@ -54,16 +54,16 @@ public class BookingGet extends Get<Booking> {
             // Put covidTests into each Booking
             List<CovidTest> covidTests = new ArrayList<>();
             JSONArray covidTestsJsonArray = (JSONArray) json.getJSONObject(i).get("covidTests");
-            for (int j = 0; j < covidTestsJsonArray.length(); j++){
+            for (int j = 0; j < covidTestsJsonArray.length(); j++) {
                 String covidTestId = (String) covidTestsJsonArray.getJSONObject(j).get("id");
                 CovidTest covidTest = new CovidTest(covidTestId, null, null);
                 covidTests.add(covidTest);
 
             }
 
-
             String url = "";
             String qr = "";
+            boolean testingDone = false;
 
             // Get the URL from the JSON if the attribute exists
             try {
@@ -77,6 +77,13 @@ public class BookingGet extends Get<Booking> {
                 qr = additionalInfoJSON.getString("qrCode");
             } catch (Exception exception) {
                 qr = "";
+            }
+
+            // Get the testingDone from JSON if the attribute exists
+            try {
+                testingDone = additionalInfoJSON.getBoolean("testingDone");
+            } catch (Exception exception) {
+                testingDone = false;
             }
 
             String testingSiteName = null;
@@ -96,10 +103,9 @@ public class BookingGet extends Get<Booking> {
 
             Booking booking = new Booking(bookingId, customerId, customerName, testingSiteId, testingSiteName,
                     smsPin,
-                    startTime, status, url, qr);
+                    startTime, status, url, qr, testingDone);
             booking.setCovidTests(covidTests);
             bookings.add(booking);
-
         }
 
         return bookings;

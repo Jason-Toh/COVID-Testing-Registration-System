@@ -286,4 +286,20 @@ public class BookingController {
 
         return "pinCode";
     }
+
+    @GetMapping("/profile")
+    public String displayProfilePage(Model model) {
+
+        // If the user is not authenticated, redirect to login
+        if (!authenticateInstance.getIsUserAuthenticated()) {
+            return "redirect:/login";
+        }
+
+        // If the user is not a customer, redirect to notAuthorised
+        if (!authenticateInstance.getUser().isCustomer()) {
+            return "notAuthorised";
+        }
+
+        return "profile";
+    }
 }

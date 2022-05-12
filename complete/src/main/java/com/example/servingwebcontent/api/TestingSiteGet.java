@@ -66,13 +66,13 @@ public class TestingSiteGet extends Get<TestingSite> {
             // Bookings
             List<Booking> bookings = new ArrayList<>();
             JSONArray bookingsJson = (JSONArray) json.getJSONObject(i).get("bookings");
-            for(int j = 0; j < bookingsJson.length(); j++){
+            for (int j = 0; j < bookingsJson.length(); j++) {
                 String bookingId = (String) bookingsJson.getJSONObject(j).get("id");
                 // Customer name, id
                 JSONObject customerObj = (JSONObject) bookingsJson.getJSONObject(j).get("customer");
                 String customerFName = (String) customerObj.get("familyName");
                 String customerLName = (String) customerObj.get("givenName");
-                String customerFullName = customerLName + " " +customerFName;
+                String customerFullName = customerLName + " " + customerFName;
                 String customerId = (String) customerObj.get("id");
 
                 // smsPin, status, startTime
@@ -80,13 +80,12 @@ public class TestingSiteGet extends Get<TestingSite> {
                 String status = (String) bookingsJson.getJSONObject(j).get("status");
                 String startTime = (String) bookingsJson.getJSONObject(j).get("startTime");
 
-                Booking booking = new Booking(bookingId,customerId,customerFullName, testingSiteId,
+                Booking booking = new Booking(bookingId, customerId, customerFullName, testingSiteId,
                         testingSiteName, smsPin,
-                        startTime, status, null, null);
+                        startTime, status, null, null, false);
 
                 bookings.add(booking);
             }
-
 
             // Additional Info class
             JSONObject additionalInfoJson = (JSONObject) json.getJSONObject(i).get("additionalInfo");
@@ -100,7 +99,8 @@ public class TestingSiteGet extends Get<TestingSite> {
             TestingSiteStatus additionalInfo = new TestingSiteStatus(typeOfFacility, onSiteBookingAndTesting,
                     waitingTimeInMins, openingTime, closingTime, openOrClosed);
 
-            TestingSite testingSite = new TestingSite(testingSiteId, testingSiteName, description, websiteUrl, phoneNumber, address,
+            TestingSite testingSite = new TestingSite(testingSiteId, testingSiteName, description, websiteUrl,
+                    phoneNumber, address,
                     additionalInfo, createdAt, updatedAt);
             testingSite.setBookings(bookings);
             testingSites.add(testingSite);

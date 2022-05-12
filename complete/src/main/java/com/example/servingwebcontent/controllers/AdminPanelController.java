@@ -1,7 +1,7 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
-import com.example.servingwebcontent.enumeration.TestType;
+// import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.models.AuthenticateSingleton;
 import com.example.servingwebcontent.models.Booking;
 import com.example.servingwebcontent.models.TestingSite;
@@ -24,14 +24,14 @@ public class AdminPanelController {
 
     public List<Booking> getBookingListUsingTestingSite() throws InterruptedException, ParseException, IOException {
         String api = System.getenv("API_KEY");
-        APIfactory factory = new TestingSiteFactory(api);
-        Get testingSiteGet = factory.createGet();
-        Collection<TestingSite>testingSites = testingSiteGet.getApi();
+        APIfactory<TestingSite> factory = new TestingSiteFactory(api);
+        Get<TestingSite> testingSiteGet = factory.createGet();
+        Collection<TestingSite> testingSites = testingSiteGet.getApi();
 
         // TO DO SEARCH FOR TESTING SITE WHICH THAT ADMIN RESPONSIBLE
         User user = authenticateInstance.getUser();
-        for(TestingSite testingSite: testingSites){
-            if(testingSite.getId().equals(user.getTestingSiteId())){
+        for (TestingSite testingSite : testingSites) {
+            if (testingSite.getId().equals(user.getTestingSiteId())) {
                 return testingSite.getBookings();
             }
         }
@@ -77,11 +77,12 @@ public class AdminPanelController {
 
         return "adminPanel";
     }
+
     @RequestMapping("/adminPanel/{id}")
     public String showTestingSite(@PathVariable String id, Model model)
             throws IOException, InterruptedException, ParseException {
 
-        APIfactory apiFactory = new BookingFactory(System.getenv("API_KEY"));
+        APIfactory<Booking> apiFactory = new BookingFactory(System.getenv("API_KEY"));
         Delete deleteBooking = apiFactory.createDelete();
         deleteBooking.deleteApi(id);
 

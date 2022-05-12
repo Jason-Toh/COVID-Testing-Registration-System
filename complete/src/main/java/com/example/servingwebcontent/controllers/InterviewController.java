@@ -15,7 +15,7 @@ import java.util.*;
 
 @Controller
 public class InterviewController {
-//hello
+    // hello
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
     public List<String> getTestTypeList() {
@@ -52,6 +52,7 @@ public class InterviewController {
         String pinCode = interviewForm.getPinCode();
         boolean check = false;
         boolean check2 = false;
+        boolean check3 = false;
 
         String patientName = "";
         String patientId = "";
@@ -63,8 +64,11 @@ public class InterviewController {
                 check = true;
                 patientId = booking.getCustomerId();
                 patientName = booking.getCustomerName();
-                if (!booking.getStatus().equals("COMPLETED")) {
+                if (booking.getStatus().equals("COMPLETED")) {
                     check2 = true;
+                }
+                if (booking.getTestingDone() == true) {
+                    check3 = true;
                 }
                 break;
             }
@@ -76,8 +80,14 @@ public class InterviewController {
             return "pinInterview";
         }
 
-        if (check2) {
+        if (!check2) {
             model.addAttribute("error", "Booking Status is not COMPLETED");
+
+            return "pinInterview";
+        }
+
+        if (check3) {
+            model.addAttribute("error", "Test has already been performed");
 
             return "pinInterview";
         }
@@ -144,7 +154,7 @@ public class InterviewController {
         // change the booking status to completed
 
         APIfactory<Booking> bookingFactory2 = new BookingFactory(System.getenv("API_KEY"), bookingId, patientStatus,
-                BookingStatus.COMPLETED);
+                BookingStatus.COMPLETED, true);
         Patch bookingPatch = bookingFactory2.createPatch();
         // String returnValue = bookingPatch.patchApi();
         bookingPatch.patchApi();
