@@ -70,15 +70,17 @@ public class AdminPanelController {
         }
 
         List<Booking> bookings = getBookingListUsingTestingSite();
+
         model.addAttribute("bookings", bookings);
 
         List<TestingSite> testingSiteList = getTestingSiteList();
         model.addAttribute("testingSiteList", testingSiteList);
 
+
         return "adminPanel";
     }
 
-    @RequestMapping("/adminPanel/{id}")
+    @RequestMapping("/adminPanelDelete/{id}")
     public String showTestingSite(@PathVariable String id, Model model)
             throws IOException, InterruptedException, ParseException {
 
@@ -90,9 +92,60 @@ public class AdminPanelController {
         model.addAttribute("bookings", bookings);
 
         List<TestingSite> testingSiteList = getTestingSiteList();
+        System.out.println(testingSiteList);
         model.addAttribute("testingSiteList", testingSiteList);
 
         return "adminPanel";
     }
 
+    @RequestMapping(("/adminPanelModified/{id}/testing-site/{second}"))
+    public String modifiedTestingSite(@PathVariable String id,@PathVariable String second, Model model)
+            throws IOException, InterruptedException, ParseException {
+
+        System.out.println("booking id: "+id+" testing-site id  "+second);
+
+        List<Booking> bookings = getBookingListUsingTestingSite();
+        model.addAttribute("bookings", bookings);
+
+        List<TestingSite> testingSiteList = getTestingSiteList();
+        model.addAttribute("testingSiteList", testingSiteList);
+
+        return "adminPanel";
+    }
+
+    @RequestMapping(("/adminPanelModified/{id}/testing-site/{testsiteid}/bookingTime/{time}"))
+    public String modifiedDateTime(@PathVariable String id, @PathVariable String testsiteid,@PathVariable String time, Model model)
+            throws IOException, InterruptedException, ParseException {
+
+        System.out.println("booking id: "+id+" date-time:  "+time+"" +" testsiteid:  "+testsiteid+"");
+
+
+        String api = System.getenv("API_KEY");
+        if(!testsiteid.equals("testsiteID")){
+            APIfactory apIfactory = new BookingFactory(api, id,null,testsiteid, null);
+            Patch bookingPatch = apIfactory.createPatch();
+
+            List<String> thingsToPatch = new ArrayList<>();
+            thingsToPatch.add("TESTSITE");
+
+            bookingPatch.patchApi(thingsToPatch);
+        }
+        if(!testsiteid.equals("date")){
+            APIfactory apIfactory = new BookingFactory(api, id,null,null, time);
+            Patch bookingPatch = apIfactory.createPatch();
+
+            List<String> thingsToPatch = new ArrayList<>();
+            thingsToPatch.add("TIME");
+
+            bookingPatch.patchApi(thingsToPatch);
+        }
+
+        List<Booking> bookings = getBookingListUsingTestingSite();
+        model.addAttribute("bookings", bookings);
+
+        List<TestingSite> testingSiteList = getTestingSiteList();
+        model.addAttribute("testingSiteList", testingSiteList);
+
+        return "adminPanel";
+    }
 }

@@ -268,18 +268,28 @@ public class BookingController {
             System.out.println(bookingId);
             String url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             APIfactory<Booking> bookingFactory3 = new BookingFactory(System.getenv("API_KEY"), bookingId,
-                    bookingForm.getQr(), url,
-                    "");
+                    bookingForm.getQr(), url);
             Patch bookingPatch2 = bookingFactory3.createPatch();
             // String returnValue = bookingPatch.patchApi();
-            bookingPatch2.patchApi();
+
+            // stuff to patch in booking
+            List<String> thingsToPatch = new ArrayList<>();
+            thingsToPatch.add("QR");  //PATCH QR
+            thingsToPatch.add("URL"); //PATCH URL
+            bookingPatch2.patchApi(thingsToPatch);
+
         } else {
             // OnSite Booking should have COMPLETED as Booking Status
             APIfactory<Booking> bookingFactory2 = new BookingFactory(System.getenv("API_KEY"), bookingId,
                     BookingStatus.COMPLETED);
             Patch bookingPatch = bookingFactory2.createPatch();
             // String returnValue = bookingPatch.patchApi();
-            bookingPatch.patchApi();
+
+            // stuff to patch in booking
+            List<String> thingsToPatch = new ArrayList<>();
+            thingsToPatch.add("STATUS");  //PATCH STATUS
+
+            bookingPatch.patchApi(thingsToPatch);
         }
 
         model.addAttribute("pinCode", book.get("smsPin") + "");

@@ -79,6 +79,7 @@ public class TestingSiteGet extends Get<TestingSite> {
                 String smsPin = (String) bookingsJson.getJSONObject(j).get("smsPin");
                 String status = (String) bookingsJson.getJSONObject(j).get("status");
                 String startTime = (String) bookingsJson.getJSONObject(j).get("startTime");
+                startTime = startTime.substring(0,23);
 
                 Booking booking = new Booking(bookingId, customerId, customerFullName, testingSiteId,
                         testingSiteName, smsPin,

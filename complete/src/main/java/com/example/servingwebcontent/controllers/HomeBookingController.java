@@ -153,7 +153,12 @@ public class HomeBookingController {
                             BookingStatus.COMPLETED);
                     Patch bookingPatch = bookingFactory2.createPatch();
                     // String returnValue = bookingPatch.patchApi();
-                    bookingPatch.patchApi();
+
+                    // stuff to patch in booking
+                    List<String> thingsToPatch = new ArrayList<>();
+                    thingsToPatch.add("STATUS");  //PATCH STATUS
+
+                    bookingPatch.patchApi(thingsToPatch);
                     return "bookingDone";
                 }
             }

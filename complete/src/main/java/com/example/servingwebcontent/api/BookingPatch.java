@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class BookingPatch extends Patch {
     private final String myApiKey;
@@ -17,9 +18,10 @@ public class BookingPatch extends Patch {
     private final String url;
     private final String testingSiteId;
     private final boolean testingDone;
+    private final String startTime;
 
     public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus, String qrCode,
-            String url, String testingSiteId, boolean testingDone) {
+            String url, String testingSiteId, boolean testingDone, String startTime) {
         this.myApiKey = myApiKey;
         this.bookingId = bookingId;
         this.symptom = symptom;
@@ -28,35 +30,40 @@ public class BookingPatch extends Patch {
         this.url = url;
         this.testingSiteId = testingSiteId;
         this.testingDone = testingDone;
+        this.startTime = startTime;
     }
 
     @Override
-    public String patchApi() throws IOException, InterruptedException {
+    public String patchApi(List<String> thingsToPatch) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         String rootUrl = "https://fit3077.com/api/v2";
         String usersUrl = rootUrl + "/booking/" + bookingId;
         String jsonString;
-        if (qrCode != null || url != null) {
+        if (thingsToPatch.contains("QR") && thingsToPatch.contains("URL") && thingsToPatch.contains("PATSTATUS")) {
             jsonString = "{" +
                     "\"additionalInfo\":" + "{ " +
                     "\"qrCode\":\"" + qrCode + "\"," +
                     "\"url\":\"" + url + "\"," +
                     "\"symptom\":\"" + symptom + "\""
                     + "}" + "}";
-        } else if (this.testingDone != false) {
+        } else if (thingsToPatch.contains("TESTDONE")) {
             jsonString = "{" +
                     "\"additionalInfo\":" + "{ " +
                     "\"testingDone\":\"" + testingDone + "\""
                     + "}" + "}";
-        } else if (this.bookingStatus != null) {
+        } else if (thingsToPatch.contains("STATUS")) {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"" +
                     "}";
-        } else if (this.testingSiteId != null) {
+        } else if (thingsToPatch.contains("TESTSITE")) {
             jsonString = "{" +
                     "\"testingSiteId\":\"" + testingSiteId + "\"" +
                     "}";
-        } else {
+        } else if (thingsToPatch.contains("TIME")) {
+            jsonString = "{" +
+                    "\"startTime\":\"" + startTime + "\"" +
+                    "}";
+        }else {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"," +
                     "\"additionalInfo\":" + "{ " +

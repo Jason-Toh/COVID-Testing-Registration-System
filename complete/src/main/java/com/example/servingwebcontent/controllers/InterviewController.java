@@ -157,7 +157,13 @@ public class InterviewController {
                 BookingStatus.COMPLETED, true);
         Patch bookingPatch = bookingFactory2.createPatch();
         // String returnValue = bookingPatch.patchApi();
-        bookingPatch.patchApi();
+
+        // stuff to patch in booking
+        List<String> thingsToPatch = new ArrayList<>();
+        thingsToPatch.add("PATSTATUS");  //PATCH PATIENT STATUS
+        thingsToPatch.add("STATUS");     //PATCH STATUS
+        thingsToPatch.add("TESTDONE");   //PATCH TESTDONE
+        bookingPatch.patchApi(thingsToPatch);
 
         return "testingDone";
     }
