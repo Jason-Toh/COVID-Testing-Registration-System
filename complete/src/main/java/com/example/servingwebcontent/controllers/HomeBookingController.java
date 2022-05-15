@@ -1,6 +1,8 @@
 package com.example.servingwebcontent.controllers;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -107,6 +109,11 @@ public class HomeBookingController {
         List<String> testTypeList = getTestTypeList();
         model.addAttribute("testTypeList", testTypeList);
 
+        // Must use yyyy-MM-dd and not yyyy/MM/dd
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime timeNow = LocalDateTime.now();
+        model.addAttribute("todayDate", dtf.format(timeNow));
+
         return "onlineBooking";
     }
 
@@ -156,7 +163,7 @@ public class HomeBookingController {
 
                     // stuff to patch in booking
                     List<String> thingsToPatch = new ArrayList<>();
-                    thingsToPatch.add("STATUS");  //PATCH STATUS
+                    thingsToPatch.add("STATUS"); // PATCH STATUS
 
                     bookingPatch.patchApi(thingsToPatch);
                     return "bookingDone";

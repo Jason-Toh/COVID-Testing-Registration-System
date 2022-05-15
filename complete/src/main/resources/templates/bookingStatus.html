@@ -25,11 +25,15 @@
                 </tr>
                 <tr>
                     <th>Start Time</th>
-                    <td th:text="${booking.getStartTime()}"></td>
+                    <td th:text="${booking.getFormattedStartTime()}"></td>
                 </tr>
                 <tr>
                     <th>Booking Status</th>
                     <td th:text="${booking.getStatus()}"></td>
+                </tr>
+                <tr>
+                    <th>Covid Test Status</th>
+                    <td th:text="${booking.getTestingDone()} ? 'Completed' : 'Not Completed'"></td>
                 </tr>
             </tbody>
         </table>

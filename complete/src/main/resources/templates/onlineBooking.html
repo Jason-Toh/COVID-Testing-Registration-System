@@ -39,7 +39,7 @@
                     <td>
                         <h6 th:text=" ${error} ? ${error} : '' " class="${error} ? text-danger : '' "></h6>
                         <input type="datetime-local" id="birthdaytime" name="birthdaytime" th:field="*{time}"
-                            class="form-control" required>
+                            class="form-control" th:min="${todayDate}" required>
                     <td>
                 </tr>
                 <tr>
@@ -99,6 +99,7 @@
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script>
+
         function makeRandomString(length) {
             var result = '';
             var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

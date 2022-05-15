@@ -1,7 +1,10 @@
 package com.example.servingwebcontent.models;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Booking {
     private String bookingId;
@@ -48,6 +51,14 @@ public class Booking {
 
     public String getStartTime() {
         return startTime;
+    }
+
+    public String getFormattedStartTime() {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy hh:mm a", Locale.ENGLISH);
+        LocalDateTime date = LocalDateTime.parse(startTime, inputFormatter);
+        String formattedDate = outputFormatter.format(date);
+        return formattedDate;
     }
 
     public void setStartTime(String startTime) {
@@ -155,7 +166,8 @@ public class Booking {
                 ", covidTests=" + covidTests + '\'' +
                 ", status='" + status + '\'' +
                 ", url='" + url + '\'' +
-                ", qr='" + qr +
+                ", qr='" + qr + '\'' +
+                ", testingDone='" + testingDone +
                 '}';
     }
 }

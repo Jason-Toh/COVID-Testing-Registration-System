@@ -13,11 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -92,6 +96,27 @@ public class BookingController {
         return testTypeList;
     }
 
+    public List<Booking> getBookingList() {
+
+        APIfactory<Booking> bookingFactory = new BookingFactory(System.getenv("API_KEY"));
+        Get<Booking> bookingGet = bookingFactory.createGet();
+
+        List<Booking> bookingList = new ArrayList<>();
+
+        try {
+            Collection<Booking> bookingCollection = bookingGet.getApi();
+
+            for (Booking booking : bookingCollection) {
+                bookingList.add(booking);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return bookingList;
+    }
+
     @GetMapping("/register")
     public String getOnsiteBooking(Model model) {
 
@@ -116,6 +141,10 @@ public class BookingController {
 
         List<String> testTypeList = getTestTypeList();
         model.addAttribute("testTypeList", testTypeList);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime timeNow = LocalDateTime.now();
+        model.addAttribute("todayDate", dtf.format(timeNow));
 
         // 4. Get smsPin
         // RandomPinGenerator rad = new RandomPinGenerator();
@@ -182,7 +211,7 @@ public class BookingController {
 
         // Make booking post here
         APIfactory<Booking> bookingFactory = new BookingFactory(
-                System.getenv("API_KEY"), bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
+                System.getenv("API_KEY"), null, bookingForm.getCustomerUsername(), bookingForm.getTestingSite(),
                 bookingForm.getTime());
 
         Get<Booking> bookingGet = bookingFactory.createGet();
@@ -274,8 +303,8 @@ public class BookingController {
 
             // stuff to patch in booking
             List<String> thingsToPatch = new ArrayList<>();
-            thingsToPatch.add("QR");  //PATCH QR
-            thingsToPatch.add("URL"); //PATCH URL
+            thingsToPatch.add("QR"); // PATCH QR
+            thingsToPatch.add("URL"); // PATCH URL
             bookingPatch2.patchApi(thingsToPatch);
 
         } else {
@@ -287,7 +316,7 @@ public class BookingController {
 
             // stuff to patch in booking
             List<String> thingsToPatch = new ArrayList<>();
-            thingsToPatch.add("STATUS");  //PATCH STATUS
+            thingsToPatch.add("STATUS"); // PATCH STATUS
 
             bookingPatch.patchApi(thingsToPatch);
         }
@@ -310,6 +339,35 @@ public class BookingController {
             return "notAuthorised";
         }
 
+        List<Booking> bookingList = getBookingList();
+
+        List<Booking> customerBookingList = new ArrayList<>();
+
+        User currentUser = authenticateInstance.getUser();
+
+        for (Booking booking : bookingList) {
+            if (booking.getCustomerId().equals(currentUser.getId())) {
+                customerBookingList.add(booking);
+            }
+        }
+
+        model.addAttribute("bookingList", customerBookingList);
+
         return "profile";
+    }
+
+    @RequestMapping("modify/{id}")
+    public String modifyBooking(@PathVariable String id, Model model) {
+
+        List<Booking> bookingList = getBookingList();
+
+        for (Booking booking : bookingList) {
+            if (booking.getBookingId().equals(id)) {
+                model.addAttribute("booking", booking);
+                break;
+            }
+        }
+
+        return "modifyBooking";
     }
 }

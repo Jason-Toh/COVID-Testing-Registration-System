@@ -39,12 +39,11 @@ public class BookingPatch extends Patch {
         String rootUrl = "https://fit3077.com/api/v2";
         String usersUrl = rootUrl + "/booking/" + bookingId;
         String jsonString;
-        if (thingsToPatch.contains("QR") && thingsToPatch.contains("URL") && thingsToPatch.contains("PATSTATUS")) {
+        if (thingsToPatch.contains("QR") && thingsToPatch.contains("URL")) {
             jsonString = "{" +
                     "\"additionalInfo\":" + "{ " +
                     "\"qrCode\":\"" + qrCode + "\"," +
-                    "\"url\":\"" + url + "\"," +
-                    "\"symptom\":\"" + symptom + "\""
+                    "\"url\":\"" + url + "\""
                     + "}" + "}";
         } else if (thingsToPatch.contains("TESTDONE")) {
             jsonString = "{" +
@@ -63,7 +62,7 @@ public class BookingPatch extends Patch {
             jsonString = "{" +
                     "\"startTime\":\"" + startTime + "\"" +
                     "}";
-        }else {
+        } else {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"," +
                     "\"additionalInfo\":" + "{ " +

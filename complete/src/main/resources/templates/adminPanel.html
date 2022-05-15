@@ -11,80 +11,87 @@
 </head>
 
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
-<div class="container py-4">
-    <img src="https://c.tenor.com/kWW3pMOGDPIAAAAC/sakuramiko35-miko35.gif" alt="Flowers" width=200 height=200>
-    <table class="table">
-        <tbody class="thead-dark">
-        <tr>
-            <th>BOOKING ID</th>
-            <th>CUSTOMER ID</th>
-            <th>CUSTOMER NAME</th>
-            <th>SMSPIN</th>
-            <th>STATUS</th>
-            <th>TESTING-SITE</th>
-            <th>STARTTIME</th>
-        </tr>
-        <tr th:each="booking: ${bookings}">
-            <td th:text="${booking.bookingId}" />
-            <td th:text="${booking.customerId}" />
-            <td th:text="${booking.customerName}" />
-            <td th:text="${booking.smsPin}" />
-<!--            <td th:text="${booking.startTime}" />-->
-            <td th:text="${booking.status}" />
-            <td>
-<!--            <select th:attr="onchange=|upload('${booking.bookingId}','${booking.status}')|" >-->
-            <select th:attr="onchange=${'upload('+ '''' +booking.bookingId + '''' + ')'}" th:id = "'hi'+${booking.bookingId}">
-                <option disabled selected value> -- select an option -- </option>
-                <option th:each="testSite : ${testingSiteList}" th:value="${testSite.id}" th:text="${testSite.name}" />
-            </select>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container py-4">
+        <img src="https://c.tenor.com/kWW3pMOGDPIAAAAC/sakuramiko35-miko35.gif" alt="Flowers" width=200 height=200>
+        <table class="table">
+            <tbody class="thead-dark">
+                <tr>
+                    <th>BOOKING ID</th>
+                    <th>CUSTOMER ID</th>
+                    <th>CUSTOMER NAME</th>
+                    <th>SMSPIN</th>
+                    <th>STATUS</th>
+                    <th>TESTING-SITE</th>
+                    <th>STARTTIME</th>
+                    <th>ACTION</th>
+                </tr>
+                <tr th:each="booking: ${bookings}">
+                    <td th:text="${booking.bookingId}" />
+                    <td th:text="${booking.customerId}" />
+                    <td th:text="${booking.customerName}" />
+                    <td th:text="${booking.smsPin}" />
+                    <!--            <td th:text="${booking.startTime}" />-->
+                    <td th:text="${booking.status}" />
+                    <td>
+                        <!--            <select th:attr="onchange=|upload('${booking.bookingId}','${booking.status}')|" >-->
+                        <select class="custom-select my-1 mr-sm-2"
+                            th:attr="onchange=${'upload('+ '''' +booking.bookingId + '''' + ')'}"
+                            th:id="'hi'+${booking.bookingId}">
+                            <option disabled selected value> -- select an option -- </option>
+                            <option th:each="testSite : ${testingSiteList}" th:value="${testSite.id}"
+                                th:text="${testSite.name}" />
+                        </select>
 
-            </td>
+                    </td>
 
-            <td><input type="datetime-local" class="form-control" th:value="${booking.startTime}" th:attr="onchange=${'upload1('+ '''' +booking.bookingId + '''' + ')'}" th:id = "'ti'+${booking.bookingId}"></td>
+                    <td><input type="datetime-local" class="form-control" th:value="${booking.startTime}"
+                            th:attr="onchange=${'upload1('+ '''' +booking.bookingId + '''' + ')'}"
+                            th:id="'ti'+${booking.bookingId}"></td>
 
-            <td><a th:href="@{/adminPanelDelete/{id}(id=${booking.bookingId})}"
-               class="btn btn-primary">DELETE</a>
-            <td>
-            <td><a th:href="@{/adminPanelModified/{id}/testing-site/testsiteID/bookingTime/date(id=${booking.bookingId})}"
-                   class="btn btn-primary" th:id = "'bt'+${booking.bookingId}" style="display:none">Modified</a>
-            <td>
-        </tr>
-        </tbody>
-    </table>
+                    <td>
+                        <a th:href="@{/adminPanelDelete/{id}(id=${booking.bookingId})}"
+                            class="btn btn-primary">DELETE</a>
+                    <td>
+                    <td>
+                        <a th:href="@{/adminPanelModified/{id}/testing-site/testsiteID/bookingTime/date(id=${booking.bookingId})}"
+                            class="btn btn-primary" th:id="'bt'+${booking.bookingId}" style="display:none">Modified</a>
+                    <td>
+                </tr>
+            </tbody>
+        </table>
 
-</div>
-<script th:inline="javascript">
-function upload(text) {
-  alert("booking id: " + text)
-  let testSiteId = document.getElementById("hi" + text).value
-  alert(testSiteId)
+    </div>
+    <script th:inline="javascript">
+        function upload(text) {
+            alert("booking id: " + text)
+            let testSiteId = document.getElementById("hi" + text).value
+            alert(testSiteId)
 
-  // change href
-  let y = document.getElementById("bt" + text)
-  let z = document.getElementById("bt" + text).href
-  y.href = z.replace(/testsiteID/g, testSiteId);
+            // change href
+            let y = document.getElementById("bt" + text)
+            let z = document.getElementById("bt" + text).href
+            y.href = z.replace(/testsiteID/g, testSiteId);
 
-  // show btn
-  y.style.display = "block"
-}
+            // show btn
+            y.style.display = "block"
+        }
 
-function upload1(text) {
-  alert("booking id: " + text)
-  let time = document.getElementById("ti" + text).value
-  alert(time)
+        function upload1(text) {
+            alert("booking id: " + text)
+            let time = document.getElementById("ti" + text).value
+            alert(time)
 
-  // change href
-  let y = document.getElementById("bt" + text)
-  let z = document.getElementById("bt" + text).href
-  y.href = z.replace(/date/g, time);
+            // change href
+            let y = document.getElementById("bt" + text)
+            let z = document.getElementById("bt" + text).href
+            y.href = z.replace(/date/g, time);
 
-   // show btn
-  y.style.display = "block"
-}
-</script>
+            // show btn
+            y.style.display = "block"
+        }
+    </script>
 
-<div th:replace="fragments/scripts :: scripts"></div>
+    <div th:replace="fragments/scripts :: scripts"></div>
 
 </body>
-

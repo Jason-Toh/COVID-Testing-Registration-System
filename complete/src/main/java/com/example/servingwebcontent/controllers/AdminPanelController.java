@@ -76,7 +76,6 @@ public class AdminPanelController {
         List<TestingSite> testingSiteList = getTestingSiteList();
         model.addAttribute("testingSiteList", testingSiteList);
 
-
         return "adminPanel";
     }
 
@@ -99,10 +98,10 @@ public class AdminPanelController {
     }
 
     @RequestMapping(("/adminPanelModified/{id}/testing-site/{second}"))
-    public String modifiedTestingSite(@PathVariable String id,@PathVariable String second, Model model)
+    public String modifiedTestingSite(@PathVariable String id, @PathVariable String second, Model model)
             throws IOException, InterruptedException, ParseException {
 
-        System.out.println("booking id: "+id+" testing-site id  "+second);
+        System.out.println("booking id: " + id + " testing-site id  " + second);
 
         List<Booking> bookings = getBookingListUsingTestingSite();
         model.addAttribute("bookings", bookings);
@@ -114,25 +113,25 @@ public class AdminPanelController {
     }
 
     @RequestMapping(("/adminPanelModified/{id}/testing-site/{testsiteid}/bookingTime/{time}"))
-    public String modifiedDateTime(@PathVariable String id, @PathVariable String testsiteid,@PathVariable String time, Model model)
+    public String modifiedDateTime(@PathVariable String id, @PathVariable String testsiteid, @PathVariable String time,
+            Model model)
             throws IOException, InterruptedException, ParseException {
 
-        System.out.println("booking id: "+id+" date-time:  "+time+"" +" testsiteid:  "+testsiteid+"");
-
+        System.out.println("booking id: " + id + " date-time:  " + time + "" + " testsiteid:  " + testsiteid + "");
 
         String api = System.getenv("API_KEY");
-        if(!testsiteid.equals("testsiteID")){
-            APIfactory apIfactory = new BookingFactory(api, id,null,testsiteid, null);
-            Patch bookingPatch = apIfactory.createPatch();
+        if (!testsiteid.equals("testsiteID")) {
+            APIfactory<Booking> bookingFactory = new BookingFactory(api, id, null, testsiteid, null);
+            Patch bookingPatch = bookingFactory.createPatch();
 
             List<String> thingsToPatch = new ArrayList<>();
             thingsToPatch.add("TESTSITE");
 
             bookingPatch.patchApi(thingsToPatch);
         }
-        if(!testsiteid.equals("date")){
-            APIfactory apIfactory = new BookingFactory(api, id,null,null, time);
-            Patch bookingPatch = apIfactory.createPatch();
+        if (!testsiteid.equals("date")) {
+            APIfactory<Booking> bookingFactory = new BookingFactory(api, id, null, null, time);
+            Patch bookingPatch = bookingFactory.createPatch();
 
             List<String> thingsToPatch = new ArrayList<>();
             thingsToPatch.add("TIME");
