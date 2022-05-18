@@ -116,6 +116,15 @@ public class ModifyBookingController {
         return bookingList;
     }
 
+    // public List<String> getOptionsList() {
+
+    // // TODO: Finish cancel booking
+
+    // // 0 - booking is cancelled
+    // // 1 - covid test is completed
+
+    // }
+
     @GetMapping("/profile")
     public String displayProfilePage(Model model) {
 
@@ -260,7 +269,7 @@ public class ModifyBookingController {
         // Patch the changes
         String api = System.getenv("API_KEY");
         APIfactory<Booking> bookingFactory = new BookingFactory(api,
-                bookingForm.getBookingID(), null, bookingForm.getTestingSite(), null);
+                bookingForm.getBookingID(), null, bookingForm.getTestingSite(), bookingForm.getTime());
         Patch bookingPatch = bookingFactory.createPatch();
 
         List<String> thingsToPatch = new ArrayList<>();
@@ -276,6 +285,23 @@ public class ModifyBookingController {
         bookingPatch.patchApi(thingsToPatch);
 
         return "modifyDone";
+    }
+
+    @RequestMapping("cancel/{id}")
+    public String cancelBooking(@PathVariable String id, Model model) throws IOException, InterruptedException {
+
+        // Patch the changes
+        String api = System.getenv("API_KEY");
+        APIfactory<Booking> bookingFactory = new BookingFactory(api, id, true);
+        Patch bookingPatch = bookingFactory.createPatch();
+
+        List<String> thingsToPatch = new ArrayList<>();
+
+        thingsToPatch.add("CANCEL");
+
+        bookingPatch.patchApi(thingsToPatch);
+
+        return "cancelDone";
     }
 
 }

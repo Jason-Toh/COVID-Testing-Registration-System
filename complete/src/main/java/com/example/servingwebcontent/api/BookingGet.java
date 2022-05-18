@@ -64,6 +64,7 @@ public class BookingGet extends Get<Booking> {
             String url = "";
             String qr = "";
             boolean testingDone = false;
+            boolean cancelBooking = false;
 
             // Get the URL from the JSON if the attribute exists
             try {
@@ -86,6 +87,12 @@ public class BookingGet extends Get<Booking> {
                 testingDone = false;
             }
 
+            try {
+                cancelBooking = additionalInfoJSON.getBoolean("cancelBooking");
+            } catch (Exception exception) {
+                cancelBooking = false;
+            }
+
             String testingSiteName = null;
             String testingSiteId = null;
 
@@ -103,7 +110,7 @@ public class BookingGet extends Get<Booking> {
 
             Booking booking = new Booking(bookingId, customerId, customerName, testingSiteId, testingSiteName,
                     smsPin,
-                    startTime, status, url, qr, testingDone);
+                    startTime, status, url, qr, testingDone, cancelBooking);
             booking.setCovidTests(covidTests);
             bookings.add(booking);
         }

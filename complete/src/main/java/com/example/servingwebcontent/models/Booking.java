@@ -18,11 +18,12 @@ public class Booking {
     private String url;
     private String qr;
     private boolean testingDone;
+    private boolean cancelBooking;
     private List<CovidTest> covidTests;
 
     public Booking(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName, String smsPin,
-            String startTime, String status, String url, String qr, boolean testingDone) {
+            String startTime, String status, String url, String qr, boolean testingDone, boolean cancelBooking) {
         this.covidTests = new ArrayList<>();
         this.bookingId = bookingId;
         this.customerId = customerId;
@@ -35,6 +36,7 @@ public class Booking {
         this.url = url;
         this.qr = qr;
         this.testingDone = testingDone;
+        this.cancelBooking = cancelBooking;
     }
 
     public Booking(String bookingId, String testingSiteId,
@@ -143,6 +145,14 @@ public class Booking {
 
     public void setTestingDone(boolean testingDone) {
         this.testingDone = testingDone;
+    }
+
+    public boolean getCancelBooking() {
+        return cancelBooking;
+    }
+
+    public void setCancelBooking(boolean cancelBooking) {
+        this.cancelBooking = cancelBooking;
     }
 
     public List<CovidTest> getCovidTests() {

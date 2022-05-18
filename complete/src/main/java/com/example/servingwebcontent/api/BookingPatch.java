@@ -19,9 +19,10 @@ public class BookingPatch extends Patch {
     private final String testingSiteId;
     private final boolean testingDone;
     private final String startTime;
+    private final boolean cancelBooking;
 
     public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus, String qrCode,
-            String url, String testingSiteId, boolean testingDone, String startTime) {
+            String url, String testingSiteId, boolean testingDone, String startTime, boolean cancelBooking) {
         this.myApiKey = myApiKey;
         this.bookingId = bookingId;
         this.symptom = symptom;
@@ -31,6 +32,7 @@ public class BookingPatch extends Patch {
         this.testingSiteId = testingSiteId;
         this.testingDone = testingDone;
         this.startTime = startTime;
+        this.cancelBooking = cancelBooking;
     }
 
     @Override
@@ -62,6 +64,12 @@ public class BookingPatch extends Patch {
             jsonString = "{" +
                     "\"startTime\":\"" + startTime + "\"" +
                     "}";
+
+        } else if (thingsToPatch.contains("CANCEL")) {
+            jsonString = "{" +
+                    "\"additionalInfo\":" + "{ " +
+                    "\"cancelBooking\":\"" + cancelBooking + "\""
+                    + "}" + "}";
         } else {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"," +

@@ -28,11 +28,16 @@
                     <td th:text="${booking.getSmsPin()}"></td>
                     <td th:text="${booking.getStatus()}"></td>
                     <td th:text="${booking.getFormattedStartTime()}"></td>
-                    <td th:switch="${booking.getTestingDone()}">
-                        <h6 th:case="true" class="text-danger">Covid Test is Completed</h6>
-                        <!-- <button th:case="false" class="btn btn-primary">Modify</button> -->
-                        <a th:case="false" th:href="@{/modify/{id}(id=${booking.getBookingId()})}"
-                            class="btn btn-primary">Modify</a>
+                    <td>
+                        <div th:switch="${booking.getTestingDone()}">
+                            <h6 th:case="true" class="text-danger">Covid Test is Completed</h6>
+                        </div>
+                        <div th:switch="${booking.getCancelBooking()}">
+                            <h6 th:case="true" class="text-danger">Booking is Cancelled</h6>
+                        </div>
+                        <div th:if="(!${booking.getTestingDone()} and !${booking.getCancelBooking()})">
+                            <a th:href="@{/modify/{id}(id=${booking.getBookingId()})}" class="btn btn-primary">View</a>
+                        </div>
                     </td>
                 </tr>
             </tbody>

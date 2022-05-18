@@ -15,9 +15,16 @@ public class BookingFactory implements APIfactory<Booking> {
     private String url;
     private String qrCode;
     private boolean testingDone;
+    private boolean cancelBooking;
 
     public BookingFactory(String api) {
         this.api = api;
+    }
+
+    public BookingFactory(String api, String bookingId, boolean cancelBooking) {
+        this.api = api;
+        this.bookingId = bookingId;
+        this.cancelBooking = cancelBooking;
     }
 
     public BookingFactory(String api, String bookingId, BookingStatus bookingStatus) {
@@ -68,6 +75,6 @@ public class BookingFactory implements APIfactory<Booking> {
     @Override
     public Patch createPatch() {
         return new BookingPatch(api, bookingId, symptom, bookingStatus, qrCode, url, testingSiteId, testingDone,
-                startTime);
+                startTime, cancelBooking);
     }
 }

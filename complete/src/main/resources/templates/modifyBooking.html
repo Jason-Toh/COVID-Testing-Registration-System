@@ -56,9 +56,10 @@
                 </tbody>
             </table>
             <button type="submit" class="btn btn-primary float-right">
-                Submit
+                Modify
             </button>
         </form>
+        <a th:href="@{/cancel/{id}(id=${booking.getBookingId()})}" class="btn btn-primary">Cancel</a>
     </div>
     <div th:replace="fragments/scripts :: scripts"></div>
 </body>
