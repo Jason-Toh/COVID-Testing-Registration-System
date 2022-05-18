@@ -13,14 +13,52 @@
 <body>
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container py-4">
+        <form name='f' th:action="@{/modify}" th:object="${bookingForm}" method='POST'>
 
-        <table class="table">
-            <thead class="thead-dark">
-                <th>Testing Site</th>
-                <th>Date</th>
-            </thead>
-        </table>
+            <input type="hidden" class="form-control" id="bookingID" name="bookingID"
+                th:value="${booking.getBookingId()}">
 
+            <table class="table">
+                <tbody class="thead-dark">
+                    <tr>
+                        <th>Customer Name</th>
+                        <td th:text="${booking.getCustomerName()}"></td>
+                    </tr>
+                    <tr>
+                        <th>Testing Site Name</th>
+                        <td>
+                            <h6 th:text=" ${error} ? ${error} : '' " class=" ${error} ? text-danger : '' "></h6>
+                            <select name="testingSite" id="testingSite" class="custom-select my-1 mr-sm-2" required>
+                                <option th:each="testSite : ${testingSiteList}" th:value="${testSite.id}"
+                                    th:text="${testSite.name}"
+                                    th:selected="${testSite.id} == ${booking.getTestingSiteId()}">
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Start Time</th>
+                        <td>
+                            <h6 th:text=" ${error} ? ${error} : '' " class=" ${error} ? text-danger : '' "></h6>
+                            <h6 th:text=" ${error2} ? ${error2} : '' " class=" ${error2} ? text-danger : '' "></h6>
+                            <input type="datetime-local" id="time" name="time" class="form-control"
+                                th:min="${currentDateTime}" th:value="${currentDateTime}" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Booking Status</th>
+                        <td th:text="${booking.getStatus()}"></td>
+                    </tr>
+                    <tr>
+                        <th>Covid Test Status</th>
+                        <td th:text="${booking.getTestingDone()} ? 'Completed' : 'Not Completed'"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary float-right">
+                Submit
+            </button>
+        </form>
     </div>
     <div th:replace="fragments/scripts :: scripts"></div>
 </body>

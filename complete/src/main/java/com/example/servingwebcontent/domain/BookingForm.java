@@ -9,6 +9,7 @@ public class BookingForm {
     private String time;
     private String qr;
     private String url;
+    private String bookingID;
     private boolean receivedRATKit;
     private boolean onHomeBooking;
 
@@ -92,8 +93,12 @@ public class BookingForm {
         this.url = url;
     }
 
-    public boolean isReceivedRATKit() {
-        return receivedRATKit;
+    public String getBookingID() {
+        return bookingID;
+    }
+
+    public void setBookingID(String bookingID) {
+        this.bookingID = bookingID;
     }
 
     @Override

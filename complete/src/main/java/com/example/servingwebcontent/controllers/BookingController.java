@@ -6,16 +6,13 @@ import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.models.*;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.BookingStatusForm;
-// import com.example.servingwebcontent.tool.RandomPinGenerator;
 import com.google.zxing.WriterException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -324,50 +321,5 @@ public class BookingController {
         model.addAttribute("pinCode", book.get("smsPin") + "");
 
         return "pinCode";
-    }
-
-    @GetMapping("/profile")
-    public String displayProfilePage(Model model) {
-
-        // If the user is not authenticated, redirect to login
-        if (!authenticateInstance.getIsUserAuthenticated()) {
-            return "redirect:/login";
-        }
-
-        // If the user is not a customer, redirect to notAuthorised
-        if (!authenticateInstance.getUser().isCustomer()) {
-            return "notAuthorised";
-        }
-
-        List<Booking> bookingList = getBookingList();
-
-        List<Booking> customerBookingList = new ArrayList<>();
-
-        User currentUser = authenticateInstance.getUser();
-
-        for (Booking booking : bookingList) {
-            if (booking.getCustomerId().equals(currentUser.getId())) {
-                customerBookingList.add(booking);
-            }
-        }
-
-        model.addAttribute("bookingList", customerBookingList);
-
-        return "profile";
-    }
-
-    @RequestMapping("modify/{id}")
-    public String modifyBooking(@PathVariable String id, Model model) {
-
-        List<Booking> bookingList = getBookingList();
-
-        for (Booking booking : bookingList) {
-            if (booking.getBookingId().equals(id)) {
-                model.addAttribute("booking", booking);
-                break;
-            }
-        }
-
-        return "modifyBooking";
     }
 }
