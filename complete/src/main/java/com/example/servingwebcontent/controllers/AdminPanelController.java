@@ -126,17 +126,21 @@ public class AdminPanelController {
 
             List<String> thingsToPatch = new ArrayList<>();
             thingsToPatch.add("TESTSITE");
+            thingsToPatch.add("ADMIN");
 
             bookingPatch.patchApi(thingsToPatch);
+
         }
-        if (!testsiteid.equals("date")) {
+        if (!time.equals("date")) {
             APIfactory<Booking> bookingFactory = new BookingFactory(api, id, null, null, time);
             Patch bookingPatch = bookingFactory.createPatch();
 
             List<String> thingsToPatch = new ArrayList<>();
             thingsToPatch.add("TIME");
+            thingsToPatch.add("ADMIN");
 
             bookingPatch.patchApi(thingsToPatch);
+
         }
 
         List<Booking> bookings = getBookingListUsingTestingSite();

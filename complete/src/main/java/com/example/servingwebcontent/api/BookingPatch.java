@@ -68,8 +68,13 @@ public class BookingPatch extends Patch {
         } else if (thingsToPatch.contains("TESTSITE")) {
             jsonString = "{" +
                     "\"testingSiteId\":\"" + testingSiteId + "\"," +
-                    "\"additionalInfo\":" + "{ " +
-                    "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
+                    "\"additionalInfo\":" + "{ " ;
+
+            if(thingsToPatch.contains("ADMIN")){
+                jsonString += "\"recentUpdateTime\":\"" + (java.time.LocalDateTime.now().toString()).substring(0,23) + "Z" + "\",";
+            }
+
+            jsonString += "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
                     "\"pastBookings\":" + "[" + "{" +
                     "\"timestamp\":\"" + oldTimestamp + "\"," +
                     "\"testingSiteId\":\"" + oldTestingSiteId + "\"," +
@@ -79,8 +84,12 @@ public class BookingPatch extends Patch {
         } else if (thingsToPatch.contains("TIME")) {
             jsonString = "{" +
                     "\"startTime\":\"" + startTime + "\"," +
-                    "\"additionalInfo\":" + "{ " +
-                    "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
+                    "\"additionalInfo\":" + "{ " ;
+
+            if(thingsToPatch.contains("ADMIN")){
+                jsonString += "\"recentUpdateTime\":\"" + (java.time.LocalDateTime.now().toString()).substring(0,23) + "Z" + "\",";
+            }
+            jsonString += "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
                     "\"pastBookings\":" + "[" + "{" +
                     "\"timestamp\":\"" + oldTimestamp + "\"," +
                     "\"testingSiteId\":\"" + oldTestingSiteId + "\"," +
