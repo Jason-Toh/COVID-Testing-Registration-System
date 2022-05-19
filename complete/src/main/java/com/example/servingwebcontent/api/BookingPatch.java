@@ -20,9 +20,11 @@ public class BookingPatch extends Patch {
     private final boolean testingDone;
     private final String startTime;
     private final boolean cancelBooking;
+    private final String modifiedTimestamp;
 
     public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus, String qrCode,
-            String url, String testingSiteId, boolean testingDone, String startTime, boolean cancelBooking) {
+            String url, String testingSiteId, boolean testingDone, String startTime, boolean cancelBooking,
+            String modifiedTimestamp) {
         this.myApiKey = myApiKey;
         this.bookingId = bookingId;
         this.symptom = symptom;
@@ -33,6 +35,7 @@ public class BookingPatch extends Patch {
         this.testingDone = testingDone;
         this.startTime = startTime;
         this.cancelBooking = cancelBooking;
+        this.modifiedTimestamp = modifiedTimestamp;
     }
 
     @Override
@@ -58,12 +61,16 @@ public class BookingPatch extends Patch {
                     "}";
         } else if (thingsToPatch.contains("TESTSITE")) {
             jsonString = "{" +
-                    "\"testingSiteId\":\"" + testingSiteId + "\"" +
-                    "}";
+                    "\"testingSiteId\":\"" + testingSiteId + "\"," +
+                    "\"additionalInfo\":" + "{ " +
+                    "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\""
+                    + "}" + "}";
         } else if (thingsToPatch.contains("TIME")) {
             jsonString = "{" +
-                    "\"startTime\":\"" + startTime + "\"" +
-                    "}";
+                    "\"startTime\":\"" + startTime + "\"," +
+                    "\"additionalInfo\":" + "{ " +
+                    "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\""
+                    + "}" + "}";
 
         } else if (thingsToPatch.contains("CANCEL")) {
             jsonString = "{" +

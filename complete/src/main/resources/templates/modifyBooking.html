@@ -53,6 +53,10 @@
                         <th>Covid Test Status</th>
                         <td th:text="${booking.getTestingDone()} ? 'Completed' : 'Not Completed'"></td>
                     </tr>
+                    <tr th:if="${not booking.getModifiedTimeStamp().isEmpty()}">
+                        <th>Timestamp of modifications</th>
+                        <td th:text="${booking.getFormattedModifiedTimeStamp()}"></td>
+                    </tr>
                 </tbody>
             </table>
             <button type="submit" class="btn btn-primary float-right">

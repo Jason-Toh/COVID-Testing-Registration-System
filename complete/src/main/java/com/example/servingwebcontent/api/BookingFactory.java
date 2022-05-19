@@ -16,6 +16,7 @@ public class BookingFactory implements APIfactory<Booking> {
     private String qrCode;
     private boolean testingDone;
     private boolean cancelBooking;
+    private String modifiedTimestamp;
 
     public BookingFactory(String api) {
         this.api = api;
@@ -57,6 +58,16 @@ public class BookingFactory implements APIfactory<Booking> {
         this.startTime = startTime;
     }
 
+    public BookingFactory(String api, String bookingId, String customerId, String testingSiteId, String startTime,
+            String modifiedTimestamp) {
+        this.api = api;
+        this.bookingId = bookingId;
+        this.customerId = customerId;
+        this.testingSiteId = testingSiteId;
+        this.startTime = startTime;
+        this.modifiedTimestamp = modifiedTimestamp;
+    }
+
     @Override
     public Get<Booking> createGet() {
         return new BookingGet(api);
@@ -75,6 +86,6 @@ public class BookingFactory implements APIfactory<Booking> {
     @Override
     public Patch createPatch() {
         return new BookingPatch(api, bookingId, symptom, bookingStatus, qrCode, url, testingSiteId, testingDone,
-                startTime, cancelBooking);
+                startTime, cancelBooking, modifiedTimestamp);
     }
 }

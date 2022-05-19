@@ -5,6 +5,8 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -266,10 +268,16 @@ public class ModifyBookingController {
             }
         }
 
+        // Timestamp of current changes
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime timeNow = LocalDateTime.now();
+        String formattedDateTime = dtf.format(timeNow);
+
         // Patch the changes
         String api = System.getenv("API_KEY");
         APIfactory<Booking> bookingFactory = new BookingFactory(api,
-                bookingForm.getBookingID(), null, bookingForm.getTestingSite(), bookingForm.getTime());
+                bookingForm.getBookingID(), null, bookingForm.getTestingSite(), bookingForm.getTime(),
+                formattedDateTime);
         Patch bookingPatch = bookingFactory.createPatch();
 
         List<String> thingsToPatch = new ArrayList<>();

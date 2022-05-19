@@ -19,11 +19,13 @@ public class Booking {
     private String qr;
     private boolean testingDone;
     private boolean cancelBooking;
+    private String modifiedTimestamp;
     private List<CovidTest> covidTests;
 
     public Booking(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName, String smsPin,
-            String startTime, String status, String url, String qr, boolean testingDone, boolean cancelBooking) {
+            String startTime, String status, String url, String qr, boolean testingDone, boolean cancelBooking,
+            String modifiedTimestamp) {
         this.covidTests = new ArrayList<>();
         this.bookingId = bookingId;
         this.customerId = customerId;
@@ -37,6 +39,7 @@ public class Booking {
         this.qr = qr;
         this.testingDone = testingDone;
         this.cancelBooking = cancelBooking;
+        this.modifiedTimestamp = modifiedTimestamp;
     }
 
     public Booking(String bookingId, String testingSiteId,
@@ -155,6 +158,22 @@ public class Booking {
         this.cancelBooking = cancelBooking;
     }
 
+    public String getModifiedTimeStamp() {
+        return modifiedTimestamp;
+    }
+
+    public void setModifiedTimestamp(String modifiedTimestamp) {
+        this.modifiedTimestamp = modifiedTimestamp;
+    }
+
+    public String getFormattedModifiedTimeStamp() {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy hh:mm a", Locale.ENGLISH);
+        LocalDateTime date = LocalDateTime.parse(modifiedTimestamp + ":00.000Z", inputFormatter);
+        String formattedDate = outputFormatter.format(date);
+        return formattedDate;
+    }
+
     public List<CovidTest> getCovidTests() {
         return covidTests;
     }
@@ -177,7 +196,9 @@ public class Booking {
                 ", status='" + status + '\'' +
                 ", url='" + url + '\'' +
                 ", qr='" + qr + '\'' +
-                ", testingDone='" + testingDone +
+                ", testingDone='" + testingDone + '\'' +
+                ", cancelBooking='" + cancelBooking + '\'' +
+                ", modifiedTimestamp='" + modifiedTimestamp +
                 '}';
     }
 }

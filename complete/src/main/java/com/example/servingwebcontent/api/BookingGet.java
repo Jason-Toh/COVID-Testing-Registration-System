@@ -65,6 +65,7 @@ public class BookingGet extends Get<Booking> {
             String qr = "";
             boolean testingDone = false;
             boolean cancelBooking = false;
+            String modifiedTimestamp = "";
 
             // Get the URL from the JSON if the attribute exists
             try {
@@ -93,6 +94,12 @@ public class BookingGet extends Get<Booking> {
                 cancelBooking = false;
             }
 
+            try {
+                modifiedTimestamp = additionalInfoJSON.getString("modifiedTimestamp");
+            } catch (Exception exception) {
+                modifiedTimestamp = "";
+            }
+
             String testingSiteName = null;
             String testingSiteId = null;
 
@@ -110,7 +117,7 @@ public class BookingGet extends Get<Booking> {
 
             Booking booking = new Booking(bookingId, customerId, customerName, testingSiteId, testingSiteName,
                     smsPin,
-                    startTime, status, url, qr, testingDone, cancelBooking);
+                    startTime, status, url, qr, testingDone, cancelBooking, modifiedTimestamp);
             booking.setCovidTests(covidTests);
             bookings.add(booking);
         }
