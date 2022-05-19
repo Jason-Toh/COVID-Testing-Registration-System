@@ -49,6 +49,7 @@ public class BookingGet extends Get<Booking> {
             String smsPin = (String) json.getJSONObject(i).get("smsPin");
             String startTime = (String) json.getJSONObject(i).get("startTime");
             String status = (String) json.getJSONObject(i).get("status");
+            String createdAt = (String) json.getJSONObject(i).get("createdAt");
             JSONObject additionalInfoJSON = (JSONObject) json.getJSONObject(i).get("additionalInfo");
 
             // Put covidTests into each Booking
@@ -117,7 +118,7 @@ public class BookingGet extends Get<Booking> {
 
             Booking booking = new Booking(bookingId, customerId, customerName, testingSiteId, testingSiteName,
                     smsPin,
-                    startTime, status, url, qr, testingDone, cancelBooking, modifiedTimestamp);
+                    startTime, status, url, qr, testingDone, cancelBooking, modifiedTimestamp, createdAt);
             booking.setCovidTests(covidTests);
             bookings.add(booking);
         }

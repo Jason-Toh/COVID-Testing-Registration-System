@@ -83,7 +83,7 @@ public class TestingSiteGet extends Get<TestingSite> {
 
                 Booking booking = new Booking(bookingId, customerId, customerFullName, testingSiteId,
                         testingSiteName, smsPin,
-                        startTime, status, null, null, false, false, null);
+                        startTime, status, null, null, false, false, null, createdAt);
 
                 bookings.add(booking);
             }

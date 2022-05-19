@@ -20,12 +20,13 @@ public class Booking {
     private boolean testingDone;
     private boolean cancelBooking;
     private String modifiedTimestamp;
+    private String createdAt;
     private List<CovidTest> covidTests;
 
     public Booking(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName, String smsPin,
             String startTime, String status, String url, String qr, boolean testingDone, boolean cancelBooking,
-            String modifiedTimestamp) {
+            String modifiedTimestamp, String createdAt) {
         this.covidTests = new ArrayList<>();
         this.bookingId = bookingId;
         this.customerId = customerId;
@@ -40,6 +41,7 @@ public class Booking {
         this.testingDone = testingDone;
         this.cancelBooking = cancelBooking;
         this.modifiedTimestamp = modifiedTimestamp;
+        this.createdAt = createdAt;
     }
 
     public Booking(String bookingId, String testingSiteId,
@@ -166,6 +168,14 @@ public class Booking {
         this.modifiedTimestamp = modifiedTimestamp;
     }
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public String getFormattedModifiedTimeStamp() {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy hh:mm a", Locale.ENGLISH);
@@ -198,7 +208,8 @@ public class Booking {
                 ", qr='" + qr + '\'' +
                 ", testingDone='" + testingDone + '\'' +
                 ", cancelBooking='" + cancelBooking + '\'' +
-                ", modifiedTimestamp='" + modifiedTimestamp +
+                ", modifiedTimestamp='" + modifiedTimestamp + '\'' +
+                ", createdAt='" + createdAt +
                 '}';
     }
 }

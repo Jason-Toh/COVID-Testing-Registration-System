@@ -273,11 +273,21 @@ public class ModifyBookingController {
         LocalDateTime timeNow = LocalDateTime.now();
         String formattedDateTime = dtf.format(timeNow);
 
+        String oldTimestamp = "";
+        String oldTestingSiteId = currentBooking.getTestingSiteId();
+        String oldStartTime = currentBooking.getStartTime();
+
+        if (currentBooking.getModifiedTimeStamp().isEmpty()) {
+            oldTimestamp = currentBooking.getCreatedAt();
+        } else {
+            oldTimestamp = currentBooking.getModifiedTimeStamp();
+        }
+
         // Patch the changes
         String api = System.getenv("API_KEY");
         APIfactory<Booking> bookingFactory = new BookingFactory(api,
                 bookingForm.getBookingID(), null, bookingForm.getTestingSite(), bookingForm.getTime(),
-                formattedDateTime);
+                formattedDateTime, oldTimestamp, oldTestingSiteId, oldStartTime);
         Patch bookingPatch = bookingFactory.createPatch();
 
         List<String> thingsToPatch = new ArrayList<>();
@@ -310,6 +320,12 @@ public class ModifyBookingController {
         bookingPatch.patchApi(thingsToPatch);
 
         return "cancelDone";
+    }
+
+    @RequestMapping("revert/{id}")
+    public String revertBooking(@PathVariable String id, Model model) {
+
+        return "";
     }
 
 }

@@ -21,10 +21,13 @@ public class BookingPatch extends Patch {
     private final String startTime;
     private final boolean cancelBooking;
     private final String modifiedTimestamp;
+    private final String oldTimestamp;
+    private final String oldTestingSiteId;
+    private final String oldStartTime;
 
     public BookingPatch(String myApiKey, String bookingId, String symptom, BookingStatus bookingStatus, String qrCode,
             String url, String testingSiteId, boolean testingDone, String startTime, boolean cancelBooking,
-            String modifiedTimestamp) {
+            String modifiedTimestamp, String oldTimestamp, String oldTestingSiteId, String oldStartTime) {
         this.myApiKey = myApiKey;
         this.bookingId = bookingId;
         this.symptom = symptom;
@@ -36,6 +39,9 @@ public class BookingPatch extends Patch {
         this.startTime = startTime;
         this.cancelBooking = cancelBooking;
         this.modifiedTimestamp = modifiedTimestamp;
+        this.oldTimestamp = oldTimestamp;
+        this.oldTestingSiteId = oldTestingSiteId;
+        this.oldStartTime = oldStartTime;
     }
 
     @Override
@@ -48,13 +54,13 @@ public class BookingPatch extends Patch {
             jsonString = "{" +
                     "\"additionalInfo\":" + "{ " +
                     "\"qrCode\":\"" + qrCode + "\"," +
-                    "\"url\":\"" + url + "\""
-                    + "}" + "}";
+                    "\"url\":\"" + url + "\"" +
+                    "}" + "}";
         } else if (thingsToPatch.contains("TESTDONE")) {
             jsonString = "{" +
                     "\"additionalInfo\":" + "{ " +
-                    "\"testingDone\":\"" + testingDone + "\""
-                    + "}" + "}";
+                    "\"testingDone\":\"" + testingDone + "\"" +
+                    "}" + "}";
         } else if (thingsToPatch.contains("STATUS")) {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"" +
@@ -63,26 +69,35 @@ public class BookingPatch extends Patch {
             jsonString = "{" +
                     "\"testingSiteId\":\"" + testingSiteId + "\"," +
                     "\"additionalInfo\":" + "{ " +
-                    "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\""
-                    + "}" + "}";
+                    "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
+                    "\"pastBookings\":" + "[" + "{" +
+                    "\"timestamp\":\"" + oldTimestamp + "\"," +
+                    "\"testingSiteId\":\"" + oldTestingSiteId + "\"," +
+                    "\"startTime\":\"" + oldStartTime + "\"" +
+                    "}" + "]" +
+                    "}" + "}";
         } else if (thingsToPatch.contains("TIME")) {
             jsonString = "{" +
                     "\"startTime\":\"" + startTime + "\"," +
                     "\"additionalInfo\":" + "{ " +
-                    "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\""
-                    + "}" + "}";
-
+                    "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
+                    "\"pastBookings\":" + "[" + "{" +
+                    "\"timestamp\":\"" + oldTimestamp + "\"," +
+                    "\"testingSiteId\":\"" + oldTestingSiteId + "\"," +
+                    "\"startTime\":\"" + oldStartTime + "\"" +
+                    "}" + "]" +
+                    "}" + "}";
         } else if (thingsToPatch.contains("CANCEL")) {
             jsonString = "{" +
                     "\"additionalInfo\":" + "{ " +
-                    "\"cancelBooking\":\"" + cancelBooking + "\""
-                    + "}" + "}";
+                    "\"cancelBooking\":\"" + cancelBooking + "\"" +
+                    "}" + "}";
         } else {
             jsonString = "{" +
                     "\"status\":\"" + bookingStatus + "\"," +
                     "\"additionalInfo\":" + "{ " +
-                    "\"symptom\":\"" + symptom + "\""
-                    + "}" + "}";
+                    "\"symptom\":\"" + symptom + "\"" +
+                    "}" + "}";
         }
 
         HttpRequest.BodyPublisher jsonPayload = HttpRequest.BodyPublishers.ofString(jsonString);
