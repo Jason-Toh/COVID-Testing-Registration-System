@@ -269,11 +269,11 @@ public class ModifyBookingController {
         String oldTestingSiteName = currentBooking.getTestingSiteName();
         String oldStartTime = currentBooking.getStartTime();
 
-        if (currentBooking.getModifiedTimestamp().isEmpty()) {
+        if (currentBooking.getModifiedTimeStamp().isEmpty()) {
             oldTimestamp = currentBooking.getCreatedAt();
             oldTimestamp = oldTimestamp.substring(0, 16);
         } else {
-            oldTimestamp = currentBooking.getModifiedTimestamp();
+            oldTimestamp = currentBooking.getModifiedTimeStamp();
         }
 
         PastBooking pastBooking = new PastBooking(oldTimestamp, oldTestingSiteId, oldTestingSiteName, oldStartTime);

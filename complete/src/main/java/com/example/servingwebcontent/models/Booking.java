@@ -22,6 +22,7 @@ public class Booking {
     private String modifiedTimestamp;
     private String createdAt;
     private List<CovidTest> covidTests;
+    private String recentUpdateTime;
     private List<PastBooking> pastBookings;
 
     public Booking(String bookingId, String customerId, String customerName, String testingSiteId,
@@ -161,7 +162,7 @@ public class Booking {
         this.cancelBooking = cancelBooking;
     }
 
-    public String getModifiedTimestamp() {
+    public String getModifiedTimeStamp() {
         return modifiedTimestamp;
     }
 
@@ -177,7 +178,7 @@ public class Booking {
         this.createdAt = createdAt;
     }
 
-    public String getFormattedModifiedTimestamp() {
+    public String getFormattedModifiedTimeStamp() {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy hh:mm a", Locale.ENGLISH);
         LocalDateTime date = LocalDateTime.parse(modifiedTimestamp + ":00.000Z", inputFormatter);
@@ -191,6 +192,14 @@ public class Booking {
 
     public void setCovidTests(List<CovidTest> covidTests) {
         this.covidTests = covidTests;
+    }
+
+    public String getRecentUpdateTime() {
+        return recentUpdateTime;
+    }
+
+    public void setRecentUpdateTime(String recentUpdateTime) {
+        this.recentUpdateTime = recentUpdateTime;
     }
 
     public List<PastBooking> getPastBookings() {
@@ -211,14 +220,15 @@ public class Booking {
                 ", testingSiteName='" + testingSiteName + '\'' +
                 ", smsPin='" + smsPin + '\'' +
                 ", startTime='" + startTime + '\'' +
-                ", covidTests=" + covidTests + '\'' +
                 ", status='" + status + '\'' +
                 ", url='" + url + '\'' +
                 ", qr='" + qr + '\'' +
-                ", testingDone='" + testingDone + '\'' +
-                ", cancelBooking='" + cancelBooking + '\'' +
+                ", testingDone=" + testingDone +
+                ", cancelBooking=" + cancelBooking +
                 ", modifiedTimestamp='" + modifiedTimestamp + '\'' +
-                ", createdAt='" + createdAt +
+                ", createdAt='" + createdAt + '\'' +
+                ", covidTests=" + covidTests +
+                ", recentUpdateTime='" + recentUpdateTime + '\'' +
                 '}';
     }
 }

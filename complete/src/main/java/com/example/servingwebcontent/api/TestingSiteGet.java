@@ -66,6 +66,7 @@ public class TestingSiteGet extends Get<TestingSite> {
             // Bookings
             List<Booking> bookings = new ArrayList<>();
             JSONArray bookingsJson = (JSONArray) json.getJSONObject(i).get("bookings");
+            String recentUpdateTime = "";
             for (int j = 0; j < bookingsJson.length(); j++) {
                 String bookingId = (String) bookingsJson.getJSONObject(j).get("id");
                 // Customer name, id
@@ -81,10 +82,16 @@ public class TestingSiteGet extends Get<TestingSite> {
                 String startTime = (String) bookingsJson.getJSONObject(j).get("startTime");
                 startTime = startTime.substring(0, 23);
 
+                JSONObject additionalInfoJSON = (JSONObject) bookingsJson.getJSONObject(j).get("additionalInfo");
+                try {
+                    recentUpdateTime = additionalInfoJSON.getString("recentUpdateTime");
+                } catch (Exception exception) {
+                    recentUpdateTime = "";
+                }
                 Booking booking = new Booking(bookingId, customerId, customerFullName, testingSiteId,
                         testingSiteName, smsPin,
                         startTime, status, null, null, false, false, null, createdAt);
-
+                booking.setRecentUpdateTime(recentUpdateTime);
                 bookings.add(booking);
             }
 

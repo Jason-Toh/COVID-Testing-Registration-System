@@ -69,6 +69,7 @@ public class BookingGet extends Get<Booking> {
             boolean testingDone = false;
             boolean cancelBooking = false;
             String modifiedTimestamp = "";
+            String recentUpdateTime = "";
 
             // Get the URL from the JSON if the attribute exists
             try {
@@ -121,6 +122,11 @@ public class BookingGet extends Get<Booking> {
                 pastBookings = new ArrayList<>();
             }
 
+            try {
+                recentUpdateTime = additionalInfoJSON.getString("recentUpdateTime");
+            } catch (Exception exception) {
+                recentUpdateTime = "";
+            }
             String testingSiteName = null;
             String testingSiteId = null;
 
@@ -139,6 +145,7 @@ public class BookingGet extends Get<Booking> {
             Booking booking = new Booking(bookingId, customerId, customerName, testingSiteId, testingSiteName,
                     smsPin,
                     startTime, status, url, qr, testingDone, cancelBooking, modifiedTimestamp, createdAt);
+            booking.setRecentUpdateTime(recentUpdateTime);
             booking.setCovidTests(covidTests);
             booking.setPastBookings(pastBookings);
             bookings.add(booking);

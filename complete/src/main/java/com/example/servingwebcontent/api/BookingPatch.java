@@ -76,7 +76,7 @@ public class BookingPatch extends Patch {
                         if (thingsToPatch.contains("ADMIN")) {
                                 jsonString += "\"recentUpdateTime\":\""
                                                 + (java.time.LocalDateTime.now().toString()).substring(0, 23)
-                                                + "Z" + "\",";
+                                                + "Z" + "\"";
                         }
 
                         if (thingsToPatch.contains("MODIFY")) {
@@ -118,7 +118,7 @@ public class BookingPatch extends Patch {
                         if (thingsToPatch.contains("ADMIN")) {
                                 jsonString += "\"recentUpdateTime\":\""
                                                 + (java.time.LocalDateTime.now().toString()).substring(0, 23)
-                                                + "Z" + "\",";
+                                                + "Z" + "\"";
                         }
                         if (thingsToPatch.contains("MODIFY")) {
                                 jsonString += "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
@@ -158,7 +158,7 @@ public class BookingPatch extends Patch {
                                         "\"symptom\":\"" + symptom + "\"" +
                                         "}" + "}";
                 }
-
+                System.out.println(jsonString);
                 HttpRequest.BodyPublisher jsonPayload = HttpRequest.BodyPublishers.ofString(jsonString);
 
                 HttpRequest request = HttpRequest.newBuilder()
