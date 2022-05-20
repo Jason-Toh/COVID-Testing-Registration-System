@@ -118,15 +118,6 @@ public class ModifyBookingController {
         return bookingList;
     }
 
-    // public List<String> getOptionsList() {
-
-    // // TODO: Finish cancel booking
-
-    // // 0 - booking is cancelled
-    // // 1 - covid test is completed
-
-    // }
-
     @GetMapping("/profile")
     public String displayProfilePage(Model model) {
 
@@ -275,19 +266,31 @@ public class ModifyBookingController {
 
         String oldTimestamp = "";
         String oldTestingSiteId = currentBooking.getTestingSiteId();
+        String oldTestingSiteName = currentBooking.getTestingSiteName();
         String oldStartTime = currentBooking.getStartTime();
 
-        if (currentBooking.getModifiedTimeStamp().isEmpty()) {
+        if (currentBooking.getModifiedTimestamp().isEmpty()) {
             oldTimestamp = currentBooking.getCreatedAt();
         } else {
-            oldTimestamp = currentBooking.getModifiedTimeStamp();
+            oldTimestamp = currentBooking.getModifiedTimestamp();
+        }
+
+        PastBooking pastBooking = new PastBooking(oldTimestamp, oldTestingSiteId, oldTestingSiteName, oldStartTime);
+
+        List<PastBooking> pastBookings = currentBooking.getPastBookings();
+
+        if (pastBookings.size() < 3) {
+            pastBookings.add(pastBooking);
+        } else {
+            pastBookings.remove(0);
+            pastBookings.add(pastBooking);
         }
 
         // Patch the changes
         String api = System.getenv("API_KEY");
         APIfactory<Booking> bookingFactory = new BookingFactory(api,
                 bookingForm.getBookingID(), null, bookingForm.getTestingSite(), bookingForm.getTime(),
-                formattedDateTime, oldTimestamp, oldTestingSiteId, oldStartTime);
+                formattedDateTime, pastBookings);
         Patch bookingPatch = bookingFactory.createPatch();
 
         List<String> thingsToPatch = new ArrayList<>();
@@ -325,7 +328,19 @@ public class ModifyBookingController {
     @RequestMapping("revert/{id}")
     public String revertBooking(@PathVariable String id, Model model) {
 
-        return "";
+        List<Booking> bookingList = getBookingList();
+        List<TestingSite> testingSiteList = getTestingSiteList();
+
+        for (Booking booking : bookingList) {
+            if (booking.getBookingId().equals(id)) {
+                model.addAttribute("pastBookings", booking.getPastBookings());
+                break;
+            }
+        }
+
+        model.addAttribute("testingSiteList", testingSiteList);
+
+        return "revertBooking";
     }
 
 }

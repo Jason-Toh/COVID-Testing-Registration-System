@@ -1,7 +1,10 @@
 package com.example.servingwebcontent.api;
 
+import java.util.List;
+
 import com.example.servingwebcontent.enumeration.BookingStatus;
 import com.example.servingwebcontent.models.Booking;
+import com.example.servingwebcontent.models.PastBooking;
 
 public class BookingFactory implements APIfactory<Booking> {
 
@@ -17,9 +20,7 @@ public class BookingFactory implements APIfactory<Booking> {
     private boolean testingDone;
     private boolean cancelBooking;
     private String modifiedTimestamp;
-    private String oldTimestamp;
-    private String oldTestingSiteId;
-    private String oldStartTime;
+    private List<PastBooking> pastBookings;
 
     public BookingFactory(String api) {
         this.api = api;
@@ -62,16 +63,14 @@ public class BookingFactory implements APIfactory<Booking> {
     }
 
     public BookingFactory(String api, String bookingId, String customerId, String testingSiteId, String startTime,
-            String modifiedTimestamp, String oldTimestamp, String oldTestingSiteId, String oldStartTime) {
+            String modifiedTimestamp, List<PastBooking> pastBookings) {
         this.api = api;
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.testingSiteId = testingSiteId;
         this.startTime = startTime;
         this.modifiedTimestamp = modifiedTimestamp;
-        this.oldTimestamp = oldTimestamp;
-        this.oldTestingSiteId = oldTestingSiteId;
-        this.oldStartTime = oldStartTime;
+        this.pastBookings = pastBookings;
     }
 
     @Override
@@ -92,6 +91,6 @@ public class BookingFactory implements APIfactory<Booking> {
     @Override
     public Patch createPatch() {
         return new BookingPatch(api, bookingId, symptom, bookingStatus, qrCode, url, testingSiteId, testingDone,
-                startTime, cancelBooking, modifiedTimestamp, oldTimestamp, oldTestingSiteId, oldStartTime);
+                startTime, cancelBooking, modifiedTimestamp, pastBookings);
     }
 }

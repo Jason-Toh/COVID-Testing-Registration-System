@@ -22,6 +22,7 @@ public class Booking {
     private String modifiedTimestamp;
     private String createdAt;
     private List<CovidTest> covidTests;
+    private List<PastBooking> pastBookings;
 
     public Booking(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName, String smsPin,
@@ -160,7 +161,7 @@ public class Booking {
         this.cancelBooking = cancelBooking;
     }
 
-    public String getModifiedTimeStamp() {
+    public String getModifiedTimestamp() {
         return modifiedTimestamp;
     }
 
@@ -176,7 +177,7 @@ public class Booking {
         this.createdAt = createdAt;
     }
 
-    public String getFormattedModifiedTimeStamp() {
+    public String getFormattedModifiedTimestamp() {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy hh:mm a", Locale.ENGLISH);
         LocalDateTime date = LocalDateTime.parse(modifiedTimestamp + ":00.000Z", inputFormatter);
@@ -190,6 +191,14 @@ public class Booking {
 
     public void setCovidTests(List<CovidTest> covidTests) {
         this.covidTests = covidTests;
+    }
+
+    public List<PastBooking> getPastBookings() {
+        return pastBookings;
+    }
+
+    public void setPastBookings(List<PastBooking> pastBookings) {
+        this.pastBookings = pastBookings;
     }
 
     @Override

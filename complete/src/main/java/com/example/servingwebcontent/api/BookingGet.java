@@ -2,6 +2,8 @@ package com.example.servingwebcontent.api;
 
 import com.example.servingwebcontent.models.Booking;
 import com.example.servingwebcontent.models.CovidTest;
+import com.example.servingwebcontent.models.PastBooking;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -101,6 +103,24 @@ public class BookingGet extends Get<Booking> {
                 modifiedTimestamp = "";
             }
 
+            List<PastBooking> pastBookings = new ArrayList<>();
+
+            try {
+                JSONArray pastBookingJSONArray = (JSONArray) additionalInfoJSON.getJSONArray("pastBookings");
+
+                for (int j = 0; j < pastBookingJSONArray.length(); j++) {
+                    String oldTimestamp = (String) pastBookingJSONArray.getJSONObject(j).get("timestamp");
+                    String oldTestingSiteId = (String) pastBookingJSONArray.getJSONObject(j).get("testingSiteId");
+                    String oldTestingSiteName = (String) pastBookingJSONArray.getJSONObject(j).get("testingSiteName");
+                    String oldStartTime = (String) pastBookingJSONArray.getJSONObject(j).get("startTime");
+                    PastBooking pastBooking = new PastBooking(oldTimestamp, oldTestingSiteId,
+                            oldTestingSiteName, oldStartTime);
+                    pastBookings.add(pastBooking);
+                }
+            } catch (Exception exception) {
+                pastBookings = new ArrayList<>();
+            }
+
             String testingSiteName = null;
             String testingSiteId = null;
 
@@ -120,6 +140,7 @@ public class BookingGet extends Get<Booking> {
                     smsPin,
                     startTime, status, url, qr, testingDone, cancelBooking, modifiedTimestamp, createdAt);
             booking.setCovidTests(covidTests);
+            booking.setPastBookings(pastBookings);
             bookings.add(booking);
         }
 

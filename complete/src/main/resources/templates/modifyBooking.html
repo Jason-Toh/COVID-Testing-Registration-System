@@ -53,10 +53,10 @@
                         <th>Covid Test Status</th>
                         <td th:text="${booking.getTestingDone()} ? 'Completed' : 'Not Completed'"></td>
                     </tr>
-                    <tr th:if="${not booking.getModifiedTimeStamp().isEmpty()}">
+                    <tr th:if="${not booking.getModifiedTimestamp().isEmpty()}">
                         <th>Timestamp of modifications</th>
                         <td>
-                            <span th:text="${booking.getFormattedModifiedTimeStamp()}"></span>
+                            <span th:text="${booking.getFormattedModifiedTimestamp()}"></span>
                             <a th:href="@{/revert/{id}(id=${booking.getBookingId()})}"
                                 class="btn btn-primary float-right">
                                 Revert
