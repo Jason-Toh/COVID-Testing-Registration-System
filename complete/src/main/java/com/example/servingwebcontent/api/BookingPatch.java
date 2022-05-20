@@ -60,9 +60,14 @@ public class BookingPatch extends Patch {
                                         "\"testingDone\":\"" + testingDone + "\"" +
                                         "}" + "}";
                 } else if (thingsToPatch.contains("STATUS")) {
-                        jsonString = "{" +
-                                        "\"status\":\"" + bookingStatus + "\"" +
-                                        "}";
+                        jsonString = "{" + "\"status\":\"" + bookingStatus + "\"";
+                                if(thingsToPatch.contains("ADMIN")){
+                                        jsonString += ",\"additionalInfo\":" + "{ "
+                                                   + "\"recentUpdateTime\":\""
+                                                   + (java.time.LocalDateTime.now().toString()).substring(0, 23)
+                                                   + "Z" + "\"";
+                                }
+                                jsonString += "}}";
                 } else if (thingsToPatch.contains("TESTSITE")) {
                         jsonString = "{" +
                                         "\"testingSiteId\":\"" + testingSiteId + "\",";

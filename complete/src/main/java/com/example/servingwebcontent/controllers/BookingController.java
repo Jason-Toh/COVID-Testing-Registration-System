@@ -283,7 +283,16 @@ public class BookingController {
         }
 
         Post bookingPost = bookingFactory.createPost();
-        String jsonPost = bookingPost.postApi();
+        List<String> thingsToPost = new ArrayList<>();
+        String jsonPost = "";
+
+        // IF IT IS ON-SITE BOOKING THEN IT WILL HAVE UPDATED TIME ATTRIBUTE BEING UPDATED
+        if(!bookingForm.isOnHomeBooking()){
+            thingsToPost.add("ADMIN");
+        }
+
+        jsonPost = bookingPost.postApi(thingsToPost);
+
 
         // Convert booking return JSON string to JSONObject and get the booking id
         JSONObject book = new JSONObject(jsonPost);

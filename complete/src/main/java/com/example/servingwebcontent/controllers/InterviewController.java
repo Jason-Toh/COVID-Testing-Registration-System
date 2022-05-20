@@ -147,7 +147,8 @@ public class InterviewController {
                 interviewForm.getPatient(), interviewForm.getAdministerer(), bookingId, patientStatus);
         Post covidTestPost = covidTestFactory.createPost();
         // String jsonPost = covidTestPost.postApi();
-        covidTestPost.postApi();
+        List<String> thingsToPost = new ArrayList<>();
+        covidTestPost.postApi(thingsToPost);
 
         // PATCH the symptom into the additional info of the booking api using it
         // booking id

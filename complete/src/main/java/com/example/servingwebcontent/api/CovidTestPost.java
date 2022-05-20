@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class CovidTestPost extends Post {
         private String myApiKey;
@@ -27,7 +28,7 @@ public class CovidTestPost extends Post {
         }
 
         @Override
-        public String postApi() throws IOException, InterruptedException {
+        public String postApi(List<String> thingsToPost) throws IOException, InterruptedException {
                 String rootUrl = "https://fit3077.com/api/v2";
 
                 String jsonString = "{" +

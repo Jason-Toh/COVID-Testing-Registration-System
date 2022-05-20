@@ -2,6 +2,7 @@ package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
 // import com.example.servingwebcontent.enumeration.TestType;
+import com.example.servingwebcontent.enumeration.BookingStatus;
 import com.example.servingwebcontent.models.AuthenticateSingleton;
 import com.example.servingwebcontent.models.Booking;
 import com.example.servingwebcontent.models.TestingSite;
@@ -86,6 +87,33 @@ public class AdminPanelController {
         APIfactory<Booking> apiFactory = new BookingFactory(System.getenv("API_KEY"));
         Delete deleteBooking = apiFactory.createDelete();
         deleteBooking.deleteApi(id);
+
+        List<Booking> bookings = getBookingListUsingTestingSite();
+        model.addAttribute("bookings", bookings);
+
+        List<TestingSite> testingSiteList = getTestingSiteList();
+        System.out.println(testingSiteList);
+        model.addAttribute("testingSiteList", testingSiteList);
+
+        return "adminPanel";
+    }
+
+    @RequestMapping("/adminPanelCancel/{id}/status/{status}")
+    public String modifiedStatus(@PathVariable String id, @PathVariable String status, Model model)
+            throws IOException, InterruptedException, ParseException {
+        System.out.println("iop  "+id+"  uiy  "+ status);
+
+        String api = System.getenv("API_KEY");
+
+        APIfactory<Booking> bookingFactory = new BookingFactory(api, id, BookingStatus.CANCELLED);
+        Patch bookingPatch = bookingFactory.createPatch();
+
+        List<String> thingsToPatch = new ArrayList<>();
+        thingsToPatch.add("STATUS");
+        thingsToPatch.add("ADMIN");
+
+        bookingPatch.patchApi(thingsToPatch);
+
 
         List<Booking> bookings = getBookingListUsingTestingSite();
         model.addAttribute("bookings", bookings);

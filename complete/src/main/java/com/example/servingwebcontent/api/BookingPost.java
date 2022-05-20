@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class BookingPost extends Post {
         private final String myApiKey;
@@ -20,14 +21,22 @@ public class BookingPost extends Post {
         }
 
         @Override
-        public String postApi() throws IOException, InterruptedException {
+        public String postApi(List<String> thingsToPost) throws IOException, InterruptedException {
                 String rootUrl = "https://fit3077.com/api/v2";
 
                 String jsonString = "{" +
                                 "\"customerId\":\"" + customerId + "\"," +
                                 "\"testingSiteId\":\"" + testingSiteId + "\"," +
-                                "\"startTime\":\"" + startTime + "\"" +
-                                "}";
+                                "\"startTime\":\"" + startTime + "\"";
+                                if(thingsToPost.contains("ADMIN")){
+                                        jsonString += ",\"additionalInfo\":" + "{ "
+                                                   + "\"recentUpdateTime\":\""
+                                                + (java.time.LocalDateTime.now().toString()).substring(0, 23)
+                                                + "Z" + "\""
+                                                + "}";
+                                }
+
+                jsonString += "}";
                 // Note the POST() method being used here, and the request body is supplied to
                 // it.
                 // A request body needs to be supplied to this endpoint, otherwise a 400 Bad
