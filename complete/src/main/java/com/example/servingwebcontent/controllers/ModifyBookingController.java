@@ -17,6 +17,7 @@ import com.example.servingwebcontent.models.*;
 import com.example.servingwebcontent.api.APIfactory;
 import com.example.servingwebcontent.api.TestingSiteFactory;
 import com.example.servingwebcontent.domain.BookingForm;
+import com.example.servingwebcontent.domain.RevertBookingForm;
 import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.models.AuthenticateSingleton;
 import com.google.zxing.WriterException;
@@ -345,13 +346,68 @@ public class ModifyBookingController {
         return "revertBooking";
     }
 
-    @RequestMapping("selectRevert/{timestamp}")
-    public String submitRevertBooking(@PathVariable String timestamp, Model model) {
+    @PostMapping("revertBooking")
+    public String submitRevertBooking(@ModelAttribute("revertBookingForm") RevertBookingForm revertBookingForm,
+            Model model) throws IOException, InterruptedException {
 
-        // List<Booking> bookingList = getBookingList();
-        // List<PastBooking> pastBookingList =
+        String bookingId = revertBookingForm.getBookingId();
+        String timestamp = revertBookingForm.getTimestamp();
 
-        return "";
+        List<Booking> bookingList = getBookingList();
+
+        Booking currentBooking = null;
+
+        for (Booking booking : bookingList) {
+            if (booking.getBookingId().equals(bookingId)) {
+                currentBooking = booking;
+                break;
+            }
+        }
+
+        List<PastBooking> pastBookingList = currentBooking.getPastBookings();
+
+        String testingSiteId = "";
+        String startTime = "";
+
+        int count = 0;
+        for (PastBooking pastBooking : pastBookingList) {
+            if (pastBooking.getTimestamp().equals(timestamp)) {
+                testingSiteId = pastBooking.getTestingSiteId();
+                startTime = pastBooking.getStartTime();
+                break;
+            }
+            count++;
+        }
+
+        // Remove the past Booking from the list
+        pastBookingList.remove(count);
+
+        // Timestamp of current changes
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime timeNow = LocalDateTime.now();
+        String formattedDateTime = dtf.format(timeNow);
+
+        // Patch the changes
+        String api = System.getenv("API_KEY");
+        APIfactory<Booking> bookingFactory = new BookingFactory(api,
+                bookingId, null,
+                testingSiteId,
+                startTime,
+                formattedDateTime, pastBookingList);
+        Patch bookingPatch = bookingFactory.createPatch();
+
+        List<String> thingsToPatch = new ArrayList<>();
+
+        thingsToPatch.add("TESTSITE");
+        thingsToPatch.add("TIME");
+
+        if (thingsToPatch.contains("TESTSITE") || thingsToPatch.contains("TIME")) {
+            thingsToPatch.add("MODIFY");
+        }
+
+        bookingPatch.patchApi(thingsToPatch);
+
+        return "revertedDone";
     }
 
 }
