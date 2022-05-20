@@ -65,8 +65,13 @@ public class BookingPatch extends Patch {
                                         "}";
                 } else if (thingsToPatch.contains("TESTSITE")) {
                         jsonString = "{" +
-                                        "\"testingSiteId\":\"" + testingSiteId + "\"," +
-                                        "\"additionalInfo\":" + "{ ";
+                                        "\"testingSiteId\":\"" + testingSiteId + "\",";
+
+                        if (thingsToPatch.contains("TIME")) {
+                                jsonString += "\"startTime\":\"" + startTime + "\",";
+                        }
+
+                        jsonString += "\"additionalInfo\":" + "{ ";
 
                         if (thingsToPatch.contains("ADMIN")) {
                                 jsonString += "\"recentUpdateTime\":\""
@@ -74,56 +79,73 @@ public class BookingPatch extends Patch {
                                                 + "Z" + "\",";
                         }
 
-                        jsonString += "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
-                                        "\"pastBookings\":" + "[";
+                        if (thingsToPatch.contains("MODIFY")) {
+                                jsonString += "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
+                                                "\"pastBookings\":" + "[";
 
-                        int count = 0;
-                        for (PastBooking pastBooking : pastBookings) {
-                                jsonString += "{" +
-                                                "\"timestamp\":\"" + pastBooking.getTimestamp() + "\"," +
-                                                "\"testingSiteId\":\"" + pastBooking.getTestingSiteId() + "\"," +
-                                                "\"testingSiteName\":\"" + pastBooking.getTestingSiteName() + "\"," +
-                                                "\"startTime\":\"" + pastBooking.getStartTime() + "\"";
-                                if (count != pastBookings.size() - 1) {
-                                        jsonString += "},";
-                                } else {
-                                        jsonString += "}";
+                                int count = 0;
+                                for (PastBooking pastBooking : pastBookings) {
+                                        jsonString += "{" +
+                                                        "\"timestamp\":\"" + pastBooking.getTimestamp() + "\"," +
+                                                        "\"testingSiteId\":\"" + pastBooking.getTestingSiteId() + "\","
+                                                        +
+                                                        "\"testingSiteName\":\"" + pastBooking.getTestingSiteName()
+                                                        + "\"," +
+                                                        "\"startTime\":\"" + pastBooking.getStartTime() + "\"";
+                                        if (count != pastBookings.size() - 1) {
+                                                jsonString += "},";
+                                        } else {
+                                                jsonString += "}";
+                                        }
+
+                                        count++;
                                 }
 
-                                count++;
+                                jsonString += "]";
                         }
 
-                        jsonString += "]" + "}" + "}";
+                        jsonString += "}" + "}";
                 } else if (thingsToPatch.contains("TIME")) {
                         jsonString = "{" +
-                                        "\"startTime\":\"" + startTime + "\"," +
-                                        "\"additionalInfo\":" + "{ ";
+                                        "\"startTime\":\"" + startTime + "\",";
+
+                        if (thingsToPatch.contains("TESTSITE")) {
+                                jsonString += "\"testingSiteId\":\"" + testingSiteId + "\",";
+                        }
+
+                        jsonString += "\"additionalInfo\":" + "{ ";
 
                         if (thingsToPatch.contains("ADMIN")) {
                                 jsonString += "\"recentUpdateTime\":\""
                                                 + (java.time.LocalDateTime.now().toString()).substring(0, 23)
                                                 + "Z" + "\",";
                         }
-                        jsonString += "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
-                                        "\"pastBookings\":" + "[";
+                        if (thingsToPatch.contains("MODIFY")) {
+                                jsonString += "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
+                                                "\"pastBookings\":" + "[";
 
-                        int count = 0;
-                        for (PastBooking pastBooking : pastBookings) {
-                                jsonString += "{" +
-                                                "\"timestamp\":\"" + pastBooking.getTimestamp() + "\"," +
-                                                "\"testingSiteId\":\"" + pastBooking.getTestingSiteId() + "\"," +
-                                                "\"testingSiteName\":\"" + pastBooking.getTestingSiteName() + "\"," +
-                                                "\"startTime\":\"" + pastBooking.getStartTime() + "\"";
-                                if (count != pastBookings.size() - 1) {
-                                        jsonString += "},";
-                                } else {
-                                        jsonString += "}";
+                                int count = 0;
+                                for (PastBooking pastBooking : pastBookings) {
+                                        jsonString += "{" +
+                                                        "\"timestamp\":\"" + pastBooking.getTimestamp() + "\"," +
+                                                        "\"testingSiteId\":\"" + pastBooking.getTestingSiteId() + "\","
+                                                        +
+                                                        "\"testingSiteName\":\"" + pastBooking.getTestingSiteName()
+                                                        + "\"," +
+                                                        "\"startTime\":\"" + pastBooking.getStartTime() + "\"";
+                                        if (count != pastBookings.size() - 1) {
+                                                jsonString += "},";
+                                        } else {
+                                                jsonString += "}";
+                                        }
+
+                                        count++;
                                 }
 
-                                count++;
+                                jsonString += "]";
                         }
+                        jsonString += "}" + "}";
 
-                        jsonString += "]" + "}" + "}";
                 } else if (thingsToPatch.contains("CANCEL")) {
                         jsonString = "{" +
                                         "\"additionalInfo\":" + "{ " +

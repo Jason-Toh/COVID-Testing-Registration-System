@@ -271,6 +271,7 @@ public class ModifyBookingController {
 
         if (currentBooking.getModifiedTimestamp().isEmpty()) {
             oldTimestamp = currentBooking.getCreatedAt();
+            oldTimestamp = oldTimestamp.substring(0, 16);
         } else {
             oldTimestamp = currentBooking.getModifiedTimestamp();
         }
@@ -303,6 +304,10 @@ public class ModifyBookingController {
             thingsToPatch.add("TIME");
         }
 
+        if (thingsToPatch.contains("TESTSITE") || thingsToPatch.contains("TIME")) {
+            thingsToPatch.add("MODIFY");
+        }
+
         bookingPatch.patchApi(thingsToPatch);
 
         return "modifyDone";
@@ -329,7 +334,6 @@ public class ModifyBookingController {
     public String revertBooking(@PathVariable String id, Model model) {
 
         List<Booking> bookingList = getBookingList();
-        List<TestingSite> testingSiteList = getTestingSiteList();
 
         for (Booking booking : bookingList) {
             if (booking.getBookingId().equals(id)) {
@@ -337,8 +341,6 @@ public class ModifyBookingController {
                 break;
             }
         }
-
-        model.addAttribute("testingSiteList", testingSiteList);
 
         return "revertBooking";
     }
