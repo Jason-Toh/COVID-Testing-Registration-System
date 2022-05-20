@@ -265,6 +265,13 @@ public class ModifyBookingController {
         LocalDateTime timeNow = LocalDateTime.now();
         String formattedDateTime = dtf.format(timeNow);
 
+        String currentTime = formattedDateTime.substring(0, 16);
+
+        if (currentTime.equals(currentBooking.getModifiedTimestamp())) {
+            model.addAttribute("error3", "You can only modify at a future time");
+            return "modifyBooking";
+        }
+
         String oldTimestamp = "";
         String oldTestingSiteId = currentBooking.getTestingSiteId();
         String oldTestingSiteName = currentBooking.getTestingSiteName();
@@ -319,6 +326,7 @@ public class ModifyBookingController {
 
         // Patch the changes
         String api = System.getenv("API_KEY");
+        // TODO: Change Booking Status to CANCELLED
         APIfactory<Booking> bookingFactory = new BookingFactory(api, id, true);
         Patch bookingPatch = bookingFactory.createPatch();
 
@@ -380,7 +388,8 @@ public class ModifyBookingController {
         }
 
         // Remove the past Booking from the list
-        pastBookingList.remove(count);
+        // pastBookingList.remove(count);
+        pastBookingList = pastBookingList.subList(0, count);
 
         // Timestamp of current changes
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
