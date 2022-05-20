@@ -269,11 +269,11 @@ public class ModifyBookingController {
         String oldTestingSiteName = currentBooking.getTestingSiteName();
         String oldStartTime = currentBooking.getStartTime();
 
-        if (currentBooking.getModifiedTimeStamp().isEmpty()) {
+        if (currentBooking.getModifiedTimestamp().isEmpty()) {
             oldTimestamp = currentBooking.getCreatedAt();
             oldTimestamp = oldTimestamp.substring(0, 16);
         } else {
-            oldTimestamp = currentBooking.getModifiedTimeStamp();
+            oldTimestamp = currentBooking.getModifiedTimestamp();
         }
 
         PastBooking pastBooking = new PastBooking(oldTimestamp, oldTestingSiteId, oldTestingSiteName, oldStartTime);
@@ -337,12 +337,21 @@ public class ModifyBookingController {
 
         for (Booking booking : bookingList) {
             if (booking.getBookingId().equals(id)) {
-                model.addAttribute("pastBookings", booking.getPastBookings());
+                model.addAttribute("booking", booking);
                 break;
             }
         }
 
         return "revertBooking";
+    }
+
+    @RequestMapping("selectRevert/{timestamp}")
+    public String submitRevertBooking(@PathVariable String timestamp, Model model) {
+
+        // List<Booking> bookingList = getBookingList();
+        // List<PastBooking> pastBookingList =
+
+        return "";
     }
 
 }

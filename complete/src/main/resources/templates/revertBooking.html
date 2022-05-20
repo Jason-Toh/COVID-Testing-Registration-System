@@ -24,12 +24,16 @@
                 <th scope="col">Start Time</th>
                 <th scope="col">Action</th>
             </thead>
-            <tbody th:each="pastBooking : ${pastBookings}">
+            <tbody th:each="pastBooking : ${booking.getPastBookings()}">
                 <tr>
                     <td th:text="${pastBooking.getFormattedTimestamp()}"></td>
                     <td th:text="${pastBooking.getTestingSiteName()}" th:value="${pastBooking.getTestingSiteId()}"></td>
                     <td th:text="${pastBooking.getFormattedStartTime()}"></td>
-                    <td></td>
+                    <td>
+                        <!-- <a th:href="@{/selectRevert/{timestamp}(timestamp=${pastBooking.getTimestamp()})}"
+                            class="btn btn-primary">Choose</a> -->
+
+                    </td>
                 </tr>
             </tbody>
         </table>

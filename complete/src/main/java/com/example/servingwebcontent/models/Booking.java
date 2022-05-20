@@ -162,7 +162,7 @@ public class Booking {
         this.cancelBooking = cancelBooking;
     }
 
-    public String getModifiedTimeStamp() {
+    public String getModifiedTimestamp() {
         return modifiedTimestamp;
     }
 
@@ -178,7 +178,7 @@ public class Booking {
         this.createdAt = createdAt;
     }
 
-    public String getFormattedModifiedTimeStamp() {
+    public String getFormattedModifiedTimestamp() {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyy hh:mm a", Locale.ENGLISH);
         LocalDateTime date = LocalDateTime.parse(modifiedTimestamp + ":00.000Z", inputFormatter);
