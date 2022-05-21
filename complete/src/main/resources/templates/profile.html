@@ -19,6 +19,7 @@
                 <th scope="col">Booking ID</th>
                 <th scope="col">Booking PIN</th>
                 <th scope="col">Booking Status</th>
+                <th scope="col">Testing Site Name</th>
                 <th scope="col">Start Time</th>
                 <th scope="col">Action</th>
             </thead>
@@ -27,6 +28,7 @@
                     <td th:text="${booking.getBookingId()}"></td>
                     <td th:text="${booking.getSmsPin()}"></td>
                     <td th:text="${booking.getStatus()}"></td>
+                    <td th:text="${booking.getTestingSiteName()}"></td>
                     <td th:text="${booking.getFormattedStartTime()}"></td>
                     <td>
                         <div th:switch="${booking.getTestingDone()}">
@@ -35,7 +37,11 @@
                         <div th:switch="${booking.getCancelBooking()}">
                             <h6 th:case="true" class="text-danger">Booking is Cancelled</h6>
                         </div>
-                        <div th:if="(!${booking.getTestingDone()} and !${booking.getCancelBooking()})">
+                        <div th:switch="${booking.getLapsedBooking()}">
+                            <h6 th:case="true" class="text-danger">Booking is Lapsed</h6>
+                        </div>
+                        <div
+                            th:if="(!${booking.getTestingDone()} and !${booking.getCancelBooking()} and !${booking.getLapsedBooking()})">
                             <a th:href="@{/modify/{id}(id=${booking.getBookingId()})}" class="btn btn-primary">View</a>
                         </div>
                     </td>

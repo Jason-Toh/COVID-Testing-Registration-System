@@ -61,13 +61,13 @@ public class BookingPatch extends Patch {
                                         "}" + "}";
                 } else if (thingsToPatch.contains("STATUS")) {
                         jsonString = "{" + "\"status\":\"" + bookingStatus + "\"";
-                                if(thingsToPatch.contains("ADMIN")){
-                                        jsonString += ",\"additionalInfo\":" + "{ "
-                                                   + "\"recentUpdateTime\":\""
-                                                   + (java.time.LocalDateTime.now().toString()).substring(0, 23)
-                                                   + "Z" + "\"";
-                                }
-                                jsonString += "}}";
+                        if (thingsToPatch.contains("ADMIN")) {
+                                jsonString += ",\"additionalInfo\":" + "{ "
+                                                + "\"recentUpdateTime\":\""
+                                                + (java.time.LocalDateTime.now().toString()).substring(0, 23)
+                                                + "Z" + "\"";
+                        }
+                        jsonString += "}}";
                 } else if (thingsToPatch.contains("TESTSITE")) {
                         jsonString = "{" +
                                         "\"testingSiteId\":\"" + testingSiteId + "\",";
@@ -153,6 +153,7 @@ public class BookingPatch extends Patch {
 
                 } else if (thingsToPatch.contains("CANCEL")) {
                         jsonString = "{" +
+                                        "\"status\":\"" + bookingStatus + "\"," +
                                         "\"additionalInfo\":" + "{ " +
                                         "\"cancelBooking\":\"" + cancelBooking + "\"" +
                                         "}" + "}";

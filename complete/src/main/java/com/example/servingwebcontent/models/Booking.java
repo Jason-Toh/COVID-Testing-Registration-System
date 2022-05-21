@@ -24,6 +24,7 @@ public class Booking {
     private List<CovidTest> covidTests;
     private String recentUpdateTime;
     private List<PastBooking> pastBookings;
+    private boolean lapsedBooking;
 
     public Booking(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName, String smsPin,
@@ -44,6 +45,13 @@ public class Booking {
         this.cancelBooking = cancelBooking;
         this.modifiedTimestamp = modifiedTimestamp;
         this.createdAt = createdAt;
+
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        LocalDateTime timeNow = LocalDateTime.now();
+        LocalDateTime startTime2 = LocalDateTime.parse(startTime, inputFormatter);
+        if (timeNow.isAfter(startTime2)) {
+            this.lapsedBooking = true;
+        }
     }
 
     public Booking(String bookingId, String testingSiteId,
@@ -56,6 +64,13 @@ public class Booking {
         this.smsPin = smsPin;
         this.startTime = startTime;
         this.status = status;
+
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        LocalDateTime timeNow = LocalDateTime.now();
+        LocalDateTime startTime2 = LocalDateTime.parse(startTime, inputFormatter);
+        if (timeNow.isAfter(startTime2)) {
+            this.lapsedBooking = true;
+        }
     }
 
     public String getStartTime() {
@@ -210,6 +225,14 @@ public class Booking {
         this.pastBookings = pastBookings;
     }
 
+    public boolean getLapsedBooking() {
+        return lapsedBooking;
+    }
+
+    public void setLapsedBooking(boolean lapsedBooking) {
+        this.lapsedBooking = lapsedBooking;
+    }
+
     @Override
     public String toString() {
         return "Booking{" +
@@ -227,8 +250,9 @@ public class Booking {
                 ", cancelBooking=" + cancelBooking +
                 ", modifiedTimestamp='" + modifiedTimestamp + '\'' +
                 ", createdAt='" + createdAt + '\'' +
-                ", covidTests=" + covidTests +
+                ", covidTests=" + covidTests + '\'' +
                 ", recentUpdateTime='" + recentUpdateTime + '\'' +
+                ", lapsedBooking='" + lapsedBooking + '\'' +
                 '}';
     }
 }

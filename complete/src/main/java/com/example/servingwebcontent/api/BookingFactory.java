@@ -26,10 +26,11 @@ public class BookingFactory implements APIfactory<Booking> {
         this.api = api;
     }
 
-    public BookingFactory(String api, String bookingId, boolean cancelBooking) {
+    public BookingFactory(String api, String bookingId, boolean cancelBooking, BookingStatus bookingStatus) {
         this.api = api;
         this.bookingId = bookingId;
         this.cancelBooking = cancelBooking;
+        this.bookingStatus = bookingStatus;
     }
 
     public BookingFactory(String api, String bookingId, BookingStatus bookingStatus) {

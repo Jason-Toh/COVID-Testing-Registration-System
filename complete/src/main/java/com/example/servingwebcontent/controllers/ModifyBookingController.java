@@ -18,6 +18,7 @@ import com.example.servingwebcontent.api.APIfactory;
 import com.example.servingwebcontent.api.TestingSiteFactory;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.RevertBookingForm;
+import com.example.servingwebcontent.enumeration.BookingStatus;
 import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.models.AuthenticateSingleton;
 import com.google.zxing.WriterException;
@@ -318,6 +319,10 @@ public class ModifyBookingController {
 
         bookingPatch.patchApi(thingsToPatch);
 
+        if (authenticateInstance.getUser().isCustomer()) {
+            return "redirect:/profile";
+        }
+
         return "modifyDone";
     }
 
@@ -327,7 +332,7 @@ public class ModifyBookingController {
         // Patch the changes
         String api = System.getenv("API_KEY");
         // TODO: Change Booking Status to CANCELLED
-        APIfactory<Booking> bookingFactory = new BookingFactory(api, id, true);
+        APIfactory<Booking> bookingFactory = new BookingFactory(api, id, true, BookingStatus.CANCELLED);
         Patch bookingPatch = bookingFactory.createPatch();
 
         List<String> thingsToPatch = new ArrayList<>();
@@ -335,6 +340,10 @@ public class ModifyBookingController {
         thingsToPatch.add("CANCEL");
 
         bookingPatch.patchApi(thingsToPatch);
+
+        if (authenticateInstance.getUser().isCustomer()) {
+            return "redirect:/profile";
+        }
 
         return "cancelDone";
     }
@@ -416,7 +425,11 @@ public class ModifyBookingController {
 
         bookingPatch.patchApi(thingsToPatch);
 
-        return "revertedDone";
+        if (authenticateInstance.getUser().isCustomer()) {
+            return "redirect:/profile";
+        }
+
+        return "revertDone";
     }
 
 }
