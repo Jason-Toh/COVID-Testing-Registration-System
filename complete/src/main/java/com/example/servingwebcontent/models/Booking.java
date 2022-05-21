@@ -48,6 +48,11 @@ public class Booking {
 
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
         LocalDateTime timeNow = LocalDateTime.now();
+
+        if (startTime.length() == 23) {
+            startTime = startTime + "Z";
+        }
+
         LocalDateTime startTime2 = LocalDateTime.parse(startTime, inputFormatter);
         if (timeNow.isAfter(startTime2)) {
             this.lapsedBooking = true;
@@ -67,6 +72,11 @@ public class Booking {
 
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
         LocalDateTime timeNow = LocalDateTime.now();
+
+        if (startTime.length() == 23) {
+            startTime = startTime + "Z";
+        }
+
         LocalDateTime startTime2 = LocalDateTime.parse(startTime, inputFormatter);
         if (timeNow.isAfter(startTime2)) {
             this.lapsedBooking = true;

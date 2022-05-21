@@ -35,19 +35,21 @@
                     <td th:text="${booking.status}" />
                     <td>
                         <!--            <select th:attr="onchange=|upload('${booking.bookingId}','${booking.status}')|" >-->
-                        <select class="custom-select my-1 mr-sm-2"
-                            th:attr="onchange=${'upload('+ '''' +booking.bookingId + '''' + ')'}"
-                            th:id="'hi'+${booking.bookingId}" th:disabled="${booking.status.equals('CANCELLED')} ? 'true' : 'false'">
-                            <option disabled selected value> -- select an option -- </option>
+                        <select th:attr="onchange=${'upload('+ '''' +booking.bookingId + '''' + ')'}"
+                            th:id="'hi'+${booking.bookingId}"
+                            th:disabled="${booking.status.equals('CANCELLED')} ? 'true' : 'false'">
+                            <!-- <option disabled selected value> -- select an option -- </option> -->
                             <option th:each="testSite : ${testingSiteList}" th:value="${testSite.id}"
-                                th:text="${testSite.name}" />
+                                th:text="${testSite.name}" th:selected="${testSite.id} == ${booking.getTestingSiteId()}"
+                                disabled />
                         </select>
 
                     </td>
 
                     <td><input type="datetime-local" class="form-control" th:value="${booking.startTime}"
                             th:attr="onchange=${'upload1('+ '''' +booking.bookingId + '''' + ')'}"
-                            th:id="'ti'+${booking.bookingId}" th:disabled="${booking.status.equals('CANCELLED')} ? 'true' : 'false'"></td>
+                            th:id="'ti'+${booking.bookingId}"
+                            th:disabled="${booking.status.equals('CANCELLED')} ? 'true' : 'false'"></td>
 
                     <td>
                         <a th:href="@{/adminPanelDelete/{id}(id=${booking.bookingId})}"
@@ -55,7 +57,8 @@
                     <td>
                     <td>
                         <a th:href="@{/adminPanelCancel/{id}/status/CANCELED(id=${booking.bookingId})}"
-                           class="btn btn-primary" th:style="${booking.status.equals('CANCELLED')} ? 'display:none' : 'display:block'">CANCEL</a>
+                            class="btn btn-primary"
+                            th:style="${booking.status.equals('CANCELLED')} ? 'display:none' : 'display:block'">CANCEL</a>
                     <td>
                     <td>
                         <a th:href="@{/adminPanelModified/{id}/testing-site/testsiteID/bookingTime/date(id=${booking.bookingId})}"
