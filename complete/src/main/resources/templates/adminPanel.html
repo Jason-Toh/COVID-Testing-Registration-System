@@ -13,7 +13,7 @@
 <body>
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container py-4">
-        <img src="https://c.tenor.com/kWW3pMOGDPIAAAAC/sakuramiko35-miko35.gif" alt="Flowers" width=200 height=200>
+        <!-- <img src="https://c.tenor.com/kWW3pMOGDPIAAAAC/sakuramiko35-miko35.gif" alt="Flowers" width=200 height=200> -->
         <table class="table">
             <tbody class="thead-dark">
                 <tr>
@@ -40,8 +40,8 @@
                             th:disabled="${booking.status.equals('CANCELLED')} ? 'true' : 'false'">
                             <option disabled selected value> -- select an option -- </option>
                             <option th:each="testSite : ${testingSiteList}" th:value="${testSite.id}"
-                                th:text="${testSite.name}" th:selected="${testSite.id} == ${booking.getTestingSiteId()}"
-                                 />
+                                th:text="${testSite.name}"
+                                th:selected="${testSite.id} == ${booking.getTestingSiteId()}" />
                         </select>
 
                     </td>

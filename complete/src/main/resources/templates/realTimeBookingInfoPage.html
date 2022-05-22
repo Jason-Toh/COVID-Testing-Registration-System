@@ -11,38 +11,38 @@
 </head>
 
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
-<div class="container py-4">
-    <h1>DATA UPDATED IN PAST 1 hour</h1>
-    <img src="https://c.tenor.com/51MmfeKDnBMAAAAC/meikyuu-black-company-rimu.gif" alt="Flowers" width=200 height=200>
-    <table class="table">
-        <tbody class="thead-dark">
-        <tr>
-            <th>BOOKING ID</th>
-<!--            <th>CUSTOMER ID</th>-->
-<!--            <th>CUSTOMER NAME</th>-->
-            <th>SMSPIN</th>
-            <th>STATUS</th>
-            <th>UPDATE DESCRIPTION</th>
-        </tr>
-        <tr th:each="booking: ${bookings}">
-            <td th:text="${booking.bookingId}" />
-<!--            <td th:text="${booking.customerId}" />-->
-<!--            <td th:text="${booking.customerName}" />-->
-            <td th:text="${booking.smsPin}" />
-            <td th:text="${booking.status}" />'
-            <td th:text="${booking.updateDesc}" />
-        </tr>
-        </tbody>
-    </table>
-</div>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container py-4">
+        <h1>DATA UPDATED IN PAST 1 hour</h1>
+        <!-- <img src="https://c.tenor.com/51MmfeKDnBMAAAAC/meikyuu-black-company-rimu.gif" alt="Flowers" width=200 height=200> -->
+        <table class="table">
+            <tbody class="thead-dark">
+                <tr>
+                    <th>BOOKING ID</th>
+                    <!--            <th>CUSTOMER ID</th>-->
+                    <!--            <th>CUSTOMER NAME</th>-->
+                    <th>SMSPIN</th>
+                    <th>STATUS</th>
+                    <th>UPDATE DESCRIPTION</th>
+                </tr>
+                <tr th:each="booking: ${bookings}">
+                    <td th:text="${booking.bookingId}" />
+                    <!--            <td th:text="${booking.customerId}" />-->
+                    <!--            <td th:text="${booking.customerName}" />-->
+                    <td th:text="${booking.smsPin}" />
+                    <td th:text="${booking.status}" />'
+                    <td th:text="${booking.updateDesc}" />
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 
-<div th:replace="fragments/scripts :: scripts"></div>
-<script>
+    <div th:replace="fragments/scripts :: scripts"></div>
+    <script>
 
-    window.setTimeout( function() {
-      window.location.reload();
-    }, 5000);
-</script>
+        window.setTimeout(function () {
+            window.location.reload();
+        }, 5000);
+    </script>
 </body>
