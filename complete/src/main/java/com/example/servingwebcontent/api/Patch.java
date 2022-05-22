@@ -4,5 +4,5 @@ import java.io.IOException;
 import java.util.List;
 
 public abstract class Patch {
-    public abstract String patchApi(List<String> thingsToPatch) throws IOException, InterruptedException;
+    public abstract String patchApi(List<String> thingsToPatch, String description) throws IOException, InterruptedException;
 }

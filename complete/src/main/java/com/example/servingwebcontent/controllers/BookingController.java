@@ -311,7 +311,8 @@ public class BookingController {
             List<String> thingsToPatch = new ArrayList<>();
             thingsToPatch.add("QR"); // PATCH QR
             thingsToPatch.add("URL"); // PATCH URL
-            bookingPatch2.patchApi(thingsToPatch);
+            String description = "";
+            bookingPatch2.patchApi(thingsToPatch, description);
 
         } else {
             // OnSite Booking should have COMPLETED as Booking Status
@@ -323,8 +324,8 @@ public class BookingController {
             // stuff to patch in booking
             List<String> thingsToPatch = new ArrayList<>();
             thingsToPatch.add("STATUS"); // PATCH STATUS
-
-            bookingPatch.patchApi(thingsToPatch);
+            String description = "";
+            bookingPatch.patchApi(thingsToPatch, description);
         }
 
         model.addAttribute("pinCode", book.get("smsPin") + "");

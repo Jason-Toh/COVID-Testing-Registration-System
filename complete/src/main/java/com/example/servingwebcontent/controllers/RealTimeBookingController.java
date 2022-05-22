@@ -30,15 +30,21 @@ public class RealTimeBookingController {
         APIfactory<TestingSite> factory = new TestingSiteFactory(api);
         Get<TestingSite> testingSiteGet = factory.createGet();
         Collection<TestingSite> testingSites = testingSiteGet.getApi();
-
+        List<Booking> bookings = new ArrayList<>();
         // TO DO SEARCH FOR TESTING SITE WHICH THAT ADMIN RESPONSIBLE
         User user = authenticateInstance.getUser();
         for (TestingSite testingSite : testingSites) {
+            for(Booking booking : testingSite.getBookings()){
+                System.out.println(booking.getPreviousTestSite());
+                if(checkPreviousTestSite(booking)){
+                    bookings.add(booking);
+                }
+            }
             if (testingSite.getId().equals(user.getTestingSiteId())) {
-                return testingSite.getBookings();
+                bookings.addAll(testingSite.getBookings());
             }
         }
-        return null;
+        return bookings;
     }
 
     public List<Booking> checkDifferenceTime(List<Booking> bookings) throws java.text.ParseException {
@@ -50,18 +56,23 @@ public class RealTimeBookingController {
         Date currentTime = formatter.parse(currTime);
         List<Booking> bookings1 = new ArrayList<>();
         for (Booking booking : bookings){
-            System.out.println(booking.getRecentUpdateTime());
             if(!booking.getRecentUpdateTime().equals("")){
                 Date recentTime = formatter.parse(booking.getRecentUpdateTime());
-
-                System.out.println((currentTime.getTime()-recentTime.getTime())/1000);
-
-                if((currentTime.getTime()-recentTime.getTime())/1000 < timeRangeAllowed){
+                if((currentTime.getTime()-recentTime.getTime())/1000 < timeRangeAllowed || checkPreviousTestSite(booking)){
                     bookings1.add(booking);
                 }
             }
         }
         return bookings1;
+    }
+
+    public boolean checkPreviousTestSite(Booking booking){
+        boolean flag = false;
+        User user = authenticateInstance.getUser();
+        if(booking.getPreviousTestSite().equals(user.getTestingSiteId())){
+            flag = true;
+        }
+        return flag;
     }
 
     public List<TestingSite> getTestingSiteList() {

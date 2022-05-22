@@ -316,8 +316,8 @@ public class ModifyBookingController {
         if (thingsToPatch.contains("TESTSITE") || thingsToPatch.contains("TIME")) {
             thingsToPatch.add("MODIFY");
         }
-
-        bookingPatch.patchApi(thingsToPatch);
+        String description = "";
+        bookingPatch.patchApi(thingsToPatch, description);
 
         if (authenticateInstance.getUser().isCustomer()) {
             return "redirect:/profile";
@@ -338,8 +338,8 @@ public class ModifyBookingController {
         List<String> thingsToPatch = new ArrayList<>();
 
         thingsToPatch.add("CANCEL");
-
-        bookingPatch.patchApi(thingsToPatch);
+        String description = "";
+        bookingPatch.patchApi(thingsToPatch, description);
 
         if (authenticateInstance.getUser().isCustomer()) {
             return "redirect:/profile";
@@ -422,8 +422,8 @@ public class ModifyBookingController {
         if (thingsToPatch.contains("TESTSITE") || thingsToPatch.contains("TIME")) {
             thingsToPatch.add("MODIFY");
         }
-
-        bookingPatch.patchApi(thingsToPatch);
+        String description = "";
+        bookingPatch.patchApi(thingsToPatch, description);
 
         if (authenticateInstance.getUser().isCustomer()) {
             return "redirect:/profile";

@@ -101,7 +101,7 @@ public class AdminPanelController {
     @RequestMapping("/adminPanelCancel/{id}/status/{status}")
     public String modifiedStatus(@PathVariable String id, @PathVariable String status, Model model)
             throws IOException, InterruptedException, ParseException {
-        System.out.println("iop  "+id+"  uiy  "+ status);
+        System.out.println("id:  "+id+"  status:  "+ status);
 
         String api = System.getenv("API_KEY");
 
@@ -112,7 +112,8 @@ public class AdminPanelController {
         thingsToPatch.add("STATUS");
         thingsToPatch.add("ADMIN");
 
-        bookingPatch.patchApi(thingsToPatch);
+        String description = "Booking has been cancelled";
+        bookingPatch.patchApi(thingsToPatch, description);
 
 
         List<Booking> bookings = getBookingListUsingTestingSite();
@@ -148,6 +149,8 @@ public class AdminPanelController {
         System.out.println("booking id: " + id + " date-time:  " + time + "" + " testsiteid:  " + testsiteid + "");
 
         String api = System.getenv("API_KEY");
+
+        String description = "";
         if (!testsiteid.equals("testsiteID")) {
             APIfactory<Booking> bookingFactory = new BookingFactory(api, id, null, testsiteid, null);
             Patch bookingPatch = bookingFactory.createPatch();
@@ -155,9 +158,11 @@ public class AdminPanelController {
             List<String> thingsToPatch = new ArrayList<>();
             thingsToPatch.add("TESTSITE");
             thingsToPatch.add("ADMIN");
-
-            bookingPatch.patchApi(thingsToPatch);
-
+            description += "Testing-site has been updated ";
+            bookingPatch.patchApi(thingsToPatch, description);
+            if (!time.equals("date")){
+                description += ",";
+            }
         }
         if (!time.equals("date")) {
             APIfactory<Booking> bookingFactory = new BookingFactory(api, id, null, null, time);
@@ -166,8 +171,8 @@ public class AdminPanelController {
             List<String> thingsToPatch = new ArrayList<>();
             thingsToPatch.add("TIME");
             thingsToPatch.add("ADMIN");
-
-            bookingPatch.patchApi(thingsToPatch);
+            description += "Booking time has been updated";
+            bookingPatch.patchApi(thingsToPatch, description);
 
         }
 

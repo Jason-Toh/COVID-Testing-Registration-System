@@ -164,7 +164,8 @@ public class InterviewController {
         thingsToPatch.add("PATSTATUS");  //PATCH PATIENT STATUS
         thingsToPatch.add("STATUS");     //PATCH STATUS
         thingsToPatch.add("TESTDONE");   //PATCH TESTDONE
-        bookingPatch.patchApi(thingsToPatch);
+        String description = "";
+        bookingPatch.patchApi(thingsToPatch, description);
 
         return "testingDone";
     }

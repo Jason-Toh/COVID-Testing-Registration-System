@@ -164,8 +164,8 @@ public class HomeBookingController {
                     // stuff to patch in booking
                     List<String> thingsToPatch = new ArrayList<>();
                     thingsToPatch.add("STATUS"); // PATCH STATUS
-
-                    bookingPatch.patchApi(thingsToPatch);
+                    String description = "";
+                    bookingPatch.patchApi(thingsToPatch, description);
                     return "bookingDone";
                 }
             }

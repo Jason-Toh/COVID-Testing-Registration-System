@@ -25,6 +25,8 @@ public class Booking {
     private String recentUpdateTime;
     private List<PastBooking> pastBookings;
     private boolean lapsedBooking;
+    private String updateDesc;
+    private String previousTestSite;
 
     public Booking(String bookingId, String customerId, String customerName, String testingSiteId,
             String testingSiteName, String smsPin,
@@ -69,6 +71,7 @@ public class Booking {
         this.smsPin = smsPin;
         this.startTime = startTime;
         this.status = status;
+
 
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
         LocalDateTime timeNow = LocalDateTime.now();
@@ -243,6 +246,22 @@ public class Booking {
         this.lapsedBooking = lapsedBooking;
     }
 
+    public String getUpdateDesc() {
+        return updateDesc;
+    }
+
+    public void setUpdateDesc(String updateDesc) {
+        this.updateDesc = updateDesc;
+    }
+
+    public String getPreviousTestSite() {
+        return previousTestSite;
+    }
+
+    public void setPreviousTestSite(String previousTestSite) {
+        this.previousTestSite = previousTestSite;
+    }
+
     @Override
     public String toString() {
         return "Booking{" +
@@ -260,9 +279,12 @@ public class Booking {
                 ", cancelBooking=" + cancelBooking +
                 ", modifiedTimestamp='" + modifiedTimestamp + '\'' +
                 ", createdAt='" + createdAt + '\'' +
-                ", covidTests=" + covidTests + '\'' +
+                ", covidTests=" + covidTests +
                 ", recentUpdateTime='" + recentUpdateTime + '\'' +
-                ", lapsedBooking='" + lapsedBooking + '\'' +
+                ", pastBookings=" + pastBookings +
+                ", lapsedBooking=" + lapsedBooking +
+                ", updateDesc='" + updateDesc + '\'' +
+                ", previousTestSite='" + previousTestSite + '\'' +
                 '}';
     }
 }

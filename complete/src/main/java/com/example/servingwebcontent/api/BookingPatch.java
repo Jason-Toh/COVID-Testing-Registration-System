@@ -1,6 +1,7 @@
 package com.example.servingwebcontent.api;
 
 import com.example.servingwebcontent.enumeration.BookingStatus;
+import com.example.servingwebcontent.models.AuthenticateSingleton;
 import com.example.servingwebcontent.models.PastBooking;
 
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class BookingPatch extends Patch {
         }
 
         @Override
-        public String patchApi(List<String> thingsToPatch) throws IOException, InterruptedException {
+        public String patchApi(List<String> thingsToPatch, String description) throws IOException, InterruptedException {
                 HttpClient client = HttpClient.newHttpClient();
                 String rootUrl = "https://fit3077.com/api/v2";
                 String usersUrl = rootUrl + "/booking/" + bookingId;
@@ -66,6 +67,8 @@ public class BookingPatch extends Patch {
                                                 + "\"recentUpdateTime\":\""
                                                 + (java.time.LocalDateTime.now().toString()).substring(0, 23)
                                                 + "Z" + "\"";
+                                jsonString += ",\"updateDesc\":\""
+                                                + description + "\"";
                         }
                         jsonString += "}}";
                 } else if (thingsToPatch.contains("TESTSITE")) {
@@ -79,9 +82,14 @@ public class BookingPatch extends Patch {
                         jsonString += "\"additionalInfo\":" + "{ ";
 
                         if (thingsToPatch.contains("ADMIN")) {
+                                AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
                                 jsonString += "\"recentUpdateTime\":\""
                                                 + (java.time.LocalDateTime.now().toString()).substring(0, 23)
                                                 + "Z" + "\"";
+                                jsonString += ",\"updateDesc\":\""
+                                        + description + "\"";
+                                jsonString += ",\"previousTestSite\":\""
+                                        + authenticateInstance.getUser().getTestingSiteId() + "\"";
                         }
 
                         if (thingsToPatch.contains("MODIFY")) {
@@ -124,6 +132,8 @@ public class BookingPatch extends Patch {
                                 jsonString += "\"recentUpdateTime\":\""
                                                 + (java.time.LocalDateTime.now().toString()).substring(0, 23)
                                                 + "Z" + "\"";
+                                jsonString += ",\"updateDesc\":\""
+                                        + description + "\"";
                         }
                         if (thingsToPatch.contains("MODIFY")) {
                                 jsonString += "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +

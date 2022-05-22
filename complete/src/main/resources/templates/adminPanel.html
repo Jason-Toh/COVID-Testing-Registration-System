@@ -38,10 +38,10 @@
                         <select th:attr="onchange=${'upload('+ '''' +booking.bookingId + '''' + ')'}"
                             th:id="'hi'+${booking.bookingId}"
                             th:disabled="${booking.status.equals('CANCELLED')} ? 'true' : 'false'">
-                            <!-- <option disabled selected value> -- select an option -- </option> -->
+                            <option disabled selected value> -- select an option -- </option>
                             <option th:each="testSite : ${testingSiteList}" th:value="${testSite.id}"
                                 th:text="${testSite.name}" th:selected="${testSite.id} == ${booking.getTestingSiteId()}"
-                                disabled />
+                                 />
                         </select>
 
                     </td>
