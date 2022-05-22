@@ -25,7 +25,8 @@ import java.util.List;
 public class RealTimeBookingController {
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
-    public List<Booking> getBookingListUsingTestingSite() throws InterruptedException, ParseException, IOException, java.text.ParseException {
+    public List<Booking> getBookingListUsingTestingSite()
+            throws InterruptedException, ParseException, IOException, java.text.ParseException {
         String api = System.getenv("API_KEY");
         APIfactory<TestingSite> factory = new TestingSiteFactory(api);
         Get<TestingSite> testingSiteGet = factory.createGet();
@@ -34,9 +35,8 @@ public class RealTimeBookingController {
         // TO DO SEARCH FOR TESTING SITE WHICH THAT ADMIN RESPONSIBLE
         User user = authenticateInstance.getUser();
         for (TestingSite testingSite : testingSites) {
-            for(Booking booking : testingSite.getBookings()){
-                System.out.println(booking.getPreviousTestSite());
-                if(checkPreviousTestSite(booking)){
+            for (Booking booking : testingSite.getBookings()) {
+                if (checkPreviousTestSite(booking)) {
                     bookings.add(booking);
                 }
             }
@@ -50,15 +50,16 @@ public class RealTimeBookingController {
     public List<Booking> checkDifferenceTime(List<Booking> bookings) throws java.text.ParseException {
         // check the time difference of time and local time
         // see whether it is smaller than the set range in second
-        int timeRangeAllowed = 3600;   //In 1 hrs
+        int timeRangeAllowed = 60; // In 1 hrs
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String currTime = LocalDateTime.now().toString();
         Date currentTime = formatter.parse(currTime);
         List<Booking> bookings1 = new ArrayList<>();
-        for (Booking booking : bookings){
-            if(!booking.getRecentUpdateTime().equals("")){
+        for (Booking booking : bookings) {
+            if (!booking.getRecentUpdateTime().equals("")) {
                 Date recentTime = formatter.parse(booking.getRecentUpdateTime());
-                if((currentTime.getTime()-recentTime.getTime())/1000 < timeRangeAllowed || checkPreviousTestSite(booking)){
+                if ((currentTime.getTime() - recentTime.getTime()) / 1000 < timeRangeAllowed
+                        || checkPreviousTestSite(booking)) {
                     bookings1.add(booking);
                 }
             }
@@ -66,10 +67,10 @@ public class RealTimeBookingController {
         return bookings1;
     }
 
-    public boolean checkPreviousTestSite(Booking booking){
+    public boolean checkPreviousTestSite(Booking booking) {
         boolean flag = false;
         User user = authenticateInstance.getUser();
-        if(booking.getPreviousTestSite().equals(user.getTestingSiteId())){
+        if (booking.getPreviousTestSite().equals(user.getTestingSiteId())) {
             flag = true;
         }
         return flag;
@@ -97,7 +98,8 @@ public class RealTimeBookingController {
     }
 
     @GetMapping("/realTimeBookingInfoPage")
-    public String getRealTimeInfoPage(Model model) throws InterruptedException, ParseException, IOException, java.text.ParseException {
+    public String getRealTimeInfoPage(Model model)
+            throws InterruptedException, ParseException, IOException, java.text.ParseException {
         if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
@@ -107,8 +109,6 @@ public class RealTimeBookingController {
         }
 
         List<Booking> bookings = checkDifferenceTime(getBookingListUsingTestingSite());
-
-
 
         model.addAttribute("bookings", bookings);
 

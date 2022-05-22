@@ -92,7 +92,6 @@ public class AdminPanelController {
         model.addAttribute("bookings", bookings);
 
         List<TestingSite> testingSiteList = getTestingSiteList();
-        System.out.println(testingSiteList);
         model.addAttribute("testingSiteList", testingSiteList);
 
         return "adminPanel";
@@ -101,7 +100,6 @@ public class AdminPanelController {
     @RequestMapping("/adminPanelCancel/{id}/status/{status}")
     public String modifiedStatus(@PathVariable String id, @PathVariable String status, Model model)
             throws IOException, InterruptedException, ParseException {
-        System.out.println("id:  "+id+"  status:  "+ status);
 
         String api = System.getenv("API_KEY");
 
@@ -115,12 +113,10 @@ public class AdminPanelController {
         String description = "Booking has been cancelled";
         bookingPatch.patchApi(thingsToPatch, description);
 
-
         List<Booking> bookings = getBookingListUsingTestingSite();
         model.addAttribute("bookings", bookings);
 
         List<TestingSite> testingSiteList = getTestingSiteList();
-        System.out.println(testingSiteList);
         model.addAttribute("testingSiteList", testingSiteList);
 
         return "adminPanel";
@@ -129,8 +125,6 @@ public class AdminPanelController {
     @RequestMapping(("/adminPanelModified/{id}/testing-site/{second}"))
     public String modifiedTestingSite(@PathVariable String id, @PathVariable String second, Model model)
             throws IOException, InterruptedException, ParseException {
-
-        System.out.println("booking id: " + id + " testing-site id  " + second);
 
         List<Booking> bookings = getBookingListUsingTestingSite();
         model.addAttribute("bookings", bookings);
@@ -146,8 +140,6 @@ public class AdminPanelController {
             Model model)
             throws IOException, InterruptedException, ParseException {
 
-        System.out.println("booking id: " + id + " date-time:  " + time + "" + " testsiteid:  " + testsiteid + "");
-
         String api = System.getenv("API_KEY");
 
         String description = "";
@@ -160,7 +152,7 @@ public class AdminPanelController {
             thingsToPatch.add("ADMIN");
             description += "Testing-site has been updated ";
             bookingPatch.patchApi(thingsToPatch, description);
-            if (!time.equals("date")){
+            if (!time.equals("date")) {
                 description += ",";
             }
         }
