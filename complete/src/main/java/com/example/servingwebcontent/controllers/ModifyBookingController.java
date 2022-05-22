@@ -331,14 +331,13 @@ public class ModifyBookingController {
 
         // Patch the changes
         String api = System.getenv("API_KEY");
-        // TODO: Change Booking Status to CANCELLED
         APIfactory<Booking> bookingFactory = new BookingFactory(api, id, true, BookingStatus.CANCELLED);
         Patch bookingPatch = bookingFactory.createPatch();
 
         List<String> thingsToPatch = new ArrayList<>();
 
         thingsToPatch.add("CANCEL");
-        String description = "";
+        String description = "Booking has been cancelled";
         bookingPatch.patchApi(thingsToPatch, description);
 
         if (authenticateInstance.getUser().isCustomer()) {
@@ -418,11 +417,12 @@ public class ModifyBookingController {
 
         thingsToPatch.add("TESTSITE");
         thingsToPatch.add("TIME");
+        thingsToPatch.add("ADMIN");
 
         if (thingsToPatch.contains("TESTSITE") || thingsToPatch.contains("TIME")) {
             thingsToPatch.add("MODIFY");
         }
-        String description = "";
+        String description = "Booking has been revert";
         bookingPatch.patchApi(thingsToPatch, description);
 
         if (authenticateInstance.getUser().isCustomer()) {

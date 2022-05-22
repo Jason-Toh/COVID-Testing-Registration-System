@@ -165,8 +165,14 @@ public class BookingPatch extends Patch {
                         jsonString = "{" +
                                         "\"status\":\"" + bookingStatus + "\"," +
                                         "\"additionalInfo\":" + "{ " +
-                                        "\"cancelBooking\":\"" + cancelBooking + "\"" +
-                                        "}" + "}";
+                                        "\"cancelBooking\":\"" + cancelBooking + "\"";
+                        jsonString += ",\"recentUpdateTime\":\""
+                                        + (java.time.LocalDateTime.now().toString()).substring(0, 23)
+                                        + "Z" + "\"";
+                        jsonString += ",\"updateDesc\":\""
+                                + description + "\"";
+
+                        jsonString += "}" + "}";
                 } else {
                         jsonString = "{" +
                                         "\"status\":\"" + bookingStatus + "\"," +
