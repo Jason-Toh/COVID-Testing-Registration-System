@@ -94,6 +94,9 @@ public class BookingPatch extends Patch {
                         }
 
                         if (thingsToPatch.contains("MODIFY")) {
+                                if (thingsToPatch.contains("ADMIN")) {
+                                        jsonString += ",";
+                                }
                                 jsonString += "\"modifiedTimestamp\":\"" + modifiedTimestamp + "\"," +
                                                 "\"pastBookings\":" + "[";
 
@@ -181,7 +184,7 @@ public class BookingPatch extends Patch {
                                         "\"symptom\":\"" + symptom + "\"" +
                                         "}" + "}";
                 }
-                // System.out.println(jsonString);
+                System.out.println(jsonString);
                 HttpRequest.BodyPublisher jsonPayload = HttpRequest.BodyPublishers.ofString(jsonString);
 
                 HttpRequest request = HttpRequest.newBuilder()
