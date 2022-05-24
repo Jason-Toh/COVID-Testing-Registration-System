@@ -14,7 +14,7 @@
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container py-4">
         <form name='f' th:action="@{/verifyBookingId}" th:object="${phoneCallForm}" method='POST' class="mt-4">
-            <label for="pinCode">Please enter your Booking Id</label>
+            <label for="bookingId">Please enter your Booking ID</label>
             <h6 th:text=" ${error} ? ${error} : '' " class="${error} ? text-danger : '' "></h6>
             <input type='text' name='bookingId' value='' th:value="${bookingId}" class=" form-control"
                 placeholder="e.g. 954a5bfa-e37e-47d8-b195-60289a7672f6" required>

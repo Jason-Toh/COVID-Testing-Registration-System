@@ -91,6 +91,8 @@ public class PhoneCallController {
         List<Booking> bookingList = getBookingList();
         List<TestingSite> testingSiteList = getTestingSiteList();
 
+        boolean check = false;
+
         for (Booking booking : bookingList) {
             if (booking.getBookingId().equals(phoneCallForm.getBookingId())) {
 
@@ -104,11 +106,21 @@ public class PhoneCallController {
                     return "bookingPIN";
                 }
 
+                if (booking.getLapsedBooking() == true) {
+                    model.addAttribute("error", "Invalid Booking. Booking is lapsed");
+                    return "bookingPIN";
+                }
+
                 model.addAttribute("booking", booking);
                 String currentDateTime = booking.getStartTime().substring(0, 16);
                 model.addAttribute("currentDateTime", currentDateTime);
+                check = true;
                 break;
             }
+        }
+        if (!check) {
+            model.addAttribute("error", "Booking ID does not exist");
+            return "bookingPIN";
         }
 
         model.addAttribute("testingSiteList", testingSiteList);
@@ -121,6 +133,8 @@ public class PhoneCallController {
 
         List<Booking> bookingList = getBookingList();
         List<TestingSite> testingSiteList = getTestingSiteList();
+
+        boolean check = false;
 
         for (Booking booking : bookingList) {
             if (booking.getSmsPin().equals(phoneCallForm.getPinCode())) {
@@ -135,11 +149,22 @@ public class PhoneCallController {
                     return "bookingPIN";
                 }
 
+                if (booking.getLapsedBooking() == true) {
+                    model.addAttribute("error2", "Invalid Booking. Booking is lapsed");
+                    return "bookingPIN";
+                }
+
                 model.addAttribute("booking", booking);
                 String currentDateTime = booking.getStartTime().substring(0, 16);
                 model.addAttribute("currentDateTime", currentDateTime);
+                check = true;
                 break;
             }
+        }
+
+        if (!check) {
+            model.addAttribute("error2", "PIN Code does not exist");
+            return "bookingPIN";
         }
 
         model.addAttribute("testingSiteList", testingSiteList);

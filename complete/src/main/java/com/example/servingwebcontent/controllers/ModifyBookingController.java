@@ -18,6 +18,7 @@ import com.example.servingwebcontent.api.APIfactory;
 import com.example.servingwebcontent.api.TestingSiteFactory;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.RevertBookingForm;
+import com.example.servingwebcontent.domain.SearchBookingIDForm;
 import com.example.servingwebcontent.enumeration.BookingStatus;
 import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.models.AuthenticateSingleton;
@@ -148,6 +149,66 @@ public class ModifyBookingController {
         model.addAttribute("bookingList", customerBookingList);
 
         return "profile";
+    }
+
+    @GetMapping("/searchByID")
+    public String displaySearchByIDPage(Model model) {
+
+        // If the user is not authenticated, redirect to login
+        if (!authenticateInstance.getIsUserAuthenticated()) {
+            return "redirect:/login";
+        }
+
+        // If the user is not a customer, redirect to notAuthorised
+        if (!authenticateInstance.getUser().isCustomer()) {
+            return "notAuthorised";
+        }
+
+        return "searchByBookingID";
+    }
+
+    @PostMapping("/verifyBookingID")
+    public String postVerifyBookingID(@ModelAttribute("searchByBookingID") SearchBookingIDForm searchByBookingIDForm,
+            Model model) {
+
+        List<Booking> bookingList = getBookingList();
+        List<TestingSite> testingSiteList = getTestingSiteList();
+        boolean check = false;
+
+        for (Booking booking : bookingList) {
+            if (booking.getBookingId().equals(searchByBookingIDForm.getBookingID())) {
+
+                if (booking.getTestingDone() == true) {
+                    model.addAttribute("error", "Invalid Booking. Covid Test has performed");
+                    return "searchByBookingID";
+                }
+
+                if (booking.getCancelBooking() == true) {
+                    model.addAttribute("error", "Invalid Booking. Booking is cancelled");
+                    return "searchByBookingID";
+                }
+
+                if (booking.getLapsedBooking() == true) {
+                    model.addAttribute("error", "Invalid Booking. Booking is lapsed");
+                    return "searchByBookingID";
+                }
+
+                model.addAttribute("booking", booking);
+                String currentDateTime = booking.getStartTime().substring(0, 16);
+                model.addAttribute("currentDateTime", currentDateTime);
+                check = true;
+                break;
+            }
+        }
+
+        if (!check) {
+            model.addAttribute("error", "Booking ID does not exist");
+            return "searchByBookingID";
+        }
+
+        model.addAttribute("testingSiteList", testingSiteList);
+
+        return "modifyBooking";
     }
 
     @RequestMapping("modify/{id}")
