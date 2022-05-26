@@ -1,11 +1,14 @@
 package com.example.servingwebcontent.controllers;
 
-import com.example.servingwebcontent.api.*;
+import com.example.servingwebcontent.models.api.*;
 import com.example.servingwebcontent.enumeration.BookingStatus;
 import com.example.servingwebcontent.enumeration.TestType;
-import com.example.servingwebcontent.models.*;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.BookingStatusForm;
+import com.example.servingwebcontent.models.apimodel.AuthenticateSingleton;
+import com.example.servingwebcontent.models.apimodel.Booking;
+import com.example.servingwebcontent.models.apimodel.TestingSite;
+import com.example.servingwebcontent.models.apimodel.User;
 import com.google.zxing.WriterException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;

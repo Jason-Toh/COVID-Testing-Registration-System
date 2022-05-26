@@ -1,17 +1,17 @@
-package com.example.servingwebcontent.api;
+package com.example.servingwebcontent.models.api;
 
-import com.example.servingwebcontent.models.TestingSite;
+import com.example.servingwebcontent.models.apimodel.User;
 
-public class TestingSiteFactory implements APIfactory<TestingSite> {
+public class UserFactory implements APIfactory<User> {
     private String api;
 
-    public TestingSiteFactory(String api) {
+    public UserFactory(String api) {
         this.api = api;
     }
 
     @Override
-    public Get<TestingSite> createGet() {
-        return new TestingSiteGet(this.api);
+    public Get<User> createGet() {
+        return new UserGet(this.api);
     }
 
     @Override

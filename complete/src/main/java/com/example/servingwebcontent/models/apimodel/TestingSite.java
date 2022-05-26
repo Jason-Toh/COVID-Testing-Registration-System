@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.models;
+package com.example.servingwebcontent.models.apimodel;
 
 import java.util.ArrayList;
 import java.util.List;

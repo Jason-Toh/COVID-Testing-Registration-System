@@ -1,11 +1,11 @@
 package com.example.servingwebcontent.controllers;
 
-import com.example.servingwebcontent.api.*;
+import com.example.servingwebcontent.models.api.*;
 import com.example.servingwebcontent.enumeration.BookingStatus;
-import com.example.servingwebcontent.models.AuthenticateSingleton;
-import com.example.servingwebcontent.models.Booking;
-import com.example.servingwebcontent.models.TestingSite;
-import com.example.servingwebcontent.models.User;
+import com.example.servingwebcontent.models.apimodel.AuthenticateSingleton;
+import com.example.servingwebcontent.models.apimodel.Booking;
+import com.example.servingwebcontent.models.apimodel.TestingSite;
+import com.example.servingwebcontent.models.apimodel.User;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

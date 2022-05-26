@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.example.servingwebcontent.api.APIfactory;
-import com.example.servingwebcontent.api.BookingFactory;
-import com.example.servingwebcontent.api.Get;
-import com.example.servingwebcontent.api.TestingSiteFactory;
+import com.example.servingwebcontent.models.api.APIfactory;
+import com.example.servingwebcontent.models.api.BookingFactory;
+import com.example.servingwebcontent.models.api.Get;
+import com.example.servingwebcontent.models.api.TestingSiteFactory;
 import com.example.servingwebcontent.domain.PhoneCallForm;
-import com.example.servingwebcontent.models.AuthenticateSingleton;
-import com.example.servingwebcontent.models.Booking;
-import com.example.servingwebcontent.models.TestingSite;
+import com.example.servingwebcontent.models.apimodel.AuthenticateSingleton;
+import com.example.servingwebcontent.models.apimodel.Booking;
+import com.example.servingwebcontent.models.apimodel.TestingSite;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,7 +1,7 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.domain.UserLogin;
-import com.example.servingwebcontent.models.AuthenticateSingleton;
+import com.example.servingwebcontent.models.apimodel.AuthenticateSingleton;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

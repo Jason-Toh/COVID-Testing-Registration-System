@@ -1,10 +1,10 @@
-package com.example.servingwebcontent.api;
+package com.example.servingwebcontent.models.api;
 
 import java.util.List;
 
 import com.example.servingwebcontent.enumeration.BookingStatus;
-import com.example.servingwebcontent.models.Booking;
-import com.example.servingwebcontent.models.PastBooking;
+import com.example.servingwebcontent.models.apimodel.PastBooking;
+import com.example.servingwebcontent.models.apimodel.Booking;
 
 public class BookingFactory implements APIfactory<Booking> {
 

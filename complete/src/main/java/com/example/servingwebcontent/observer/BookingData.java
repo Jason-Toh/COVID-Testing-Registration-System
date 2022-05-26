@@ -1,12 +1,12 @@
 package com.example.servingwebcontent.observer;
 
-import com.example.servingwebcontent.api.APIfactory;
-import com.example.servingwebcontent.api.Get;
-import com.example.servingwebcontent.api.TestingSiteFactory;
-import com.example.servingwebcontent.models.AuthenticateSingleton;
-import com.example.servingwebcontent.models.Booking;
-import com.example.servingwebcontent.models.TestingSite;
-import com.example.servingwebcontent.models.User;
+import com.example.servingwebcontent.models.api.APIfactory;
+import com.example.servingwebcontent.models.api.Get;
+import com.example.servingwebcontent.models.api.TestingSiteFactory;
+import com.example.servingwebcontent.models.apimodel.AuthenticateSingleton;
+import com.example.servingwebcontent.models.apimodel.Booking;
+import com.example.servingwebcontent.models.apimodel.TestingSite;
+import com.example.servingwebcontent.models.apimodel.User;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class BookingData implements Subject{
-    List<Booking> bookings;
-    ArrayList<Observer> observerList;
-    AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
+    private List<Booking> bookings;
+    private ArrayList<Observer> observerList;
+    private AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
     public BookingData() {
         observerList = new ArrayList<Observer>();

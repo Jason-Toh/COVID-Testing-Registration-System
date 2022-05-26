@@ -7,13 +7,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.example.servingwebcontent.api.*;
+import com.example.servingwebcontent.models.api.*;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.ScanQRForm;
 import com.example.servingwebcontent.enumeration.BookingStatus;
 import com.example.servingwebcontent.enumeration.TestType;
-import com.example.servingwebcontent.models.*;
 
+import com.example.servingwebcontent.models.apimodel.AuthenticateSingleton;
+import com.example.servingwebcontent.models.apimodel.Booking;
+import com.example.servingwebcontent.models.apimodel.TestingSite;
+import com.example.servingwebcontent.models.apimodel.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

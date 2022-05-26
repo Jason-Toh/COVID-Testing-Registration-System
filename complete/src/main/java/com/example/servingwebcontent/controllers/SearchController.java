@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.example.servingwebcontent.api.APIfactory;
-import com.example.servingwebcontent.api.Get;
-import com.example.servingwebcontent.api.TestingSiteFactory;
-import com.example.servingwebcontent.models.TestingSite;
+import com.example.servingwebcontent.models.api.APIfactory;
+import com.example.servingwebcontent.models.api.Get;
+import com.example.servingwebcontent.models.api.TestingSiteFactory;
+import com.example.servingwebcontent.models.apimodel.TestingSite;
 import com.example.servingwebcontent.domain.BrowseForm;
 
 import org.springframework.stereotype.Controller;

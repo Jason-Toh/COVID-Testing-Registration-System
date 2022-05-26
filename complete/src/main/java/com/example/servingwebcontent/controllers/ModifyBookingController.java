@@ -12,16 +12,13 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
-import com.example.servingwebcontent.api.*;
-import com.example.servingwebcontent.models.*;
-import com.example.servingwebcontent.api.APIfactory;
-import com.example.servingwebcontent.api.TestingSiteFactory;
+import com.example.servingwebcontent.models.api.*;
+import com.example.servingwebcontent.models.apimodel.*;
 import com.example.servingwebcontent.domain.BookingForm;
 import com.example.servingwebcontent.domain.RevertBookingForm;
 import com.example.servingwebcontent.domain.SearchBookingIDForm;
 import com.example.servingwebcontent.enumeration.BookingStatus;
 import com.example.servingwebcontent.enumeration.TestType;
-import com.example.servingwebcontent.models.AuthenticateSingleton;
 import com.google.zxing.WriterException;
 
 import org.springframework.stereotype.Controller;

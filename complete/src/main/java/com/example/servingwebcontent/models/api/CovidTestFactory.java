@@ -1,6 +1,6 @@
-package com.example.servingwebcontent.api;
+package com.example.servingwebcontent.models.api;
 
-import com.example.servingwebcontent.models.CovidTest;
+import com.example.servingwebcontent.models.apimodel.CovidTest;
 
 public class CovidTestFactory implements APIfactory<CovidTest> {
     private String api;

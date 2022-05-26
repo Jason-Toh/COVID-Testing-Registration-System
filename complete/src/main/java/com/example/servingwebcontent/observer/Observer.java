@@ -1,6 +1,6 @@
 package com.example.servingwebcontent.observer;
 
-import com.example.servingwebcontent.models.Booking;
+import com.example.servingwebcontent.models.apimodel.Booking;
 
 import java.util.List;
 

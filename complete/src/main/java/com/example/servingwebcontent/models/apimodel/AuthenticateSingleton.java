@@ -1,10 +1,10 @@
-package com.example.servingwebcontent.models;
+package com.example.servingwebcontent.models.apimodel;
 
 import java.util.Collection;
 
-import com.example.servingwebcontent.api.APIfactory;
-import com.example.servingwebcontent.api.Get;
-import com.example.servingwebcontent.api.UserFactory;
+import com.example.servingwebcontent.models.api.Get;
+import com.example.servingwebcontent.models.api.APIfactory;
+import com.example.servingwebcontent.models.api.UserFactory;
 
 public class AuthenticateSingleton {
 

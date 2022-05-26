@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.api;
+package com.example.servingwebcontent.models.api;
 
 import java.io.IOException;
 import java.net.URI;
@@ -7,24 +7,17 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
-public class CovidTestPost extends Post {
-        private String myApiKey;
-        private String testType;
-        private String patientId;
-        private String administererId;
-        private String bookingId;
-        private String result;
-        private String patientStatus;
+public class BookingPost extends Post {
+        private final String myApiKey;
+        private final String customerId;
+        private final String testingSiteId;
+        private final String startTime;
 
-        public CovidTestPost(String api, String testType, String patientId, String administererId, String bookingId,
-                        String result, String patientStatus) {
+        public BookingPost(String api, String customerId, String testingSiteId, String startTime) {
                 this.myApiKey = api;
-                this.testType = testType;
-                this.patientId = patientId;
-                this.administererId = administererId;
-                this.bookingId = bookingId;
-                this.result = result;
-                this.patientStatus = patientStatus;
+                this.customerId = customerId;
+                this.testingSiteId = testingSiteId;
+                this.startTime = startTime;
         }
 
         @Override
@@ -32,20 +25,23 @@ public class CovidTestPost extends Post {
                 String rootUrl = "https://fit3077.com/api/v2";
 
                 String jsonString = "{" +
-                                "\"type\":\"" + testType + "\"," +
-                                "\"patientId\":\"" + patientId + "\"," +
-                                "\"administererId\":\"" + administererId + "\"," +
-                                "\"bookingId\":\"" + bookingId + "\"," +
-                                "\"result\":\"" + result + "\"," +
-                                "\"additionalInfo\":" + "{\"patientStatus\":\"" + patientStatus + "\"" + "}" +
-                                "}";
+                                "\"customerId\":\"" + customerId + "\"," +
+                                "\"testingSiteId\":\"" + testingSiteId + "\"," +
+                                "\"startTime\":\"" + startTime + "\"";
+                                if(thingsToPost.contains("ADMIN")){
+                                        jsonString += ",\"additionalInfo\":" + "{ "
+                                                   + "\"recentUpdateTime\":\""
+                                                + (java.time.LocalDateTime.now().toString()).substring(0, 23)
+                                                + "Z" + "\""
+                                                + "}";
+                                }
 
-                // System.out.println(jsonString);
+                jsonString += "}";
                 // Note the POST() method being used here, and the request body is supplied to
                 // it.
                 // A request body needs to be supplied to this endpoint, otherwise a 400 Bad
                 // Request error will be returned.
-                String usersVerifyTokenUrl = rootUrl + "/covid-test";
+                String usersVerifyTokenUrl = rootUrl + "/booking";
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder(URI.create(usersVerifyTokenUrl)) // Return a JWT so we can
                                                                                               // use it in Part 5 later.

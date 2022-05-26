@@ -1,8 +1,8 @@
-package com.example.servingwebcontent.api;
+package com.example.servingwebcontent.models.api;
 
 import com.example.servingwebcontent.enumeration.BookingStatus;
-import com.example.servingwebcontent.models.AuthenticateSingleton;
-import com.example.servingwebcontent.models.PastBooking;
+import com.example.servingwebcontent.models.apimodel.PastBooking;
+import com.example.servingwebcontent.models.apimodel.AuthenticateSingleton;
 
 import java.io.IOException;
 import java.net.URI;

@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.api;
+package com.example.servingwebcontent.models.api;
 
 public interface APIfactory<E> {
 

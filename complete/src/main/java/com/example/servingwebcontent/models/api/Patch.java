@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.api;
+package com.example.servingwebcontent.models.api;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.example.servingwebcontent.controllers;
 
-import com.example.servingwebcontent.models.AuthenticateSingleton;
-import com.example.servingwebcontent.models.Booking;
+import com.example.servingwebcontent.models.apimodel.AuthenticateSingleton;
+import com.example.servingwebcontent.models.apimodel.Booking;
 import com.example.servingwebcontent.observer.BookingData;
 import com.example.servingwebcontent.observer.CurrentBookingDisplay;
 import org.json.simple.parser.ParseException;
@@ -29,12 +29,13 @@ public class RealTimeBookingController {
         // create objects for testing
         CurrentBookingDisplay currentBookingDisplay = new CurrentBookingDisplay();
 
-        // pass the displays to Cricket data
+        // pass the displays to Booking data
         BookingData bookingData = new BookingData();
 
         // register display elements
         bookingData.registerObserver(currentBookingDisplay);
 
+        // retrieve latest booking
         List<Booking> bookings = bookingData.dataChanged();
 
         model.addAttribute("bookings", bookings);

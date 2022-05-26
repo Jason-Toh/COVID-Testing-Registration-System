@@ -1,8 +1,8 @@
-package com.example.servingwebcontent.api;
+package com.example.servingwebcontent.models.api;
 
-import com.example.servingwebcontent.models.Booking;
-import com.example.servingwebcontent.models.CovidTest;
-import com.example.servingwebcontent.models.User;
+import com.example.servingwebcontent.models.apimodel.Booking;
+import com.example.servingwebcontent.models.apimodel.CovidTest;
+import com.example.servingwebcontent.models.apimodel.User;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
