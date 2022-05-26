@@ -92,12 +92,14 @@ public class BookingGet extends Get<Booking> {
                 testingDone = false;
             }
 
+            // Get the cancelBooking from JSON if the attribute exists
             try {
                 cancelBooking = additionalInfoJSON.getBoolean("cancelBooking");
             } catch (Exception exception) {
                 cancelBooking = false;
             }
 
+            // Get the modifiedTimetamp from JSON if the attribute exists
             try {
                 modifiedTimestamp = additionalInfoJSON.getString("modifiedTimestamp");
             } catch (Exception exception) {
@@ -109,6 +111,7 @@ public class BookingGet extends Get<Booking> {
             try {
                 JSONArray pastBookingJSONArray = (JSONArray) additionalInfoJSON.getJSONArray("pastBookings");
 
+                // Retrieve the attributes from the pastBooking Array
                 for (int j = 0; j < pastBookingJSONArray.length(); j++) {
                     String oldTimestamp = (String) pastBookingJSONArray.getJSONObject(j).get("timestamp");
                     String oldTestingSiteId = (String) pastBookingJSONArray.getJSONObject(j).get("testingSiteId");

@@ -1,7 +1,6 @@
 package com.example.servingwebcontent.controllers;
 
 import com.example.servingwebcontent.api.*;
-// import com.example.servingwebcontent.enumeration.TestType;
 import com.example.servingwebcontent.enumeration.BookingStatus;
 import com.example.servingwebcontent.models.AuthenticateSingleton;
 import com.example.servingwebcontent.models.Booking;
@@ -62,10 +61,13 @@ public class AdminPanelController {
 
     @GetMapping("/adminPanel")
     public String getAdmin(Model model) throws InterruptedException, ParseException, IOException {
+
+        // Users must log in first
         if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
 
+        // Users must be a receptionist
         if (!authenticateInstance.getUser().isReceptionist()) {
             return "notAuthorised";
         }
@@ -106,6 +108,7 @@ public class AdminPanelController {
         APIfactory<Booking> bookingFactory = new BookingFactory(api, id, BookingStatus.CANCELLED);
         Patch bookingPatch = bookingFactory.createPatch();
 
+        // Add the Status and Admin to thingsToPatch
         List<String> thingsToPatch = new ArrayList<>();
         thingsToPatch.add("STATUS");
         thingsToPatch.add("ADMIN");
@@ -143,6 +146,8 @@ public class AdminPanelController {
         String api = System.getenv("API_KEY");
 
         String description = "";
+
+        // If the testsiteID is not all null object, modify the testing site
         if (!testsiteid.equals("testsiteID")) {
             APIfactory<Booking> bookingFactory = new BookingFactory(api, id, null, testsiteid, null);
             Patch bookingPatch = bookingFactory.createPatch();
@@ -152,10 +157,12 @@ public class AdminPanelController {
             thingsToPatch.add("ADMIN");
             description += "Testing-site has been updated ";
             bookingPatch.patchApi(thingsToPatch, description);
+            // If there is date, add a comma
             if (!time.equals("date")) {
                 description += ",";
             }
         }
+
         if (!time.equals("date")) {
             APIfactory<Booking> bookingFactory = new BookingFactory(api, id, null, null, time);
             Patch bookingPatch = bookingFactory.createPatch();
