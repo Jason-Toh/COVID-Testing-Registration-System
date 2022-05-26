@@ -58,6 +58,7 @@ public class PhoneCallController {
         List<Booking> bookingList = new ArrayList<>();
 
         try {
+            // Booking Collection
             Collection<Booking> bookingCollection = bookingGet.getApi();
 
             for (Booking booking : bookingCollection) {
@@ -74,10 +75,12 @@ public class PhoneCallController {
     @GetMapping("/phonecall")
     public String displayBookingPINPage(Model model) {
 
+        // User must be logged in
         if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
 
+        // User must be a receptionist
         if (!authenticateInstance.getUser().isReceptionist()) {
             return "notAuthorised";
         }
@@ -96,16 +99,19 @@ public class PhoneCallController {
         for (Booking booking : bookingList) {
             if (booking.getBookingId().equals(phoneCallForm.getBookingId())) {
 
+                // Returns an error if the covid test is performed
                 if (booking.getTestingDone() == true) {
                     model.addAttribute("error", "Invalid Booking. Covid Test has performed");
                     return "bookingPIN";
                 }
 
+                // Returns an error if the booking is cancelled
                 if (booking.getCancelBooking() == true) {
                     model.addAttribute("error", "Invalid Booking. Booking is cancelled");
                     return "bookingPIN";
                 }
 
+                // Returns an error if the booking is lapsed
                 if (booking.getLapsedBooking() == true) {
                     model.addAttribute("error", "Invalid Booking. Booking is lapsed");
                     return "bookingPIN";
@@ -139,16 +145,19 @@ public class PhoneCallController {
         for (Booking booking : bookingList) {
             if (booking.getSmsPin().equals(phoneCallForm.getPinCode())) {
 
+                // Returns an error if the covid test is performed
                 if (booking.getTestingDone() == true) {
                     model.addAttribute("error2", "Invalid Booking. Covid Test has performed");
                     return "bookingPIN";
                 }
 
+                // Returns an error if the booking is cancelled
                 if (booking.getCancelBooking() == true) {
                     model.addAttribute("error2", "Invalid Booking. Booking is cancelled");
                     return "bookingPIN";
                 }
 
+                // Returns an error if the booking is lapsed
                 if (booking.getLapsedBooking() == true) {
                     model.addAttribute("error2", "Invalid Booking. Booking is lapsed");
                     return "bookingPIN";

@@ -18,7 +18,6 @@ import java.util.*;
 
 @Controller
 public class InterviewController {
-    // hello
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
     public List<String> getTestTypeList() {
@@ -34,10 +33,12 @@ public class InterviewController {
     @GetMapping("/interview")
     public String getRegister(Model model) {
 
+        // User must be logged in
         if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
 
+        // User must be a health care worker
         if (!authenticateInstance.getUser().isHealthcareWorker()) {
             return "notAuthorised";
         }
@@ -63,13 +64,18 @@ public class InterviewController {
         Collection<Booking> bookingCollection = bookingGet.getApi();
 
         for (Booking booking : bookingCollection) {
+            // Checks if the pin code is the same as the booking PIN
             if (booking.getSmsPin().equals(pinCode)) {
                 check = true;
                 patientId = booking.getCustomerId();
                 patientName = booking.getCustomerName();
+
+                // Checks if the booking status is Completed
                 if (booking.getStatus().equals("COMPLETED")) {
                     check2 = true;
                 }
+
+                // Checks if booking has done the COVID Test
                 if (booking.getTestingDone() == true) {
                     check3 = true;
                 }
@@ -128,6 +134,7 @@ public class InterviewController {
         String bookingId = "";
 
         for (Booking booking : bookingCollection) {
+            // Checks if the pin code is the same as booking pin
             if (booking.getSmsPin().equals(pinCode)) {
                 bookingId = booking.getBookingId();
                 break;
@@ -164,9 +171,9 @@ public class InterviewController {
 
         // stuff to patch in booking
         List<String> thingsToPatch = new ArrayList<>();
-        thingsToPatch.add("PATSTATUS");  //PATCH PATIENT STATUS
-        thingsToPatch.add("STATUS");     //PATCH STATUS
-        thingsToPatch.add("TESTDONE");   //PATCH TESTDONE
+        thingsToPatch.add("PATSTATUS"); // PATCH PATIENT STATUS
+        thingsToPatch.add("STATUS"); // PATCH STATUS
+        thingsToPatch.add("TESTDONE"); // PATCH TESTDONE
         String description = "";
         bookingPatch.patchApi(thingsToPatch, description);
 

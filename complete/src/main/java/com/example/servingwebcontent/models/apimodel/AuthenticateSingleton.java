@@ -16,6 +16,7 @@ public class AuthenticateSingleton {
     };
 
     public static AuthenticateSingleton getInstance() {
+        // Lazy Initialisation
         if (instance == null) {
             instance = new AuthenticateSingleton();
         }
@@ -33,6 +34,7 @@ public class AuthenticateSingleton {
 
         Get<User> userGet = userFactory.createGet();
         try {
+            // User Collection
             Collection<User> userCollection = userGet.getApi();
 
             for (User user2 : userCollection) {

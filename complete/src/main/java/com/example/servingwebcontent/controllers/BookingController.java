@@ -105,6 +105,7 @@ public class BookingController {
         List<Booking> bookingList = new ArrayList<>();
 
         try {
+            // Booking Collection
             Collection<Booking> bookingCollection = bookingGet.getApi();
 
             for (Booking booking : bookingCollection) {
@@ -143,17 +144,15 @@ public class BookingController {
         List<String> testTypeList = getTestTypeList();
         model.addAttribute("testTypeList", testTypeList);
 
+        // Retrieve the current local time and parse into ISO Format
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime timeNow = LocalDateTime.now();
         model.addAttribute("todayDate", dtf.format(timeNow));
 
-        // 4. Get smsPin
-        // RandomPinGenerator rad = new RandomPinGenerator();
-        // String smsPin = rad.getPin();
-
         return "onsiteBooking";
     }
 
+    // Function that compares two calendar objects and check if the date is the same
     private boolean isDateSame(Calendar c1, Calendar c2) {
         return (c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR) &&
                 c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH) &&
@@ -197,6 +196,7 @@ public class BookingController {
             System.out.println(exception);
         }
 
+        // Returns an error if the pin code does not exist
         if (!exist) {
             model.addAttribute("error", "Pin code does not exist");
             return "pinVerification";
@@ -280,9 +280,7 @@ public class BookingController {
                 }
             }
 
-        } catch (
-
-        Exception exception) {
+        } catch (Exception exception) {
             System.out.println(exception);
         }
 

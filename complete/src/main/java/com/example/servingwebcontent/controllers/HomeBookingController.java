@@ -29,8 +29,6 @@ public class HomeBookingController {
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
     public List<TestingSite> getTestingSiteList() {
-        // 2.1 Get testing-sites and put it into model
-        // API factory
         APIfactory<TestingSite> testingSiteFactory = new TestingSiteFactory(System.getenv("API_KEY"));
         Get<TestingSite> testingSiteGet = testingSiteFactory.createGet();
 
@@ -55,7 +53,6 @@ public class HomeBookingController {
     }
 
     public List<User> getUserList() {
-        // 2.2
         APIfactory<User> userFactory = new UserFactory(System.getenv("API_KEY"));
         Get<User> userGet = userFactory.createGet();
 
@@ -91,15 +88,16 @@ public class HomeBookingController {
     @GetMapping("/homeBooking")
     public String index(Model model) {
 
+        // Users must be logged in
         if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
 
+        // Users must be a customer
         if (!authenticateInstance.getUser().isCustomer()) {
             return "notAuthorised";
         }
 
-        // 1.
         BookingForm bookingForm = new BookingForm();
         model.addAttribute("bookingForm", bookingForm);
 
@@ -114,6 +112,7 @@ public class HomeBookingController {
 
         // Must use yyyy-MM-dd and not yyyy/MM/dd
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        // Retrieve current time and parse it into ISO Format
         LocalDateTime timeNow = LocalDateTime.now();
         model.addAttribute("todayDate", dtf.format(timeNow));
 
@@ -123,10 +122,12 @@ public class HomeBookingController {
     @GetMapping("/scanQRCode")
     public String getScanQRCode(Model model) {
 
+        // Users must be logged in
         if (!authenticateInstance.getIsUserAuthenticated()) {
             return "redirect:/login";
         }
 
+        // Users must be a receptionist
         if (!authenticateInstance.getUser().isReceptionist()) {
             return "notAuthorised";
         }
@@ -149,7 +150,7 @@ public class HomeBookingController {
 
             for (Booking booking : bookingCollection) {
 
-                // If the booking status is already completed, throw an errors
+                // If the booking status is already completed, throw an error
                 if (booking.getQr().equals(qrCode)
                         && booking.getStatus().toUpperCase().equals("COMPLETED")) {
                     model.addAttribute("error", "Booking has already been completed");

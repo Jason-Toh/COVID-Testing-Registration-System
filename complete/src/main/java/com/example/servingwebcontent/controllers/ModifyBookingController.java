@@ -105,6 +105,7 @@ public class ModifyBookingController {
         List<Booking> bookingList = new ArrayList<>();
 
         try {
+            // Booking Collection
             Collection<Booking> bookingCollection = bookingGet.getApi();
 
             for (Booking booking : bookingCollection) {
@@ -138,6 +139,7 @@ public class ModifyBookingController {
         User currentUser = authenticateInstance.getUser();
 
         for (Booking booking : bookingList) {
+            // Retrieve the particular customer ID
             if (booking.getCustomerId().equals(currentUser.getId())) {
                 customerBookingList.add(booking);
             }
@@ -175,16 +177,19 @@ public class ModifyBookingController {
         for (Booking booking : bookingList) {
             if (booking.getBookingId().equals(searchByBookingIDForm.getBookingID())) {
 
+                // Returns an error if the covid test is performed
                 if (booking.getTestingDone() == true) {
                     model.addAttribute("error", "Invalid Booking. Covid Test has performed");
                     return "searchByBookingID";
                 }
 
+                // Returns an error if the booking is cancelled
                 if (booking.getCancelBooking() == true) {
                     model.addAttribute("error", "Invalid Booking. Booking is cancelled");
                     return "searchByBookingID";
                 }
 
+                // Returns an error if the booking is lapsed
                 if (booking.getLapsedBooking() == true) {
                     model.addAttribute("error", "Invalid Booking. Booking is lapsed");
                     return "searchByBookingID";
@@ -215,6 +220,7 @@ public class ModifyBookingController {
         List<TestingSite> testingSiteList = getTestingSiteList();
 
         for (Booking booking : bookingList) {
+            // Checks if the booking ID is the same as id
             if (booking.getBookingId().equals(id)) {
                 model.addAttribute("booking", booking);
                 String currentDateTime = booking.getStartTime().substring(0, 16);
@@ -251,12 +257,14 @@ public class ModifyBookingController {
         for (Booking booking : bookingList) {
             if (booking.getBookingId().equals(bookingForm.getBookingID())) {
 
+                // Checks if the testing site is modified
                 if (booking.getTestingSiteId().equals(bookingForm.getTestingSite())) {
                     check = true;
                 }
 
                 String currentDateTime = booking.getStartTime().substring(0, 16);
 
+                // Checks if the start time is changed
                 if (currentDateTime.equals(bookingForm.getTime())) {
                     check2 = true;
                 }
@@ -326,6 +334,7 @@ public class ModifyBookingController {
 
         String currentTime = formattedDateTime.substring(0, 16);
 
+        // Only allow modification if it is a future time
         if (currentTime.equals(currentBooking.getModifiedTimestamp())) {
             model.addAttribute("error3", "You can only modify at a future time");
             return "modifyBooking";
@@ -336,10 +345,12 @@ public class ModifyBookingController {
         String oldTestingSiteName = currentBooking.getTestingSiteName();
         String oldStartTime = currentBooking.getStartTime();
 
+        // If the modifiedTimestamp is empty, use the createAt Timestamp
         if (currentBooking.getModifiedTimestamp().isEmpty()) {
             oldTimestamp = currentBooking.getCreatedAt();
             oldTimestamp = oldTimestamp.substring(0, 16);
         } else {
+            // Otherwise, use the previous modifiedTimestamp
             oldTimestamp = currentBooking.getModifiedTimestamp();
         }
 
@@ -377,6 +388,7 @@ public class ModifyBookingController {
         String description = "";
         bookingPatch.patchApi(thingsToPatch, description);
 
+        // If the user is a customer, redirect to profile
         if (authenticateInstance.getUser().isCustomer()) {
             return "redirect:/profile";
         }
@@ -398,6 +410,7 @@ public class ModifyBookingController {
         String description = "Booking has been cancelled";
         bookingPatch.patchApi(thingsToPatch, description);
 
+        // If the user is a customer, redirect to profile
         if (authenticateInstance.getUser().isCustomer()) {
             return "redirect:/profile";
         }
@@ -411,6 +424,7 @@ public class ModifyBookingController {
         List<Booking> bookingList = getBookingList();
 
         for (Booking booking : bookingList) {
+            // Get the booking object based on the id
             if (booking.getBookingId().equals(id)) {
                 model.addAttribute("booking", booking);
                 break;
@@ -438,6 +452,7 @@ public class ModifyBookingController {
             }
         }
 
+        // List of PastBooking object
         List<PastBooking> pastBookingList = currentBooking.getPastBookings();
 
         String testingSiteId = "";
@@ -445,6 +460,7 @@ public class ModifyBookingController {
 
         int count = 0;
         for (PastBooking pastBooking : pastBookingList) {
+            // Get the pastBooking object based on the timestamp
             if (pastBooking.getTimestamp().equals(timestamp)) {
                 testingSiteId = pastBooking.getTestingSiteId();
                 startTime = pastBooking.getStartTime();
@@ -483,6 +499,7 @@ public class ModifyBookingController {
         String description = "Booking has been revert";
         bookingPatch.patchApi(thingsToPatch, description);
 
+        // If the user is a customer, redirect to the profile
         if (authenticateInstance.getUser().isCustomer()) {
             return "redirect:/profile";
         }
