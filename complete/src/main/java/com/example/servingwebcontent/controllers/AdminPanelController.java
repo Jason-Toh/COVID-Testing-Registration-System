@@ -22,15 +22,17 @@ import java.util.List;
 public class AdminPanelController {
     AuthenticateSingleton authenticateInstance = AuthenticateSingleton.getInstance();
 
+    // This method get the booking list according to the admin's testing-site
     public List<Booking> getBookingListUsingTestingSite() throws InterruptedException, ParseException, IOException {
         String api = System.getenv("API_KEY");
         APIfactory<TestingSite> factory = new TestingSiteFactory(api);
         Get<TestingSite> testingSiteGet = factory.createGet();
         Collection<TestingSite> testingSites = testingSiteGet.getApi();
 
-        // TO DO SEARCH FOR TESTING SITE WHICH THAT ADMIN RESPONSIBLE
+        // return the booking from testing-site where the admin is responsible
         User user = authenticateInstance.getUser();
         for (TestingSite testingSite : testingSites) {
+            // check if the testing-site id matches the user's testing-site
             if (testingSite.getId().equals(user.getTestingSiteId())) {
                 return testingSite.getBookings();
             }
@@ -38,6 +40,7 @@ public class AdminPanelController {
         return null;
     }
 
+    // Get a list of testing-site from api
     public List<TestingSite> getTestingSiteList() {
         List<TestingSite> testingSiteList = new ArrayList<>();
 
@@ -86,6 +89,7 @@ public class AdminPanelController {
     public String showTestingSite(@PathVariable String id, Model model)
             throws IOException, InterruptedException, ParseException {
 
+        // Delete the testing-site based on the input booking id
         APIfactory<Booking> apiFactory = new BookingFactory(System.getenv("API_KEY"));
         Delete deleteBooking = apiFactory.createDelete();
         deleteBooking.deleteApi(id);
@@ -99,12 +103,14 @@ public class AdminPanelController {
         return "adminPanel";
     }
 
+    // Modified the Booking Status of that booking to CANCELLED
     @RequestMapping("/adminPanelCancel/{id}/status/{status}")
     public String modifiedStatus(@PathVariable String id, @PathVariable String status, Model model)
             throws IOException, InterruptedException, ParseException {
 
         String api = System.getenv("API_KEY");
 
+        // Patch the status of the Booking to CANCELLED
         APIfactory<Booking> bookingFactory = new BookingFactory(api, id, BookingStatus.CANCELLED);
         Patch bookingPatch = bookingFactory.createPatch();
 
@@ -113,6 +119,7 @@ public class AdminPanelController {
         thingsToPatch.add("STATUS");
         thingsToPatch.add("ADMIN");
 
+        // PATCH with update description
         String description = "Booking has been cancelled";
         bookingPatch.patchApi(thingsToPatch, description);
 
@@ -147,7 +154,7 @@ public class AdminPanelController {
 
         String description = "";
 
-        // If the testsiteID is not all null object, modify the testing site
+        // If there is a change in testing-site of that booking, patch new testing-site
         if (!testsiteid.equals("testsiteID")) {
             APIfactory<Booking> bookingFactory = new BookingFactory(api, id, null, testsiteid, null);
             Patch bookingPatch = bookingFactory.createPatch();
@@ -163,6 +170,7 @@ public class AdminPanelController {
             }
         }
 
+        // If there is a change in date of that booking, patch new booking
         if (!time.equals("date")) {
             APIfactory<Booking> bookingFactory = new BookingFactory(api, id, null, null, time);
             Patch bookingPatch = bookingFactory.createPatch();
@@ -170,9 +178,9 @@ public class AdminPanelController {
             List<String> thingsToPatch = new ArrayList<>();
             thingsToPatch.add("TIME");
             thingsToPatch.add("ADMIN");
+            // add description after patch update
             description += "Booking time has been updated";
             bookingPatch.patchApi(thingsToPatch, description);
-
         }
 
         List<Booking> bookings = getBookingListUsingTestingSite();
