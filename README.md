@@ -1,15 +1,5 @@
 # Covid Registration System
 
-## Disclaimer
-
-There was a mistake on my commits where I accidentally commit using my personal email address due to setting git config --email as my personal email address.
-
-I was not aware of this and would like to apologize to the teaching staff.
-
-tohjason28@gmail.com (Jason) is my personal email address. (14 commits)
-
-jtoh0003@studentmonash.edu is my monash email address.
-
 ## Design Documents
 
 The class diagram, design rationale, git contributions and system demonstration are stored inside the Documents folder.
